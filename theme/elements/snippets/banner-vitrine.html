@@ -1,0 +1,60 @@
+{% set banner_desktop = banners.extra1 %}
+{% set banner_mobile = banners.extra2 ? banners.extra2 : banner_desktop %}
+
+{% if utils.is_mobile %}
+    {% set banner = banner_mobile %}
+{% else %}
+    {% set banner = banner_desktop %}
+{% endif %}
+
+
+{% if banner %}
+<section class="s-vitrine-banner">
+
+    {% if banner.slides is defined and banner.slides|length > 1 %}
+
+        <div class="container">
+            <div class="swiper-wrapper">
+                {% for slide in banner.slides %}
+                    <div class="swiper-slide">
+                        <a href="{{ slide.link }}" target="{{ slide.target }}">
+                            <img
+                                src="{{ slide.image }}"
+                                alt="{{ slide.label }}"
+                                width="{{ slide.width }}"
+                                height="{{ slide.height }}"
+                                loading="lazy"
+                            >
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="nav">
+                <div class="swiper-dots"></div>
+                <div class="swiper-pagination">
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+        {% if banner is defined %}
+            {% set slide = banner %}
+            <div class="container img-item">
+                <a href="{{ slide.link }}" target="{{ slide.target }}">
+                    <img
+                        src="{{ slide.src }}"
+                        alt="{{ slide.label }}"
+                    >
+                </a>
+            </div>
+        {% else %}
+            {{ banner }}
+        {% endif %}
+
+    {% endif %}
+
+</section>
+{% endif %}

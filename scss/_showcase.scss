@@ -1,0 +1,197 @@
+.s-showcase{
+    padding: 3.75rem 0;
+    background-color: #F9FAFB;
+    overflow: hidden;
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .d-title{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            h2{
+                color: var(--c_general_titulos);
+            }
+
+            .swiper-pagination{
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                position: relative;
+
+                .swiper-button-prev, .swiper-button-next{
+                    position: relative;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: #E5E7EB;
+                    width: 3.5rem;
+                    height: 3.5rem;
+                    border-radius: 100%;
+
+                    &::after{
+                        font-size: 1rem;
+                        color: #6B7280;
+                    }
+                }
+            }
+        }
+
+        .d-showcase{
+            .swiper-slide{
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+                position: relative;
+                height: 30.1875rem;
+                background-color: #F3F3F3;
+                padding: 1.5rem;
+                border-radius: 1.5rem;
+
+                .tags{
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5rem;
+                    z-index: 3;
+
+                    .item-tag{
+                        width: fit-content;
+                        padding: .375rem 1rem;
+                        border-radius: 9999px;
+                        background: rgba(255, 255, 255, 0.80);
+                        box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+                        font-size: .75rem;
+                        color: #575757;
+
+                        &.tagdesconto{
+                            background: #462E86;
+                            color: #fff;
+                        }
+                    }
+                }
+
+                .img-hover{
+                    width: 95%;
+                    height: auto;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 1;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: all .5s ease-in-out;
+                }
+
+                .img-product{
+                    z-index: 2;
+                    width: 65%;
+                    height: auto;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    transition: all .5s ease-in-out;
+                }
+
+                .info-product{
+                    z-index: 3;
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5rem;
+                    width: 100%;
+
+                    .d-variants{
+                        display: flex;
+                        align-items: center;
+                        gap: .5rem;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all .5s ease-in-out;
+
+                        .circle{
+                            width: 1.25rem;
+                            height: 1.25rem;
+                            border-radius: 100%;
+                            overflow: hidden;
+                            display: flex;
+                            
+                            img{
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        }
+                    }
+
+                    .info-price{
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        width: 100%;
+
+                        h3, h2{
+                            color: var(--c_produtos_titulos);
+                            font-size: 1rem;
+                            font-weight: 400;
+                        }
+
+                        h3{
+                            max-width: 50%;
+                        }
+    
+                        .price{
+                            color: var(--c_produtos_price);
+                            font-size: .875rem;
+                            font-weight: 500;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 0;
+                            align-items: flex-end;
+                            text-align: right;
+
+                            .pricing-installments{
+                                font-size: .75rem;
+                                font-weight: 300;
+                                text-align: right;
+                                margin-top: -10px;
+                            }
+
+                            .pricing-old{
+                                font-size: .75rem;
+                                text-decoration: line-through;
+                            }
+
+                            .operadora{
+                                display: none;
+                            }
+                        }
+                    }
+                }
+
+                &:hover{
+                    .img-hover{
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
+                    .img-product{
+                        width: 70%;
+                        top: 48%;
+                    }
+                    
+                    .d-variants{
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                }
+            }
+        }
+    }
+}

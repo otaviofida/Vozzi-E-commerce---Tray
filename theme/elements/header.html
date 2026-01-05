@@ -1,0 +1,56 @@
+<header>
+    <div class="container">
+        <div class="nav">
+            <a href="/contato" class="body-small-400">Contato</a>
+            <a href="/nossas-lojas" class="body-small-400">Nossas Lojas</a>
+        </div>
+    
+        <a href="{{ store.url }}" class="logo-image">
+            <img src="{{ asset(settings.logoicon) }}" data-original="{{ asset(settings.logoicon) }}" data-alt="{{ asset(settings.logo) }}" alt="{{ store.name }}" />
+        </a>
+    
+        <div class="nav-icons">
+            <i class="ph ph-magnifying-glass search-icon"></i>
+            <i class="ph ph-user"></i>
+            <i class="ph ph-shopping-cart-simple cart-toggle"></i>
+        </div>
+    </div>
+</header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const img = document.querySelector('.logo-image img');
+        if (!img) return;
+    
+        // Preload da imagem alternativa (muito importante)
+        const preload = new Image();
+        preload.src = img.dataset.alt;
+    
+        let changed = false;
+    
+        document.addEventListener('scroll', function () {
+            if (window.scrollY > 400 && !changed) {
+                img.classList.add('is-fading');
+    
+                setTimeout(() => {
+                    img.src = img.dataset.alt;
+                    img.classList.remove('is-fading');
+                }, 150);
+    
+                changed = true;
+            }
+    
+            if (window.scrollY <= 400 && changed) {
+                img.classList.add('is-fading');
+    
+                setTimeout(() => {
+                    img.src = img.dataset.original;
+                    img.classList.remove('is-fading');
+                }, 150);
+    
+                changed = false;
+            }
+        });
+    });
+</script>
+    

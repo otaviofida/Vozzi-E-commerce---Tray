@@ -1,0 +1,51 @@
+.s-textanimate {
+    padding: 10rem 0;
+}
+
+.s-textanimate .container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.text-words {
+    font-size: 3.5rem;
+    font-weight: 400;
+    line-height: 1.15;
+    color: #DDE3EC;
+    width: 70%;
+}
+
+/* cada palavra */
+.word {
+    opacity: 0;
+    transform: translateY(20px);
+    display: inline-block;
+    background: linear-gradient(
+        90deg,
+        #DDE3EC -52.32%,
+        #42454A 22.01%,
+        #333539 229.33%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* estado visível */
+.word.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* imagens inline */
+.text-words img {
+    width: 6.5rem;
+    height: 3.3125rem;
+    border-radius: 50rem;
+    vertical-align: middle;
+    margin: 0 .5rem;
+}

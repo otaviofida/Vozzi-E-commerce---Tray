@@ -1,0 +1,60 @@
+{% set products = Products({
+    'limit': 1,
+     'categories': [45],
+ }) %} 
+
+ {% set product = products[0] %}
+ {% set discount = product.price_offer > 0 ? (100 - (product.price_offer / product.price) * 100) : false %}
+
+<section class="s-section-highlight">
+    <div class="container">
+        <div class="up">
+            <img src="{{ asset(settings.section_highlight_image) }}" alt="Vozzi - Produto Destaque">
+        </div>
+        <div class="mid-product">
+            <div class="left swiper">
+                <div class="swiper-wrapper">
+                    <img
+                        class="img-product"
+                        src="{{ product.images[0].large }}"
+                        alt="{{ product.name }}"
+                    />
+                </div>
+                <div thumbsSlider="" class="swiper thumbs">
+                    <div class="swiper-wrapper">
+                        <img
+                            class="img-product"
+                            src="{{ product.images[0].large }}"
+                            alt="{{ product.name }}"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <h2 class="tag">Promoção</h2>
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.additional_message }}</p>
+                <div class="pricing-highlight">
+                    {% set current_price = product.price_offer > 0 ? product.price_offer : product.price %} {% set old_price = product.price_offer > 0 ? product.price : false %} 
+
+                    {% if product.has_variation and product.has_other_prices %}
+                        <p class="pricing-title">{{ Translation('a_partir_de') }}</p>
+                    {% endif %}
+
+                    {% if old_price %}
+                        <p class="pricing-old">{{ settings.currency }} {{ old_price | currency }}</p>
+                    {% endif %}
+
+                    <p class="pricing-new">
+                        {{ settings.currency }} {{ current_price | currency }}
+                    </p>
+                    <div class="tag">{{ discount| number_format }}% OFF</div>
+                </div>
+                <p class="pricing-installments">{{ product.payment }}</p>
+                {% element 'snippets/product-variants-destaque' { 
+                    'product': product 
+                } %} 
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,33 @@
+{% if product.available and (product.stock > 0 or settings.without_stock_sale) and not product.upon_request %}
+
+    {% set productVar = product.Variants|length ? product.Variants : product.variants %}
+    {% set colorVariants = [] %}
+
+    {% for variant in productVar %}
+        {% if variant.Sku[0] and variant.Sku[0].type == 'Cor' %}
+            {% set colorVariants = colorVariants|merge([{
+                id: variant.id,
+                color: variant.Sku[0].value,
+                image: variant.Sku[0].image_secure,
+                productImage: variant.images[0].full
+            }]) %}
+        {% endif %}
+    {% endfor %}
+
+    {# Só renderiza se existir variação de cor #}
+    {% if colorVariants|length > 0 %}
+        <div class="d-variants colors-only">
+            {% for variant in colorVariants %}
+                <button 
+                    class="circle js-variant-color"
+                    data-variant-id="{{ variant.id }}"
+                    data-image="{{ variant.productImage }}"
+                    aria-label="{{ variant.color }}"
+                >
+                    <img src="{{ variant.image }}" alt="{{ variant.color }}">
+                </button>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endif %}

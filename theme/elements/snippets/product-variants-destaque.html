@@ -1,0 +1,160 @@
+<style>
+    .s-section-highlights .mid-product .content .variants .option-color li::before{
+        content: '-';
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+ </style>
+
+{% if product.available and (product.stock > 0 or settings.without_stock_sale) and not product.upon_request %}
+<div class="variants">
+
+    {% set productVar = product.Variants|length ? product.Variants : product.variants %}
+    {% set listVariants = [] %}
+    {% set listVariantsSecond = [] %}
+    {% set variants = [] %}
+    {% set variantName = '' %}
+    {% set variantSecondName = '' %}
+
+    {% for variant in productVar %}
+
+        {% if loop.first %}
+            {% set variantName = variant.Sku[0].type %}
+            {% if variant.Sku[1] is defined %}
+                {% set variantSecondName = variant.Sku[1].type %}
+            {% endif %}
+        {% endif %}
+
+        {% set stock = settings.without_stock_sale ? '99999' : variant.stock %}
+
+        {# Normalização dos valores #}
+        {% set optionOne = variant.Sku[0].value 
+            | url_encode 
+            | replace({
+                '%E1':'a','%E0':'a','%E2':'a','%E3':'a','%E4':'a',
+                '%E9':'e','%E8':'e','%EA':'e','%EB':'e',
+                '%ED':'i','%EC':'i','%EE':'i','%EF':'i',
+                '%F3':'o','%F2':'o','%F4':'o','%F5':'o','%F6':'o',
+                '%FA':'u','%F9':'u','%FB':'u','%FC':'u',
+                '%E7':'c','%C7':'C','%20':' '
+            }) 
+        %}
+
+        {% set optionTwo = variant.Sku[1] is defined 
+            ? variant.Sku[1].value 
+                | url_encode 
+                | replace({
+                    '%E1':'a','%E0':'a','%E2':'a','%E3':'a','%E4':'a',
+                    '%E9':'e','%E8':'e','%EA':'e','%EB':'e',
+                    '%ED':'i','%EC':'i','%EE':'i','%EF':'i',
+                    '%F3':'o','%F2':'o','%F4':'o','%F5':'o','%F6':'o',
+                    '%FA':'u','%F9':'u','%FB':'u','%FC':'u',
+                    '%E7':'c','%C7':'C','%20':' '
+                }) 
+            : '' 
+        %}
+
+        {% set variants = variants|merge([{
+            "id": variant.id,
+            "stock": stock,
+            "option": optionOne,
+            "option2": optionTwo,
+            "price": {
+                "price": variant.price_offer != 0 ? variant.price_offer : variant.price,
+                "payment": variant.payment_option,
+                "payment_html": variant.payment_option_html | e('html')
+            },
+            "image1": variant.Sku[0].image_secure,
+            "image2": variant.Sku[1] is defined ? variant.Sku[1].image_secure : '',
+            "imageProduct1": variant.images[0] is defined ? variant.images[0].full : '',
+            "imageProduct2": variant.images[1] is defined ? variant.images[1].full : ''
+        }]) %}
+
+        {% if optionOne not in listVariants %}
+            {% set listVariants = listVariants|merge([optionOne]) %}
+        {% endif %}
+
+        {% if optionTwo and optionTwo not in listVariantsSecond %}
+            {% set listVariantsSecond = listVariantsSecond|merge([optionTwo]) %}
+        {% endif %}
+
+    {% endfor %}
+
+    <form class="list-variants"
+          data-id="{{ product.id }}"
+          data-variants='{{ variants|json_encode }}'
+          data-api-cart="1">
+
+        {# PRIMEIRA VARIAÇÃO #}
+        {% if variantName == 'Cor' %}
+        <div class="color-select">
+            <div class="variant-types">
+                <span>{{ variantName }}</span>
+            </div>
+            <ul class="first option-select option-color">
+                {% for value in listVariants %}
+                    {% set img = '' %}
+                    {% for v in variants %}
+                        {% if v.option == value %}
+                            {% set img = v.image1 %}
+                        {% endif %}
+                    {% endfor %}
+                    <li data-value="{{ value }}" style="--bg-img: url('{{ img }}')">
+                        <img src="{{ img }}" alt="{{ value }}" class="color_select">
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <label class="select-variants">
+            <div class="variant-types">
+                <span>{{ variantName }}</span>
+            </div>
+            <select class="first option-select" required>
+                <option value="" hidden>Selecione</option>
+                {% for value in listVariants %}
+                    <option value="{{ value }}">{{ value }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        {% endif %}
+
+        {# SEGUNDA VARIAÇÃO #}
+        {% if variantSecondName %}
+        <label class="select-variants">
+            <div class="variant-types">
+                <span>{{ variantSecondName }}</span>
+            </div>
+            <select class="second option-select" required disabled>
+                <option value="" hidden>Selecione</option>
+                {% for value in listVariantsSecond %}
+                    <option value="{{ value }}">{{ value }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        {% endif %}
+
+        <div class="alert-dont-stock" style="display:none">
+            <p>Variação indisponível</p>
+        </div>
+
+        <div class="flex add-cart">
+            <div data-app="product.quantity" class="qtd-prod flex">
+                <button type="button" data-app="product.qty" data-action="minus" data-product="{{ product.id }}">
+                    −
+                </button>
+                <input type="number" min="1" max="99" name="qty" value="1">
+                <button type="button" data-app="product.qty" data-action="plus" data-product="{{ product.id }}">
+                    +
+                </button>
+            </div>
+
+            <button class="action add-to-cart botao" data-product="{{ product.id }}">
+                Comprar
+            </button>
+        </div>
+    </form>
+
+</div>
+{% endif %}

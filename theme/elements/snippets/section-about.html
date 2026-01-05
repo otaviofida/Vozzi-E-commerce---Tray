@@ -1,0 +1,44 @@
+<section class="s-about">
+    <div class="container">
+        <div class="up">
+            <div class="video">
+                {% if settings.section_about_link %}
+                    {% set video_id = settings.section_about_link|replace({
+                        'https://www.youtube.com/watch?v=': '',
+                        'https://youtu.be/': '',
+                        '&feature=youtu.be': ''
+                    }) %}
+
+                    <iframe
+                        src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&controls=0&showinfo=0&rel=0&playsinline=1"
+                        frameborder="0"
+                        allow="autoplay; encrypted-media"
+                        allowfullscreen
+                    ></iframe>
+                {% endif %}
+            </div>
+            <div class="content">
+                <h2>{{ settings.section_about_titulo }}</h2>
+                <p>{{ settings.section_about_texto }}</p>
+                <a href="/nossas-lojas" class="btn-purple">Ver lojas</a>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="18" viewBox="0 0 32 18" fill="none">
+                    <path d="M30.1764 17.1517L17.1299 17.127C15.0838 17.1275 13.4282 15.4626 13.4401 13.4165L13.4509 11.575L22.6972 4.1377L30.144 4.16062C31.1688 4.16062 31.9997 4.99146 31.9997 6.01636V15.2959H32L30.1764 17.1517Z" fill="white"/>
+                    <path d="M1.82361 0L0 1.85574H0.000284747V11.1353C0.000284747 12.1602 0.831129 12.9911 1.85598 12.9911L9.30278 13.014L18.5491 5.57663L18.5599 3.73522C18.5718 1.68907 16.9162 0.024156 14.8701 0.0246306L1.82361 0Z" fill="white"/>
+                </svg>
+                <h3>{{ settings.section_about_titulo1 }}</h3>
+                <p>{{ settings.section_about_texto1 }}</p>
+            </div>
+            <div class="item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" viewBox="0 0 26 20" fill="none">
+                    <path d="M25.2418 14.0232H22.4369L19.878 16.8553H11.2186V14.0232L14.7076 11.2183H22.4369V8.33623H18.2935L25.2418 2.75053L22.4369 0H2.80433L0 2.75053V5.6093H5.6093V2.75053H14.0232V5.6093L10.623 8.33623H2.80433V11.2183H7.02861L0 16.8553L2.80496 19.6055H22.4369L25.2418 16.8553V14.0232Z" fill="white"/>
+                </svg>
+                <h3>{{ settings.section_about_titulo2 }}</h3>
+                <p>{{ settings.section_about_texto2 }}</p>
+            </div>
+        </div>
+    </div>
+</section>

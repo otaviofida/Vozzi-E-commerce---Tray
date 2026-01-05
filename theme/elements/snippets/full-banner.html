@@ -1,0 +1,58 @@
+{% set banner_desktop = banners.home %}
+{% set banner_mobile = banners.mobile ? banners.mobile : banner_desktop %}
+
+{% if utils.is_mobile %}
+    {% set banner = banner_mobile %}
+{% else %}
+    {% set banner = banner_desktop %}
+{% endif %}
+
+{% if banner %}
+<section class="s-fullbanner">
+
+    {# ───────── BANNER ROTATIVO ───────── #}
+    {% if banner.slides is defined and banner.slides|length > 1 %}
+
+        <div class="swiper s-home-banner">
+            <div class="swiper-wrapper">
+                {% for slide in banner.slides %}
+                    <div class="swiper-slide">
+                        <a href="{{ slide.link }}" target="{{ slide.target }}">
+                            <img
+                                src="{{ slide.image }}"
+                                alt="{{ slide.label }}"
+                                width="{{ slide.width }}"
+                                height="{{ slide.height }}"
+                                loading="lazy"
+                            >
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="container">
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+    {# ───────── BANNER ÚNICO ───────── #}
+    {% else %}
+
+        {% if banner.slides is defined %}
+            {% set slide = banner.slides[0] %}
+            <a href="{{ slide.link }}" target="{{ slide.target }}">
+                <img
+                    src="{{ slide.image }}"
+                    alt="{{ slide.label }}"
+                    width="{{ slide.width }}"
+                    height="{{ slide.height }}"
+                >
+            </a>
+        {% else %}
+            {{ banner }}
+        {% endif %}
+
+    {% endif %}
+
+</section>
+{% endif %}

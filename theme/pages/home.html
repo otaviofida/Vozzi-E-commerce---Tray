@@ -1,0 +1,44 @@
+{% element 'snippets/full-banner' %}
+
+{% element 'vitrine' {
+    'title' : settings.showcase_title_1,
+    'quantity' : settings.showcase_quantity_1,
+    'type' : settings.showcase_type_1,
+} %}
+
+{% if settings.banner_categoria %}
+    {% element 'snippets/banner-categoria' %}
+{% endif %}
+
+{% element 'vitrine' {
+    'title' : settings.showcase_title_2,
+    'quantity' : settings.showcase_quantity_2,
+    'type' : settings.showcase_type_2,
+} %}
+
+{% element 'snippets/textanimate' %}
+
+{% if settings.banner_vitrine %}
+    {% element 'snippets/banner-vitrine' %}
+{% endif %}
+
+{% if settings.section_highlight %}
+    {% element 'snippets/section-highlight' %}
+{% endif %}
+
+{% if settings.banner_mini %}
+    {% element 'snippets/banner-mini' %}
+{% endif %}
+
+{% if settings.banner_marcas %}
+    {% element 'snippets/banner-marcas' %}
+{% endif %}
+
+{% if settings.section_brand %}
+    {% element 'snippets/section-brand' %}
+{% endif %}
+
+{% if settings.section_about %}
+    {% element 'snippets/section-about' %}
+{% endif %}
+

@@ -1,0 +1,56 @@
+<div class="modal-search">
+    <div class="container">
+        <img src="{{ asset(settings.logorodape) }}" alt="Vozzi">
+
+        <div class="forms-search">
+            {% element 'snippets/header-search' %}
+        </div>
+
+
+        <div class="grid">
+            <ul>
+                {% for category in categories %}
+                <li class="firstLevel {{ category.children ? 'subList' }}" role="none">
+                    <a
+                        class="menu-link"
+                        href="{{ category.link }}"
+                        title="{{ category.name }}"
+                        role="menuitem"
+                        {% if category.children %}
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        {% endif %}
+                        tabindex="0"
+                    >
+                        {{ category.name }}
+                    </a>
+
+                    {% if category.children %}
+                        <ul class="secondLevel" role="menu">
+                            {% for level2 in category.children %}
+                                <li class="item-secondLevel {{ level2.children ? 'subList-group' }}" role="none">
+                                    <a class="menu-link" role="menuitem" href="{{ level2.link }}" title="{{ level2.name }}">
+                                        {{ level2.name }}
+                                    </a>
+
+                                    {% if level2.children %}
+                                        <ul class="thirdLevel" role="menu">
+                                            {% for level3 in level2.children %}
+                                                <li role="none">
+                                                    <a class="menu-link" role="menuitem" href="{{ level3.link }}" title="{{ level3.name }}">
+                                                        {{ level3.name }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+                {% endfor %} 
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+{% set current_price = product.price_offer > 0 ? product.price_offer : product.price %} {% set old_price = product.price_offer > 0 ? product.price : false %} 
+
+{% if product.has_variation and product.has_other_prices %}
+    <p class="pricing-title">{{ Translation('a_partir_de') }}</p>
+{% endif %}
+
+    {% if old_price %}
+        <p class="pricing-old">de: {{ settings.currency }} {{ old_price | currency }}</p>
+    {% endif %}
+
+    <p class="pricing-current">
+        {{ old_price ? 'por:' }} <em class="value"> {{ settings.currency }} {{ current_price | currency }} </em>
+    </p>
+
+    <p class="pricing-installments">{{ product.payment }}</p>

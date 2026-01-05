@@ -1,0 +1,69 @@
+<aside id="menu-mobile" class="menuMobile">
+    <div class="menuMobile-title">
+        <span class="icon-menu" aria-hidden="true"></span>
+        Menu
+
+        <button class="menuMobile-close" data-toggle="close" aria-label="Fechar" title="Fechar">
+            <span class="icon-exit" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <div class="menuMobile-account">
+        <div class="tray-hide account-item logged" data-logged-user="true">
+            <button class="account-button" data-toggle="account">
+                <span class="account-text">Ol&aacute;, <span data-customer="name"></span></span>
+                <span class="icon-arrow-simple" aria-hidden="true"></span>
+            </button>
+            <div class="account-access">
+                <span class="icon-account" aria-hidden="true"></span>
+                <a class="account-link" href="{{ links.central }}" title="Minha Conta"> Minha conta </a>
+                <span class="account-separator">/</span>
+                <a class="account-link" href="{{ links.logout }}" title="Sair">Sair</a>
+            </div>
+        </div>
+        <div class="tray-hide account-item loggedout" data-logged-user="false">
+            <button class="account-button" data-toggle="account">
+                <span class="account-text">Minha Conta</span>
+                <span class="icon-arrow-simple" aria-hidden="true"></span>
+            </button>
+            <div class="account-access">
+                <span class="icon-account" aria-hidden="true"></span>
+                <a class="account-link" href="{{ links.login }}" title="Entrar">Entrar</a>
+                <span class="account-separator">/</span>
+                <a class="account-link" href="{{ links.register }}" title="Cadastrar">Cadastrar</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="menuMobile-content">
+        <nav class="menuMobile-menu">
+            <ul class="menu-list">
+                {% for category in categories %}
+                    <li class="menu-firstLevel {{ category.children ? 'subList' }}">
+                        <a class="menu-link" href="{{ category.link }}">{{ category.name }}</a>
+
+                        {% if category.children %}
+                            <ul class="menu-secondLevel">
+                                {% for level2 in category.children %}
+                                    <li {% if level2.children %} class="sub" {% endif %}>
+                                        <a class="menu-link" href="{{ level2.link }}">{{ level2.name }}</a>
+
+                                        {% if level2.children %}
+                                            <ul class="menu-thirdLevel">
+                                                {% for level3 in level2.children %}
+                                                    <li>
+                                                        <a class="menu-link" href="{{ level3.link }}">{{ level3.name }}</a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+</aside>

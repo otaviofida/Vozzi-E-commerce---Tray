@@ -1,0 +1,27 @@
+{% if settings.show_product_tag_on_listing %} 
+    {% set discount = product.price_offer > 0 ? (100 - (product.price_offer / product.price) * 100) : false %} 
+
+    {% if discount %}
+        <div class="item-tag tagdesconto">
+            -{{ discount| number_format }}%
+        </div>
+    {% endif %} 
+
+    {% if product.featured %}
+        <div class="item-tag tag{{ show_double_tag == 0 ? ' tag--full' }}{{show_double_tag == 1 and (odd_amount and position == tags_count) ? ' tag--center' }}">
+            Destaque
+        </div>
+    {% endif %}
+
+    {% if product.new %}
+        <div class="item-tag tag{{ show_double_tag == 0 ? ' tag--full' }}{{show_double_tag == 1 and (odd_amount and position == tags_count) ? ' tag--center' }}">
+            Lançamento
+        </div>
+    {% endif %}
+
+    {% if product.free_shipping and Image('free_shipping') %}
+        <div class="item-tag tag{{ show_double_tag == 0 ? ' tag--full' }}{{show_double_tag == 1 and (odd_amount and position == tags_count) ? ' tag--center' }}">
+            Frete Grátis
+        </div>
+    {% endif %} 
+{% endif %}

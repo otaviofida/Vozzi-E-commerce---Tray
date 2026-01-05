@@ -1,0 +1,28 @@
+    <div class="swiper-slide product-slide">
+        <div class="tags">  
+            {% element 'snippets/product-tags' { 'product': product } %}
+        </div>
+        <div class="info-product">
+                {% element 'snippets/product-variants' { 
+                    'product': product 
+                } %} 
+            <a href="{{ product.link }}" class="info-price">
+                {% if pages.current == 'catalog' %}
+                    <h2>{{ product.name }}</h2>
+                {% else %}
+                    <h3>{{ product.name }}</h3>
+                {% endif %} 
+                <span class="price">
+                    {% element 'snippets/product-price' { 
+                        'product': product 
+                    } %} 
+                </span>
+            </a>
+        </div>
+        <img class="img-hover" src="{{ asset('img/logo-fundo.png') }}" alt="Vozzi">
+        <img
+            class="img-product"
+            src="{{ product.images[0].large }}"
+            alt="{{ product.name }}"
+        />
+    </div>

@@ -1,0 +1,40 @@
+{% if type %}
+    {% set quantity = quantity | default(8) %}
+
+    {% if type == 'top_seller' %}
+        {% set products = Products({
+            'filter': ['available'],
+            'order' : { 'quantity_sold': 'desc' },
+            'limit' : quantity
+        }) %}
+    {% else %}
+    {% set products = Products({
+        'filter': [type, 'available'],
+        'limit': quantity,
+        'order': {'quantity_sold': 'desc'}
+     }) %}
+     {% endif %}
+{% endif %}
+
+{% if products | length > 0 %}
+<section class="s-showcase">
+    <div class="container">
+        <div class="d-title">
+            <h2>{{ title }}</h2>
+            <div class="swiper-pagination">
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+        <div class="d-showcase">
+            <div class="swiper-wrapper">
+                {% for item in products %}
+                    {% element 'snippets/product' {
+                        product : item
+                    } %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}

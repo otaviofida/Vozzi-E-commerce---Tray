@@ -1,0 +1,38 @@
+<section class="s-newsletter">
+    <div class="container">
+        <div class="img">
+            <img class="base" src="{{ asset('img/img-news-base.png') }}" alt="">
+            <div class="floating">
+                <img src="{{ asset('img/img-news.png') }}" alt="" class="news-img">
+            </div>
+        </div>
+        <div class="content">
+            <h2>Newsletter</h2>
+            <span>Entre para o clube Vozzi</span>
+            <form class="newsletter" action="/mvc/store/newsletter/" method="post">
+                <input type="hidden" name="loja" value="{{ store.id }}" />
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Nome"
+                    required
+                    spellcheck="false"
+                    autocomplete="off"
+                />
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="E-mail"
+                    required
+                    spellcheck="false"
+                    autocomplete="off"
+                />
+                <button type="submit" class="newsletter-button button1" >
+                    <i class="ph ph-arrow-right"></i>
+                </button>
+            </form>
+            <p>Assine nossa newsletter e descubra lançamentos exclusivos, coleções limitadas e conteúdos que combinam estilo e tecnologia. Seja o primeiro a saber e <strong>ganhe 20% de desconto hoje!</strong></p>
+        </div>
+        <img class="bg" src="{{ asset('img/bg-news.png') }}" alt="">
+    </div>
+</section>

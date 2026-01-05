@@ -1,0 +1,77 @@
+<div class="product">
+    {% if pages.current == 'catalog' and settings.compare %}
+        <div class="product-compare">
+            <a href="{{ links.compare_delete ~ product.id }}"
+                class="compare-button {{ not product.compare ? 'compare-hidden' }}"
+                data-compare="remove"
+                aria-describedby="{{ product.name }}"
+            >
+                <span class="compare-checkbox checked"></span>
+                {{ Translation("remover_comparar") }}
+            </a>
+
+            <a href="{{ links.compare_add ~ product.id }}"
+                class="compare-button {{ product.compare ? 'compare-hidden' }}"
+                data-compare="add"
+                aria-describedby="{{ product.name }}"
+            >
+                <span class="compare-checkbox"></span>
+                {{ Translation("comparar_produto") }}
+            </a>
+        </div>
+    {% endif %}
+
+    <div class="product-image">
+        <a href="{{ product.link }}" class="product-link">
+            <img
+                class="product-img lazyload"
+                src="{{ asset('img/empty.png') }}"
+                data-src="{{ product.images[0].large }}"
+                alt="{{ product.name }}"
+                width="450"
+                height="450"
+            />
+        </a>
+
+        {% element 'snippets/product-tags' { 'product': product } %}
+    </div>
+
+    <a class="product-info" href="{{ product.link }}">
+        {% if pages.current == 'catalog' %}
+            <h2 class="product-name">{{ product.name }}</h2>
+        {% else %}
+            <h4 class="product-name">{{ product.name }}</h4>
+        {% endif %} 
+        {% element 'snippets/product-rating' { 'review': product.ranking } %}
+
+        <div class="product-price">
+            {% if product.available and (product.stock > 0 or settings.without_stock_sale) and not product.upon_request %} 
+                {% element 'snippets/product-price' { 
+                    'product': product 
+                } %} 
+            {% elseif product.upon_request %} 
+                {% element 'snippets/product-message' { 
+                    'product_message': 'Produto sob consulta' 
+                } %} 
+            {% elseif product.stock <= 0 %} 
+                {% element 'snippets/product-message' { 
+                    'product_message': 'Produto indisponível' 
+                } %} 
+            {% else %} 
+                {% element 'snippets/product-message' { 
+                    'product_message': 'Produto indisponível, avise-me quando chegar' 
+                } %}
+            {% endif %}
+        </div>
+    </a>
+
+    <button
+        class="product-button {{ not product.available and not (product.stock > 0 or settings.without_stock_sale) and product.upon_request or product.stock
+        <= 0 or product.upon_request ? 'u-marginNone' }}"
+        type="button" aria-label="Ver Produto"
+    >
+        {% if product.available and (product.stock > 0 or settings.without_stock_sale) and not product.upon_request %}
+            <a class="button2" href="{{ product.link }}"> Ver produto </a>
+        {% endif %}
+    </button>
+</div>

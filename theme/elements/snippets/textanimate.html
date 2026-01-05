@@ -1,0 +1,61 @@
+<section class="s-textanimate">
+    <div class="container">
+        <h2 class="text-words">
+            Acessórios não são apenas funcionais.
+            <img src="{{ asset('img/img1.jpg') }}" alt="">
+            Eles fazem parte do estilo, da rotina
+            <img src="{{ asset('img/img2.jpg') }}" alt="">
+            e de como você se expressa.
+        </h2>
+    </div>
+</section>
+
+<script>
+    const title = document.querySelector('.text-words');
+    
+    if (title) {
+        const nodes = Array.from(title.childNodes);
+    
+        nodes.forEach(node => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const words = node.textContent.trim().split(/\s+/);
+                const fragment = document.createDocumentFragment();
+    
+                words.forEach(word => {
+                    const span = document.createElement('span');
+                    span.className = 'word';
+                    span.textContent = word;
+                    span.style.marginRight = '0.4ch';
+                    fragment.appendChild(span);
+                });
+    
+                node.replaceWith(fragment);
+            }
+        });
+    
+        const words = title.querySelectorAll('.word');
+        let visible = false;
+    
+        document.addEventListener('scroll', () => {
+            const rect = title.getBoundingClientRect();
+            const trigger = window.innerHeight * 0.75;
+    
+            if (rect.top < trigger && !visible) {
+                visible = true;
+                words.forEach((word, index) => {
+                    setTimeout(() => {
+                        word.classList.add('is-visible');
+                    }, index * 80);
+                });
+            }
+    
+            if (rect.top > trigger && visible) {
+                visible = false;
+                words.forEach(word => {
+                    word.classList.remove('is-visible');
+                });
+            }
+        });
+    }
+    </script>
+    

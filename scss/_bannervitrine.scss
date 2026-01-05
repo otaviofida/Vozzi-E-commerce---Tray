@@ -1,0 +1,98 @@
+.s-vitrine-banner{
+    padding: 3.75rem 0;
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .swiper-slide{
+            width: 100%;
+            height: auto;
+            border-radius: 2rem;
+            overflow: hidden;
+
+            img{
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                object-position: center;
+                transition: all .5s ease-in-out;
+            }
+
+            &:hover{
+                img{
+                    transform: scale(1.03);
+                }
+            }
+        }
+
+        .nav{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+
+            .swiper-dots{
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                position: relative;
+            }
+
+            .swiper-pagination{
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                
+                .swiper-button-prev, .swiper-button-next{
+                    position: relative;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: #E5E7EB;
+                    width: 3.5rem;
+                    height: 3.5rem;
+                    border-radius: 100%;
+
+                    &::after{
+                        font-size: 1rem;
+                        color: #6B7280;
+                    }
+                }
+            }
+
+            .swiper-pagination-bullet{
+                background-color: #D2D2D2;
+                height: .25rem;
+                width: 2.5rem;
+                border-radius: 10px;
+                opacity: 1 !important;
+                transition: all .4s ease-in-out;
+            }
+
+            .swiper-pagination-bullet-active{
+                background-color: #473089;
+                width: 3.5rem;
+            }
+        }
+    }
+
+    .img-item{
+        a{
+            width: 100%;
+            height: auto;
+            border-radius: 2rem;
+            overflow: hidden;
+
+            img{
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+    }
+}

@@ -1,0 +1,117 @@
+footer{
+    padding: 7.5rem 0 15rem 0;
+    background-color: var(--c_footer_bg);
+    z-index: 10;
+    position: relative;
+    width: 100%;
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        gap: 7.5rem;
+
+        .up{
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+
+            .social{
+                display: flex;
+                align-items: center;
+                gap: .75rem;
+
+                a{
+                    background-color: var(--c_footer_details_bg);
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    border-radius: .5rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    i{
+                        color: var(--c_footer_icon);
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+            > img{
+                width: 25.625rem;
+                height: auto;
+                object-fit: contain;
+                object-position: center;
+            }
+        }
+
+        .mid{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+
+            .item{
+                display: flex;
+                flex-direction: column;
+                gap: .5rem;
+                width: 25%;
+
+                span{
+                    font-size: 1.125rem;
+                    font-weight: 700;
+                    line-height: 150%;
+                    color: var(--c_footer_title);
+                }
+    
+                ul{
+                    display: flex;
+                    flex-direction: column;
+                    gap: .75rem;
+    
+                    li a{
+                        font-size: .875rem;
+                        font-weight: 400;
+                        line-height: 150%;
+                        color: var(--c_footer_text);
+                        transition: opacity .5s ease;
+
+                        &:hover{
+                            opacity: .5;
+                        }
+                    }
+                }
+            }
+        }
+
+        .bottom{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .payment{
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                span{
+                    font-size: .75rem;
+                    font-weight: 400;
+                    color: var(--c_footer_text);
+                }
+
+                ul{
+                    display: flex;
+                    align-items: center;
+                    gap: 2px;
+                }
+            }
+
+            .enterprise{
+                font-size: .75rem;
+                font-weight: 400;
+                color: var(--c_footer_text); 
+            }
+        }
+    }
+}

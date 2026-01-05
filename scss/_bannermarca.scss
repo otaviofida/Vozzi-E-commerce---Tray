@@ -1,0 +1,54 @@
+.s-banner-marcas{
+    padding: 3.75rem 0;
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .swiper-slide{
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            align-items: center;
+
+            .img{
+                background-color: #F3F3F3;
+                border-radius: 1.5rem;
+                overflow: hidden;
+                height: 7.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+
+                img{
+                    width: auto;
+                    height: 2.75rem;
+                    object-fit: contain;
+                    object-position: center;
+                    transition: all .5s ease-in-out;
+                    filter: grayscale(1);
+                }
+            }
+
+            h3{
+                color: var(--c_geral_text);
+                font-size: 1rem;
+                font-weight: 400;
+                text-align: center;
+            }
+
+            &:hover{
+                .img{
+                    img{
+                        height: 3rem;
+                        filter: grayscale(0);
+                    }
+                }
+            }
+        }
+    }
+}

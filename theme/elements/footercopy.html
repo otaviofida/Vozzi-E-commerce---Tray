@@ -1,0 +1,117 @@
+{% set email = Translation('ag_email_1') %} 
+{% set whatsappNumber = Translation('ag_telefone_3') %} 
+{% set phone = Translation('ag_telefone_1') %} 
+{% set phone2 = Translation('ag_telefone_2') %}
+
+<footer class="footer">    
+    
+
+    <div class="footer-info">
+        <div class="info-contact">
+            <div class="info-title">Atendimento {{ icon }}</div>
+            <ul class="info-list">
+                {% if phone %} 
+                    {% set link = phone | replace({'(': '', ')': '', '-': '', ' ': ''}) %}
+                    <li>
+                        <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="contact-item"
+                            href="tel:{{ link }}"
+                            title="Telefone: {{ phone }}"
+                        >
+                            <span class="icon-phone" aria-hidden="true"></span>
+                            {{ phone }}
+                        </a>
+                    </li>
+                {% endif %} 
+                {% if phone2 %} 
+                    {% set link = phone2 | replace({'(': '', ')': '', '-': '', ' ': ''})%}
+                    <li>
+                        <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="contact-item"
+                            href="https://api.whatsapp.com/send?l=pt&phone=55{{ link }}"
+                            title="Fale conosco no WhatsApp: {{ phone2 }}"
+                        >
+                            <span class="icon-whatsapp" aria-hidden="true"></span>
+                            {{ phone2 }}
+                        </a>
+                    </li>
+                {% endif %} 
+                {% if whatsappNumber %}
+                    <li>{% element 'snippets/whatsapp' { 'number': whatsappNumber, 'include_text' : false } %}</li>
+                {% endif %} 
+                {% if email %}
+                    <li>
+                        <a class="contact-item" href="mailto:{{ email }}" title="Email: {{ email }}">
+                            <span class="icon-email" aria-hidden="true"></span>
+                            {{ email }}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+            <div class="info-media">{% element 'snippets/media-icons' %}</div>
+        </div>
+
+        <div class="info-pages">
+            <div class="info-title title--border">Institucional {{ icon }}</div>
+            <ul class="info-list">
+                {% for custom in pages.custom %}
+                    <li>
+                        <a class="info-link" href="{{ custom.url }}" title="{{ custom.name }}">{{ custom.name }}</a>
+                    </li>
+                {% endfor %}
+                <li>
+                    <a class="info-link" href="{{ links.contact }}" title="Fale Conosco">Fale Conosco</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="info-payment">
+            {% if paymentMethods.order or paymentMethods.credit %}
+                <div class="info-title title--border">Pagamento {{ icon }}</div>
+                {% element 'snippets/payment-list' %} 
+            {% endif %}
+        </div>
+
+        <div class="info-security">
+            <div class="info-title title--border">Seguran&ccedil;a {{ icon }}</div>
+            <ul class="info-list">
+                <li class="google-seal">
+                    <a
+                        href="https://transparencyreport.google.com/safe-browsing/search?url={{ store.url }}"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        title="Google Safe Browsing"
+                    >
+                        <span class="icon icon-shield"></span>
+                        <span class="icon icon-google"></span>
+                    </a>
+                </li>
+                {% if seals.ebit %}
+                    <li class="ebit-seal">{{ seals.ebit }}</li>
+                {% endif %} 
+                {% if seals.hackersafe %}
+                    <li class="loja-protegida-seal">{{ seals.hackersafe }}</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-credits">
+        <div class="credits">
+            <div class="credits-text">{{ Translation('ag_mensagem_rodape') }}</div>
+        </div>
+
+        <div class="footer-message">
+            {% element 'snippets/credits' %} 
+            {% if tray.theme_configs.custom_theme_preview %}
+                <div class="mode-preview">
+                    <a href="/mvc/store/home/reset_opencode_preview?loja={{ store.id }}">Sair modo preview</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</footer>

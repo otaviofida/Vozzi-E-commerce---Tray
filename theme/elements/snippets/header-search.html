@@ -1,0 +1,17 @@
+<form action="{{ links.search }}" method="get" data-search="suggestion">
+    <input type="hidden" name="loja" value="{{ store.id }}" />
+    <div class="d-search">
+        <input
+            placeholder="Pesquisar por..."
+            spellcheck="false"
+            autocomplete="off"
+            data-input="suggestion"
+            type="text"
+            name="palavra_busca"
+        />
+        <button title="Buscar" aria-label="Buscar">
+            <i class="ph ph-magnifying-glass"></i>
+        </button>
+    </div>
+    <div class="search-suggestion is-hidden" data-container="suggestion"></div>
+</form>

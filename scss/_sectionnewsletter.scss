@@ -1,0 +1,133 @@
+.s-newsletter{
+    padding-bottom: 7.5rem;
+
+    .container{
+        display: flex;
+        background-color: #F3F3F3;
+        align-items: center;
+        justify-content: center;
+        gap: 7.5rem;
+        border-radius: 1.5rem;
+        height: 34.1875rem;
+        position: relative;
+        overflow: hidden;
+
+        .img{
+            width: 40%;
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            z-index: 2;
+
+            .base{
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+                object-position: center;
+            }
+
+            .floating{
+                position: absolute;
+                top: 43%;
+                left: 45%;
+                transform: translate(-40%, -50%);
+                animation: floatPhone 5s ease-in-out infinite;
+                will-change: transform;
+            }
+
+            .news-img{
+                height: 380px;
+                width: auto;
+                object-fit: contain;
+                display: block;
+            }
+        }
+
+        .content{
+            width: 40%;
+            z-index: 2;
+
+            h2{
+                font-size: 3.5rem;
+                font-weight: 600;
+                color: #000000;
+            }
+
+            span{
+                font-size: 1.125rem;
+                font-weight: 400;
+                line-height: 150%;
+                color: #000;
+            }
+
+            p{
+                font-size: .875rem;
+                font-weight: 400;
+                line-height: 150%;
+                color: #6B7280;
+
+                strong{
+                    font-weight: 600;
+                }
+            }
+
+            form{
+                display: flex;
+                align-items: center;
+                gap: .3125rem;
+
+                input{
+                    border-radius: 1rem;
+                    border: 1px solid #D1D5DB;
+                    background-color: #F4F4F4;
+                    height: 3rem;
+                    padding: 0 1rem;
+
+                    color: #6B7280;
+
+                    &::placeholder{
+                        opacity: .7;
+                    }
+                }
+
+                button{
+                    height: 3rem;
+                    border-radius: 1rem;
+                    background-color: #462E86;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 3rem;
+                    padding: 0;
+                    margin: 1.25rem 0;
+
+                    i{
+                        color: #FFF;
+                        font-size: 1rem;
+                    }
+                }
+            }
+        }
+
+        .bg{
+            position: absolute;
+            bottom: -32px;
+            width: 100%;
+            height: auto;
+            z-index: 0;
+        }
+    }
+}
+
+@keyframes floatPhone{
+    0%{
+        transform: translate(-40%, -50%) translateY(0) rotate(0deg);
+    }
+    50%{
+        transform: translate(-40%, -50%) translateY(-14px) rotate(-1deg);
+    }
+    100%{
+        transform: translate(-40%, -50%) translateY(0) rotate(0deg);
+    }
+}
