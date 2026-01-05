@@ -2,7 +2,7 @@
 {% set applied_filters = filtered_options %} 
 {% set filter_titles = { 
     'categories' : 'Categorias', 
-    'prices' : 'Pre&ccedil;os', 
+    'prices' : 'Preços', 
     'availability' : 'Disponibilidade',
     'brands' : 'Marcas' 
 } %} 
@@ -54,11 +54,11 @@
                                     <label class="filter-label" for="{{ id | lower }}">
                                         <span class="filter-name">
                                             {% if loop.first %} 
-                                                At&eacute; {{ settings.currency }} {{ price.to | currency }} 
+                                                Até {{ settings.currency }} {{ price.to | currency }} 
                                             {% elseif loop.last %} 
                                                 Acima de {{ settings.currency }} {{ price.from | currency }} 
                                             {% else %} 
-                                                De {{ settings.currency }} {{ price.from | currency }} &agrave; {{ settings.currency }} {{ price.to | currency }} 
+                                                De {{ settings.currency }} {{ price.from | currency }} à {{ settings.currency }} {{ price.to | currency }} 
                                             {% endif %}
                                         </span>
                                     </label>

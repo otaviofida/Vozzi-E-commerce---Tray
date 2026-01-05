@@ -27,7 +27,66 @@
             gap: .625rem;
 
             .left{
+                position: relative;
                 background-color: #F3F3F3;
+                width: 100%;
+                overflow: hidden;
+                min-height: 36.875rem;
+                border-radius: 1.5rem;
+
+                .swipermain {
+                    width: 100%;
+                    height: 100%;
+            
+                    .swiper-slide {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+            
+                        img {
+                            max-width: 70%;
+                            max-height: 80%;
+                            width: auto;
+                            height: auto;
+                            object-fit: contain;
+                        }
+                    }
+                } 
+
+                .thumbs {
+                    position: absolute;
+                    bottom: 1rem;
+                    left: 1rem;
+                    width: 6.2rem;
+                    height: calc((5.5rem * 3) + 1rem); // 3 thumbs visíveis
+                    z-index: 10;
+            
+                    .swiper-wrapper {
+                        flex-direction: column;
+                        padding: .5rem;
+                    }
+            
+                    .swiper-slide {
+                        width: 5rem !important;
+                        height: 5rem !important;
+                        cursor: pointer;
+                        transition: all .3s ease;
+                        border-radius: 1rem;
+                        border: 1px solid #EAEAEA;
+                        overflow: hidden;
+                        padding: .5rem 0;
+            
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: contain;
+                        }
+            
+                        &.swiper-slide-thumb-active {
+                            box-shadow: 0 1px 8.1px 0 rgba(0, 0, 0, 0.06);
+                        }
+                    }
+                }
             }
 
             .content{
@@ -157,13 +216,13 @@
                                         transition: all .5s ease-in-out;
                                         position: relative;
                                         z-index: 2;
+                                        border-radius: 100%;
                                     }
 
                                     &.active{
                                        img{
                                             width: 1.3rem;
                                             height: 1.3rem;
-                                            border-radius: 100%;
                                        }
                                     }
                                 }

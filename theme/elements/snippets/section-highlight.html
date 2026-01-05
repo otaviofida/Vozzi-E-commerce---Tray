@@ -1,6 +1,6 @@
 {% set products = Products({
     'limit': 1,
-     'categories': [45],
+     'categories': [13],
  }) %} 
 
  {% set product = products[0] %}
@@ -13,20 +13,52 @@
         </div>
         <div class="mid-product">
             <div class="left swiper">
-                <div class="swiper-wrapper">
-                    <img
+                <div class="swiper-wrapper swipermain">
+                    <div class="swiper-slide">
+                        <img
                         class="img-product"
                         src="{{ product.images[0].large }}"
                         alt="{{ product.name }}"
-                    />
+                        />
+                    </div>
+                    <div class="swiper-slide">
+                        <img
+                        class="img-product"
+                        src="{{ product.images[1].large }}"
+                        alt="{{ product.name }}"
+                        />
+                    </div>
+                    <div class="swiper-slide">
+                        <img
+                        class="img-product"
+                        src="{{ product.images[2].large }}"
+                        alt="{{ product.name }}"
+                        />
+                    </div>
                 </div>
                 <div thumbsSlider="" class="swiper thumbs">
                     <div class="swiper-wrapper">
-                        <img
+                        <div class="swiper-slide">
+                            <img
                             class="img-product"
                             src="{{ product.images[0].large }}"
                             alt="{{ product.name }}"
-                        />
+                            />
+                        </div>
+                        <div class="swiper-slide">
+                            <img
+                            class="img-product"
+                            src="{{ product.images[1].large }}"
+                            alt="{{ product.name }}"
+                            />
+                        </div>
+                        <div class="swiper-slide">
+                            <img
+                            class="img-product"
+                            src="{{ product.images[2].large }}"
+                            alt="{{ product.name }}"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

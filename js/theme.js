@@ -9,6 +9,7 @@
                 '--hero-height',
                 `${height}px`
             );
+            console.log(height);
         }
     
         setSectionHeight();
@@ -29,7 +30,7 @@
         if (!searchIcon || !modalSearch || !modalContainer) return;
     
         // Abrir modal
-        searchIcon.addEventListener('click', function () {
+        searchIcon.addEventListener('click', function () { 
             modalSearch.classList.add('active');
         });
     

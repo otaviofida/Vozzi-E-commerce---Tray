@@ -97,20 +97,17 @@
 }
 
 {
-  var swiper = new Swiper(".mid-product .thumb", {
+  var swiperThumbs = new Swiper(".mid-product .thumbs", {
+    direction: "vertical",
     spaceBetween: 10,
-    slidesPerView: 4,
-    freeMode: true,
+    slidesPerView: 3,
     watchSlidesProgress: true,
   });
-  var swiper2 = new Swiper(".mid-product .left", {
+  
+  var swiperMain = new Swiper(".mid-product .left" , {
     spaceBetween: 10,
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
     thumbs: {
-      swiper: swiper,
+      swiper: swiperThumbs,
     },
   });
 }

@@ -17,7 +17,7 @@
         <div class="pageProduct-gallery" data-gallery="product">
 
             {% if product.video %}
-                <button class="gallery-video" type="button" data-toggle="closed" data-target="#modals-video" data-button="video" data-url="{{ product.video }}" aria-label="Ver V&iacute;deo">
+                <button class="gallery-video" type="button" data-toggle="closed" data-target="#modals-video" data-button="video" data-url="{{ product.video }}" aria-label="Ver Vídeo">
                     <span class="icon-youtube-simple">
                         <span class="path1"></span>
                         <span class="path2"></span>
@@ -63,7 +63,7 @@
                     <div class="double-bounce-one"></div>
                     <div class="double-bounce-two"></div>
                 </div>
-                <div class="message">Atualizando informa&ccedil;&otilde;es ...</div>
+                <div class="message">Atualizando informações ...</div>
             </div>
             {% set lastProgressiveDiscount = ProgressiveDiscounts | last %}
             {% if discount or product.featured or product.free_shipping or product.new or discount or extra_tag or lastProgressiveDiscount %}
@@ -147,7 +147,7 @@
                         {% if 'class="dados-campo infoLancamento"' in productDetails and
                         settings.show_release_date %}
                             <p class="information-text release-date">
-                                Lan&ccedil;amento: {{ product.release_date | date('d/m/Y') }}
+                                Lançamento: {{ product.release_date | date('d/m/Y') }}
                             </p>
                         {% endif %}
                         {% if product.included_items %}
@@ -171,7 +171,7 @@
                                 </ul>
                             {% if ProgressiveDiscounts|length > 1 %}
                                 <p class="progressiveDiscount-alert">
-                                    <b>Aten��o!</b> Somente o maior desconto ser&aacute; aplicado na finaliza&ccedil;&atilde;o do
+                                    <b>Aten��o!</b> Somente o maior desconto será aplicado na finalização do
                                     pedido.
                                 </p>
                             {% endif %}
@@ -195,7 +195,7 @@
                             <div class="pageProduct-kit">
                                 <div class="serverTray-content">{{ productHelper.kit() }}</div>
                                 <div class="error-kit error-message" style="display: none">
-                                    Por favor, selecione as varia&ccedil;&otilde;es antes de prosseguir.
+                                    Por favor, selecione as variações antes de prosseguir.
                                 </div>
                             </div>
                         {% endif %}
@@ -254,9 +254,9 @@
 
                         {% set pricingWithEncode %}
                             {{ productHelper.pricing()
-                                | replace({ 'botao-nao_indisponivel"' : 'botao-nao_indisponivel" data-unavailable = "Este produto encontra-se indispon&iacute;vel"' })
-                                | replace({ 'botao-sob-consulta\'' : 'botao-sob-consulta\' data-under-request = "Preencha o nosso formul&aacute;rio para consultar a disponibilidade deste produto."'})
-                                | replace({ 'botao_tire_duvidas"' : 'botao_tire_duvidas" data-button-under-request = "Preencher formul&aacute;rio"' })
+                                | replace({ 'botao-nao_indisponivel"' : 'botao-nao_indisponivel" data-unavailable = "Este produto encontra-se indisponível"' })
+                                | replace({ 'botao-sob-consulta\'' : 'botao-sob-consulta\' data-under-request = "Preencha o nosso formulário para consultar a disponibilidade deste produto."'})
+                                | replace({ 'botao_tire_duvidas"' : 'botao_tire_duvidas" data-button-under-request = "Preencher formulário"' })
                             }}
                         {% endset %}
                         {{ pricingWithEncode }}
@@ -303,7 +303,7 @@
 {% if settings.history_position %}
     <section class="pageProduct-lastSeen">
         <h2 class="lastSeen-title">
-            &Uacute;ltimos Vistos
+            Últimos Vistos
         </h2>
 
         <div class="lastSeen-list serverTray-content">
