@@ -4,17 +4,24 @@
     {% set colorVariants = [] %}
 
     {% for variant in productVar %}
-        {% if variant.Sku[0] and variant.Sku[0].type == 'Cor' %}
+        {% set colorSku = null %}
+
+        {% for sku in variant.Sku %}
+            {% if sku.type == 'Cor' %}
+                {% set colorSku = sku %}
+            {% endif %}
+        {% endfor %}
+
+        {% if colorSku %}
             {% set colorVariants = colorVariants|merge([{
                 id: variant.id,
-                color: variant.Sku[0].value,
-                image: variant.Sku[0].image_secure,
+                color: colorSku.value,
+                image: colorSku.image_secure,
                 productImage: variant.images[0].full
             }]) %}
         {% endif %}
     {% endfor %}
 
-    {# Só renderiza se existir variação de cor #}
     {% if colorVariants|length > 0 %}
         <div class="d-variants colors-only">
             {% for variant in colorVariants %}

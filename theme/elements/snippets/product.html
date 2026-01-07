@@ -1,28 +1,73 @@
-    <div class="swiper-slide product-slide">
-        <div class="tags">  
-            {% element 'snippets/product-tags' { 'product': product } %}
-        </div>
-        <div class="info-product">
-                {% element 'snippets/product-variants' { 
+<div class="swiper-slide product-slide">
+    <div class="tags">  
+        {% element 'snippets/product-tags' { 'product': product } %}
+    </div>
+
+    <div class="info-product">
+        {% element 'snippets/product-variants' { 
+            'product': product 
+        } %} 
+
+        <a href="{{ product.link }}" class="info-price">
+            {% if pages.current == 'catalog' %}
+                <h2>{{ product.name }}</h2>
+            {% else %}
+                <h3>{{ product.name }}</h3>
+            {% endif %} 
+
+            <span class="price">
+                {% element 'snippets/product-price' { 
                     'product': product 
                 } %} 
-            <a href="{{ product.link }}" class="info-price">
-                {% if pages.current == 'catalog' %}
-                    <h2>{{ product.name }}</h2>
-                {% else %}
-                    <h3>{{ product.name }}</h3>
-                {% endif %} 
-                <span class="price">
-                    {% element 'snippets/product-price' { 
-                        'product': product 
-                    } %} 
-                </span>
-            </a>
-        </div>
-        <img class="img-hover" src="{{ asset('img/logo-fundo.png') }}" alt="Vozzi">
+            </span>
+        </a>
+    </div>
+
+    <img class="img-hover" src="{{ asset('img/logo-fundo.png') }}" alt="Vozzi">
+
+    <a href="{{ product.link }}" class="link-img">
         <img
             class="img-product"
             src="{{ product.images[0].large }}"
             alt="{{ product.name }}"
         />
-    </div>
+    </a>
+
+    {% if product.available %}
+        {% if product.stock > 0 %}
+            <div class="addcart" id="variants">
+
+                {% if product.has_variation %}
+                    <button 
+                        type="button"
+                        class="addCart js-add-cart-variant"
+                        data-product-id="{{ product.id }}"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                            <path d="M0.75 0.75H4.08333L6.31667 11.9083C6.39287 12.292 6.60159 12.6366 6.90629 12.8819C7.21099 13.1272 7.59225 13.2575 7.98333 13.25H16.0833C16.4744 13.2575 16.8557 13.1272 17.1604 12.8819C17.4651 12.6366 17.6738 12.292 17.75 11.9083L19.0833 4.91667H4.91667M8.25 17.4167C8.25 17.8769 7.8769 18.25 7.41667 18.25C6.95643 18.25 6.58333 17.8769 6.58333 17.4167C6.58333 16.9564 6.95643 16.5833 7.41667 16.5833C7.8769 16.5833 8.25 16.9564 8.25 17.4167ZM17.4167 17.4167C17.4167 17.8769 17.0436 18.25 16.5833 18.25C16.1231 18.25 15.75 17.8769 15.75 17.4167C15.75 16.9564 16.1231 16.5833 16.5833 16.5833C17.0436 16.5833 17.4167 16.9564 17.4167 17.4167Z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Comprar
+                    </button>
+                {% else %}
+                    <button 
+                        type="button"
+                        class="addCart"
+                        onclick="addCart({{ product.id }})"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                            <path d="M0.75 0.75H4.08333L6.31667 11.9083C6.39287 12.292 6.60159 12.6366 6.90629 12.8819C7.21099 13.1272 7.59225 13.2575 7.98333 13.25H16.0833C16.4744 13.2575 16.8557 13.1272 17.1604 12.8819C17.4651 12.6366 17.6738 12.292 17.75 11.9083L19.0833 4.91667H4.91667M8.25 17.4167C8.25 17.8769 7.8769 18.25 7.41667 18.25C6.95643 18.25 6.58333 17.8769 6.58333 17.4167C6.58333 16.9564 6.95643 16.5833 7.41667 16.5833C7.8769 16.5833 8.25 16.9564 8.25 17.4167ZM17.4167 17.4167C17.4167 17.8769 17.0436 18.25 16.5833 18.25C16.1231 18.25 15.75 17.8769 15.75 17.4167C15.75 16.9564 16.1231 16.5833 16.5833 16.5833C17.0436 16.5833 17.4167 16.9564 17.4167 17.4167Z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Comprar
+                    </button>
+                {% endif %}
+
+            </div>
+        {% else %}
+            <span>Produto não Disponível</span>
+        {% endif %}
+    {% else %}
+        <span>Produto não Disponível</span>
+    {% endif %}
+</div>

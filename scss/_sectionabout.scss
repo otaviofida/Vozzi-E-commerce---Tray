@@ -113,4 +113,35 @@
             }
        }
     }
+
+    @media (max-width: 998px) {
+        padding: 3.75rem 0;
+
+        .container{
+            gap: .625rem;
+
+            .up{
+                grid-template-columns: 1fr;
+
+                .video{
+                    height: 16.25rem;
+                }
+
+                .content{
+                    text-align: center;
+                    align-items: center;
+                }
+            }
+
+            .grid{
+                grid-template-columns: 1fr;
+
+                .item{
+                    p{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
 }

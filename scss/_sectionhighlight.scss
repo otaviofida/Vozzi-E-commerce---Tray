@@ -34,6 +34,24 @@
                 min-height: 36.875rem;
                 border-radius: 1.5rem;
 
+                .img-highlight{
+                    position: absolute;
+                    top: 1.5rem;
+                    left: 50%;
+                    transform: translateX(-50%) scale(0.96);
+                    opacity: 0;
+                    pointer-events: none;
+
+                    width: 90%;
+                    height: auto;
+
+                    transition:
+                        opacity .3s ease,
+                        transform .45s cubic-bezier(.4, 0, .2, 1);
+
+                    will-change: transform, opacity;
+                }
+
                 .swipermain {
                     width: 100%;
                     height: 100%;
@@ -49,9 +67,23 @@
                             width: auto;
                             height: auto;
                             object-fit: contain;
+                            transition: all .5s ease-in-out;
+                        }
+
+                        &:hover{
+                            img{
+                                scale: 1.07;
+                            }
                         }
                     }
-                } 
+                }
+
+                &:has(.swiper-slide:hover){
+                    .img-highlight{
+                        opacity: 1;
+                        transform: translateX(-50%) scale(1);
+                    }
+                }
 
                 .thumbs {
                     position: absolute;
@@ -80,6 +112,7 @@
                             width: 100%;
                             height: 100%;
                             object-fit: contain;
+                            transition: opacity 0.2s ease;
                         }
             
                         &.swiper-slide-thumb-active {
@@ -196,6 +229,11 @@
                                     justify-content: center;
                                     position: relative;
 
+                                    &.disabled {
+                                        opacity: .3;
+                                        pointer-events: none;
+                                    }
+
                                     &::before {
                                         content: '';
                                         position: absolute;
@@ -253,6 +291,36 @@
                     }
                 }
 
+            }
+        }
+    }
+
+    @media (max-width: 998px) {
+        .container{
+            gap: .5rem;
+            .up{
+                max-height: none;
+            }
+            
+            .mid-product{
+                display: flex;
+                flex-direction: column;
+                gap: .5rem;
+
+                .content{
+                    .variants{
+                        width: 100%;
+                        .add-to-cart{
+                            width: 100%;
+                        }
+                    }
+                }
+
+                .left{
+                    min-height: 28.625rem;
+                    display: flex;
+                    align-items: center;
+                }
             }
         }
     }

@@ -1,5 +1,5 @@
 {% set banner_desktop = banners.home %}
-{% set banner_mobile = banners.mobile ? banners.mobile : banner_desktop %}
+{% set banner_mobile = banners.mobile %}
 
 {% if utils.is_mobile %}
     {% set banner = banner_mobile %}

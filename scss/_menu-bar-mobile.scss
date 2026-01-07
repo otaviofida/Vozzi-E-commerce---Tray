@@ -1,0 +1,39 @@
+.menu-bar-mobile{
+    background-color: #0A0713;
+    position: fixed;
+    bottom: 0;
+    z-index: 200;
+    padding: 1rem 0;
+    width: 100%;
+    border-top: 1px solid #18102D;
+    
+    .container{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: center;
+        justify-items: center;
+
+        .item{
+            height: 4rem;
+            width: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: .25rem;
+
+            span{
+                font-size: .875rem;
+                font-weight: 400;
+                color: #F3F4F6;
+                text-align: center;
+            }
+        }
+
+        .home{
+            margin: .5rem;
+            background-color: #462E86;
+            border-radius: .5rem;
+        }
+    }
+}

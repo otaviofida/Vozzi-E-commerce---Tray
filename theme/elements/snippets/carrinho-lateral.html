@@ -3,8 +3,20 @@
            <div class="box-prev">
                 <i class="ph ph-x"></i>
            </div>
-           <div class="text">Sacola</div>
+           <div class="text">
+                <span>Sacola</span>
+                <span data-cart="amount" class="amount">0 produtos adicionados</span>
+           </div>
        </div>
+       <div class="free-shipping" data-free-shipping="{{ settings.value_frete_gratis }}">
+            <p class="free-shipping__text">
+                Adicione mais <strong class="free-shipping__remaining">R$ 0,00</strong> e ganhe <strong>Frete Grátis</strong>
+            </p>
+
+            <div class="free-shipping__bar">
+                <span class="free-shipping__bar-fill" style="width:0%"></span>
+            </div>
+        </div>
        <div class="content-cart empty">
            <div class="list">
                <div class="error">

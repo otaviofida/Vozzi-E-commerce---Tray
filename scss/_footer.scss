@@ -62,6 +62,7 @@ footer{
                     font-weight: 700;
                     line-height: 150%;
                     color: var(--c_footer_title);
+                    text-transform: uppercase;
                 }
     
                 ul{
@@ -111,6 +112,31 @@ footer{
                 font-size: .75rem;
                 font-weight: 400;
                 color: var(--c_footer_text); 
+            }
+        }
+    }
+
+    @media (max-width: 998px) {
+        padding: 3.75rem 0;
+        .container{
+            .up{
+                > img{
+                    width: 18.75rem;
+                }
+            }
+
+            .mid{
+                flex-direction: column;
+                gap: 2.5rem;
+
+                .item{
+                    width: 100%;
+                }
+            }
+
+            .bottom{
+                flex-direction: column;
+                gap: .625rem;
             }
         }
     }

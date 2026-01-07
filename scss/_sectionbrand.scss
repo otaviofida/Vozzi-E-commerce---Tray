@@ -80,6 +80,34 @@
             }
         }
     }
+
+    @media (max-width: 998px) {
+        background-attachment: unset;
+        background-position: top;
+        .container{
+            .info{
+                position: relative;
+                top: 0;
+
+                h2, p{
+                    width: 100%;
+                }
+
+                .grid{
+                    grid-template-columns: 1fr;
+                    margin-top: 3.75rem;
+                }
+            }
+        }
+
+        .entry-space{
+            height: 26.25rem;
+        }
+
+        .spacer{
+            height: 7.5rem;
+        }
+    }
 }
 
 

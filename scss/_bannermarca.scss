@@ -51,4 +51,18 @@
             }
         }
     }
+
+    @media (max-width: 998px) {
+        overflow: hidden;
+
+        .container{
+            .swiper-slide{
+                .img{
+                    img{
+                        filter: none;
+                    }
+                }
+            }
+        }
+    }
 }

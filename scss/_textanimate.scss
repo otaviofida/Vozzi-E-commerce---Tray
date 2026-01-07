@@ -49,3 +49,20 @@
     vertical-align: middle;
     margin: 0 .5rem;
 }
+
+
+@media (max-width: 998px) {
+    .s-textanimate{
+        padding: 1.25rem 0;
+    }
+    
+    .text-words{
+        font-size: 2.25rem;
+        width: 100%;
+    }
+
+    .text-words img{
+        width: 3.625rem;
+        height: 2.0625rem;
+    }
+}

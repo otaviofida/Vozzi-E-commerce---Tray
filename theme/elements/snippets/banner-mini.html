@@ -1,18 +1,12 @@
+{% if utils.is_mobile %}
+{% set banner = banners.extra4 %}
+{% else %}
 {% set banner = banners.extra3 %}
-
+{% endif %}
 
 {% if banner %}
 <section class="s-mini-banner">
     <div class="container">
-
-        {% if utils.is_mobile %}
-        {% if banner.slides is defined and banner.slides|length > 1 %}
-        <div class="swiper-wrapper">
-            {% for slide in banner.slides %}
-            {% endfor %}
-        </div>
-        {% endif %}
-        {% else %}
         <div class="grid">
             {% for slide in banner.slides %}
             <a href="{{ slide.link }}" class="item" target="{{ slide.target }}">
@@ -24,10 +18,6 @@
             </a>
             {% endfor %}
         </div>
-        {% endif %}
-
-
-     
     </div>
 </section>
 {% endif %}

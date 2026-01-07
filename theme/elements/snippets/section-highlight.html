@@ -6,59 +6,74 @@
  {% set product = products[0] %}
  {% set discount = product.price_offer > 0 ? (100 - (product.price_offer / product.price) * 100) : false %}
 
+{% if utils.is.is_mobile %}
+{% set banner = asset(settings.section_highlight_image) %}
+{% else %}
+{% set banner = asset(settings.section_highlight_image_mobile) %}
+{% endif %}
+
 <section class="s-section-highlight">
     <div class="container">
         <div class="up">
-            <img src="{{ asset(settings.section_highlight_image) }}" alt="Vozzi - Produto Destaque">
+            <img src="{{ banner }}" alt="Vozzi - Produto Destaque">
         </div>
         <div class="mid-product">
             <div class="left swiper">
+                <img class="img-highlight" src="{{ asset('img/bg-highlight-product.svg') }}" alt="Vozzi">
+            
+                {# ===== SWIPER PRINCIPAL ===== #}
                 <div class="swiper-wrapper swipermain">
-                    <div class="swiper-slide">
+            
+                    {# SLIDE 0 — IMAGEM DINÂMICA DA VARIANTE #}
+                    <div class="swiper-slide is-main-slide">
                         <img
-                        class="img-product"
-                        src="{{ product.images[0].large }}"
-                        alt="{{ product.name }}"
-                        />
-                    </div>
-                    <div class="swiper-slide">
-                        <img
-                        class="img-product"
-                        src="{{ product.images[1].large }}"
-                        alt="{{ product.name }}"
-                        />
-                    </div>
-                    <div class="swiper-slide">
-                        <img
-                        class="img-product"
-                        src="{{ product.images[2].large }}"
-                        alt="{{ product.name }}"
-                        />
-                    </div>
-                </div>
-                <div thumbsSlider="" class="swiper thumbs">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img
-                            class="img-product"
+                            class="img-product js-main-product-image"
                             src="{{ product.images[0].large }}"
                             alt="{{ product.name }}"
-                            />
-                        </div>
-                        <div class="swiper-slide">
+                        />
+                    </div>
+            
+                    {# SLIDES DO PRODUTO PAI (DINÂMICOS) #}
+                    {% for image in product.images %}
+                        {% if not loop.first %}
+                            <div class="swiper-slide">
+                                <img
+                                    class="img-product"
+                                    src="{{ image.large }}"
+                                    alt="{{ product.name }}"
+                                />
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+            
+                </div>
+            
+                {# ===== THUMBS ===== #}
+                <div thumbsSlider class="swiper thumbs">
+                    <div class="swiper-wrapper">
+                
+                        {# THUMB 0 — VARIANTE (SEMPRE ÚNICA) #}
+                        <div class="swiper-slide is-variant-thumb active">
                             <img
-                            class="img-product"
-                            src="{{ product.images[1].large }}"
-                            alt="{{ product.name }}"
+                                class="img-product js-thumb-main"
+                                src="{{ product.images[0].large }}"
+                                alt="{{ product.name }}"
                             />
                         </div>
-                        <div class="swiper-slide">
-                            <img
-                            class="img-product"
-                            src="{{ product.images[2].large }}"
-                            alt="{{ product.name }}"
-                            />
-                        </div>
+                
+                        {# THUMBS DO PRODUTO PAI (SEM DUPLICAR A PRIMEIRA) #}
+                        {% for image in product.images %}
+                            {% if not loop.first %}
+                                <div class="swiper-slide">
+                                    <img
+                                        class="img-product"
+                                        src="{{ image.large }}"
+                                        alt="{{ product.name }}"
+                                    />
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                
                     </div>
                 </div>
             </div>

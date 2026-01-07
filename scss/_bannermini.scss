@@ -31,4 +31,15 @@
             }
         }
     }
+
+    @media (max-width: 998px) {
+        padding: 2.5rem 0;
+        .container{
+            .grid{
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                height: auto;
+            }
+        }
+    }
 }

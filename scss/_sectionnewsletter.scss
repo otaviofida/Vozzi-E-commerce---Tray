@@ -102,6 +102,10 @@
                     padding: 0;
                     margin: 1.25rem 0;
 
+                    span{
+                        display: none;
+                    }
+
                     i{
                         color: #FFF;
                         font-size: 1rem;
@@ -116,6 +120,50 @@
             width: 100%;
             height: auto;
             z-index: 0;
+        }
+    }
+
+    @media (max-width: 998px) {
+        padding: 0;
+
+        .container{
+            .img{
+                display: none;
+            }
+
+            .content{
+                width: 100%;
+                text-align: center;
+
+                form{
+                    flex-direction: column;
+                    margin: 2rem 0;
+                    gap: .5rem;
+
+                    input{
+                        width: 100%;
+                        box-sizing: border-box;
+                        height: 3.5rem;
+                        text-align: left;
+                    }
+
+                    button{
+                        width: 100%;
+                        margin: 0;
+                        height: 3.5rem;
+                        gap: .5rem;
+
+                        span{
+                            display: flex;
+                            color: #fff;
+                            font-size: 1rem;
+                            text-transform: none;
+                            font-weight: 400;
+                            font-family: 'Prompt', sans-serif;
+                        }
+                    }
+                }
+            }
         }
     }
 }

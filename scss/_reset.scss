@@ -793,6 +793,10 @@ body {
   .default-main{
     padding-top: var(--hero-height);
     width: 100%;
+
+    @media (max-width: 998px) {
+        padding-top: 0;
+    }
   }
  
 body{
@@ -815,4 +819,15 @@ body{
     border-radius: 48px 48px 0 0;
     padding-top: 5rem;
     box-shadow: 0px -5px 7px #0000001a;
+
+    @media (max-width: 998px) {
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 998px) {
+    .application{
+        overflow: hidden;
+    }
 }

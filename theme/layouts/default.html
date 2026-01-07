@@ -75,6 +75,9 @@
 
             {% element 'snippets/section-newsletter' %}
             {% element 'footer' %}
+            {% if utils.is_mobile %}
+                {% element 'snippets/menu-bar-mobile' %}
+            {% endif %}
         </div>
         <div>{% element 'snippets/alert-store' %}</div>
 
