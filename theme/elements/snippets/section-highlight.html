@@ -7,9 +7,9 @@
  {% set discount = product.price_offer > 0 ? (100 - (product.price_offer / product.price) * 100) : false %}
 
 {% if utils.is.is_mobile %}
-{% set banner = asset(settings.section_highlight_image) %}
-{% else %}
 {% set banner = asset(settings.section_highlight_image_mobile) %}
+{% else %}
+{% set banner = asset(settings.section_highlight_image) %}
 {% endif %}
 
 <section class="s-section-highlight">
