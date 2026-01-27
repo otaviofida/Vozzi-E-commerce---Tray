@@ -197,10 +197,43 @@
                 font-size: 1rem;
             }
 
+            .line-down{
+                display: flex;
+                width: 100%;
+                align-items: center;
+                justify-content: space-between;
+            }
+
             .qnt {
-                font-size: .75rem;
-                color: #9CA3AF;
-                font-weight: 400;
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+
+                span{
+                    color: #67677A;
+                    font-size: .875rem  ;
+                    font-weight: 400;
+                }
+
+                button{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    width: 2rem;
+                    height: 2rem;
+                    border-radius: 100%;
+                    border: 1px solid #E5E7EB;
+                    
+                    color: #6B7280;
+                    font-size: 1.5rem;
+                    font-weight: 300;
+                }
+
+                button:last-child{
+                    background-color: #E5E7EB;
+                    border-color: #E5E7EB;
+                }
             }
             
         }

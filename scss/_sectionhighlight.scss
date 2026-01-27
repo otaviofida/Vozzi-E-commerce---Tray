@@ -271,11 +271,43 @@
                             display: flex;
                             align-items: center;
                             gap: .625rem;
+                            position: relative;
 
                             span{
                                 color: #67677A;
                                 font-size: .875rem;
                                 font-weight: 400;
+                            }
+
+                            select{
+                                appearance: none;
+                                -webkit-appearance: none;
+                                -moz-appearance: none;
+                                background-color: transparent;
+                                border: 1px solid #DBDBDB;
+                                border-radius: 1rem;
+                                width: 100%;
+                                padding: .5rem 1rem;
+                            }
+
+                            &:has(.option-select){
+                                &::after{
+                                --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M0.800049 0.799805L4.80005 4.7998L8.80005 0.799805' stroke='%2367677A' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+                                content: '';
+                                position: absolute;
+                                top: 50%;
+                                right: 14px; // 👈 diminui p/ ir mais pra esquerda (ex: 10px)
+                                transform: translateY(-50%);
+                                width: 10px;
+                                height: 6px;
+
+                                pointer-events: none;
+
+                                background-image: var(--select-arrow);
+                                background-repeat: no-repeat;
+                                background-size: 10px 6px;
+                            }
                             }
                         }
                     }
@@ -288,6 +320,50 @@
                         color: #fff;
                         font-size: 1rem;
                         font-weight: 400;
+                    }
+                }
+
+                .add-cart{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    
+                    .qtd-prod{
+                        display: flex;
+                        gap: .5rem;
+
+                        button{
+                            width: 2.5rem;
+                            height: 2.5rem;
+                            border-radius: 100%;
+
+                            border: 1px solid #E5E7EB;
+
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            font-size: 1.5rem;
+                            color: #6B7280;
+                            font-size: 300;
+                        }
+
+                        button:last-child{
+                            background-color: #E5E7EB;
+                            border-color: #E5E7EB;
+                        }
+
+                        input{
+                            width: 20px;
+                            text-align: center;
+                            color: #67677A;
+                            font-size: 1rem;
+                            font-weight: 400;
+
+                            &::placeholder{
+                                text-align: center;
+                            }
+                        }
                     }
                 }
 
