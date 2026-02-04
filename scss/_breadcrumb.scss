@@ -1,0 +1,28 @@
+.breadcrumb{
+    flex-wrap: wrap;
+    margin: 0;
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .625rem;
+
+    .breadcrumb-item{
+        font-size: .875rem;
+        color: #9CA3AF;
+        font-weight: 400 !important;
+
+        &:last-child{
+            color: #6B7280;
+        }
+
+        a{
+            font-weight: 400 !important;
+        }
+
+        &:not(:first-child)::before{
+            content: "|" !important;
+        }
+    }
+}

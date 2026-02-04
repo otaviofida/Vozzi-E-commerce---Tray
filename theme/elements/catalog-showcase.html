@@ -1,7 +1,7 @@
-<div class="catalog-showcase">
-    <ul class="showcase-listProduct">
+<div class="showcase-catalog">
+    <ul>
         {% for item in products %}
-            <li class="catalog-list listProduct-item">
+            <li>
                 {% element 'snippets/product' { 'product' : item } %}
             </li>
         {% endfor %}

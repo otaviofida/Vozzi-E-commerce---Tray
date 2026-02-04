@@ -994,3 +994,48 @@
 
   });
 }
+
+{
+  // ativar e destivar o filter da pagina catalog
+
+  {
+  document.addEventListener('DOMContentLoaded', function () {
+
+    const overlay = document.querySelector('.overlayShadow');
+    const filterBox = document.querySelector('.filter-catalog');
+
+    if (!overlay || !filterBox) return;
+
+    function openFilters() {
+      overlay.classList.add('active');
+      filterBox.classList.add('active');
+    }
+
+    function closeFilters() {
+      overlay.classList.remove('active');
+      filterBox.classList.remove('active');
+    }
+
+    // abrir
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn-filter');
+      if (!btn) return;
+
+      e.preventDefault();
+      openFilters();
+    });
+
+    // fechar clicando no overlay
+    overlay.addEventListener('click', closeFilters);
+
+    // impedir fechar ao clicar dentro
+    filterBox.addEventListener('click', e => e.stopPropagation());
+
+    // fechar com ESC
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeFilters();
+    });
+
+  });
+}
+}

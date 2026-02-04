@@ -1,0 +1,104 @@
+.products-catalog{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem 0 7.5rem 0;
+
+    .header-catalog{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .5rem;
+
+        h1{
+            color: #374151;
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        span{
+            color: #6B7280;
+            font-size: 1rem;
+            font-weight: 400;
+            margin-right: auto;
+        }
+
+        .filters{
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+
+            .btn-filter{
+                padding: .5rem 1.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: .5rem;
+                border-radius: 9999px;
+                border: 1px solid #D1D5DB;
+                height: 3.5rem;
+
+                font-size: .875rem;
+                font-weight: 400;
+                color: #111827;
+
+                width: fit-content;
+            }
+
+            .orderby{
+                padding: .5rem 1.5rem;
+                border-radius: 9999px;
+                border: 1px solid #D1D5DB;
+                height: 3.5rem;
+                font-size: .875rem;
+                font-weight: 400;
+                color: #6B7280;
+                
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                select{
+                    background: none;
+                    border: none;
+                    color: #111827;
+                }
+            }
+        }
+    }
+
+    .description-catalog{
+        padding: 1.5rem;
+        border: 1px solid #9CA3AF;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        border-radius: 1rem;
+        margin-top: 2rem;
+
+        p{
+            font-size: .875rem;
+            font-weight: 400;
+            line-height: 150%;
+            color: #6B7280;
+        }
+        
+        h2{
+            color: #374151;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        span{
+            color: #111827;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .header-catalog{
+            flex-wrap: wrap;
+        }
+    }
+}

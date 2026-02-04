@@ -13,7 +13,13 @@
     'brands' : 'brand' 
 } %}
 
-<form class="filter" name="form-filter" method="get">
+<div class="filter-header">
+    <span>Filtrar</span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
+        <path d="M10.5 2.5V4.5625C10.0698 4.67265 9.68847 4.92285 9.41616 5.27365C9.14386 5.62446 8.99606 6.05591 8.99606 6.5C8.99606 6.94409 9.14386 7.37554 9.41616 7.72635C9.68847 8.07715 10.0698 8.32735 10.5 8.4375V13.5C10.5 13.6326 10.5527 13.7598 10.6464 13.8536C10.7402 13.9473 10.8674 14 11 14C11.1326 14 11.2598 13.9473 11.3535 13.8536C11.4473 13.7598 11.5 13.6326 11.5 13.5V8.4375C11.9302 8.32735 12.3115 8.07715 12.5838 7.72635C12.8561 7.37554 13.0039 6.94409 13.0039 6.5C13.0039 6.05591 12.8561 5.62446 12.5838 5.27365C12.3115 4.92285 11.9302 4.67265 11.5 4.5625V2.5C11.5 2.36739 11.4473 2.24021 11.3535 2.14645C11.2598 2.05268 11.1326 2 11 2C10.8674 2 10.7402 2.05268 10.6464 2.14645C10.5527 2.24021 10.5 2.36739 10.5 2.5ZM12 6.5C12 6.69778 11.9413 6.89112 11.8315 7.05557C11.7216 7.22002 11.5654 7.34819 11.3827 7.42388C11.1999 7.49957 10.9989 7.51937 10.8049 7.48079C10.6109 7.4422 10.4327 7.34696 10.2929 7.20711C10.153 7.06725 10.0578 6.88907 10.0192 6.69509C9.98061 6.50111 10.0004 6.30004 10.0761 6.11732C10.1518 5.93459 10.28 5.77841 10.4444 5.66853C10.6089 5.55865 10.8022 5.5 11 5.5C11.2652 5.5 11.5196 5.60536 11.7071 5.79289C11.8946 5.98043 12 6.23478 12 6.5ZM5.49998 13.5V12.4375C5.93019 12.3273 6.3115 12.0771 6.5838 11.7263C6.8561 11.3755 7.00391 10.9441 7.00391 10.5C7.00391 10.0559 6.8561 9.62446 6.5838 9.27365C6.3115 8.92285 5.93019 8.67265 5.49998 8.5625V2.5C5.49998 2.36739 5.44731 2.24021 5.35354 2.14645C5.25977 2.05268 5.13259 2 4.99998 2C4.86738 2 4.7402 2.05268 4.64643 2.14645C4.55266 2.24021 4.49998 2.36739 4.49998 2.5V8.5625C4.06978 8.67265 3.68847 8.92285 3.41617 9.27365C3.14386 9.62446 2.99606 10.0559 2.99606 10.5C2.99606 10.9441 3.14386 11.3755 3.41617 11.7263C3.68847 12.0771 4.06978 12.3273 4.49998 12.4375V13.5C4.49998 13.6326 4.55266 13.7598 4.64643 13.8536C4.7402 13.9473 4.86738 14 4.99998 14C5.13259 14 5.25977 13.9473 5.35354 13.8536C5.44731 13.7598 5.49998 13.6326 5.49998 13.5ZM3.99998 10.5C3.99998 10.3022 4.05863 10.1089 4.16852 9.94443C4.2784 9.77998 4.43458 9.65181 4.6173 9.57612C4.80003 9.50043 5.00109 9.48063 5.19508 9.51921C5.38906 9.5578 5.56724 9.65304 5.70709 9.79289C5.84694 9.93275 5.94218 10.1109 5.98077 10.3049C6.01936 10.4989 5.99955 10.7 5.92386 10.8827C5.84818 11.0654 5.72 11.2216 5.55556 11.3315C5.39111 11.4414 5.19777 11.5 4.99998 11.5C4.73477 11.5 4.48041 11.3946 4.29288 11.2071C4.10534 11.0196 3.99998 10.7652 3.99998 10.5Z" fill="#111827"/>
+    </svg>
+</div>
+<form name="form-filter" method="get">
     <input type="hidden" name="loja" value="{{ store.id }}" />
 
     {% if search.word %}
@@ -23,13 +29,13 @@
         <input type="hidden" name="categoria" value="{{ category.id }}" />
     {% endif %}
 
-    <div class="filter-content">
+    <div class="content-filter">
         {% for filter_type, filter_data in filters_available %} 
 
             {% if filter_type == 'prices' %}
-                <section class="filter-section filter-section-{{ filter_type }}">
-                    <h4 class="filter-title">{{ filter_titles[filter_type] }}</h4>
-                    <ul class="filter-list" 
+                <section class="section-filter filter-section-{{ filter_type }}">
+                    <h4 class="title-filter">{{ filter_titles[filter_type] }}</h4>
+                    <ul class="list-filter" 
                         {% if settings.show_filter_type_closed %} 
                             style="display: none" 
                         {% endif %}
@@ -39,11 +45,11 @@
                             {% set value = price.from ~ ',' ~ price.to %} 
                             {% set id = 'price-' ~ price.from ~ '-' ~ price.to %}
 
-                            <li class="filter-item">
-                                <div class="filter-checkbox">
+                            <li class="item-filter">
+                                <div class="checkbox-filter">
                                     <input
                                         type="checkbox"
-                                        class="filter-input"
+                                        class="input-filter"
                                         id="{{ id | lower }}"
                                         name="prices[]"
                                         value="{{ value }}"
@@ -51,8 +57,8 @@
                                             checked
                                         {%- endif %}
                                     />
-                                    <label class="filter-label" for="{{ id | lower }}">
-                                        <span class="filter-name">
+                                    <label class="label-filter" for="{{ id | lower }}">
+                                        <span class="name-filter">
                                             {% if loop.first %} 
                                                 Até {{ settings.currency }} {{ price.to | currency }} 
                                             {% elseif loop.last %} 
@@ -73,9 +79,9 @@
         
                 {% for property in filter_data.values %}
 
-                    <section class="filter-section filter-section-properties" data-filter-type="{{ property.key | lower }}">
-                        <h4 class="filter-title">{{ property.key }}</h4>
-                        <ul class="filter-list" 
+                    <section class="section-filter filter-section-properties" data-filter-type="{{ property.key | lower }}">
+                        <h4 class="title-filter">{{ property.key }}</h4>
+                        <ul class="list-filter" 
                             {% if settings.show_filter_type_closed %} 
                                 style="display: none" 
                             {% endif %}>
@@ -86,11 +92,11 @@
                                 {% set label_for = 'property-' ~ property.key ~ '||' ~ item.key %} 
                                 {% set value = property.key ~ '||' ~ item.key %} 
                                 {% set value_encoded = property.key_encoded ~ '||' ~ item.key_encoded %}
-                                <li class="filter-item">
-                                    <div class="filter-checkbox">
+                                <li class="item-filter">
+                                    <div class="checkbox-filter">
                                         <input
                                             type="checkbox"
-                                            class="filter-input"
+                                            class="input-filter"
                                             id="{{ label_for | lower }}"
                                             name="{{ item.entity }}[]"
                                             value="{{ value_encoded }}"
@@ -98,7 +104,7 @@
                                                 checked
                                             {%- endif %}
                                         />
-                                        <label class="filter-label" for="{{ label_for | lower }}">
+                                        <label class="label-filter" for="{{ label_for | lower }}">
                                             {{ item.key }} ({{ item.doc_count }})
                                         </label>
                                     </div>
@@ -111,20 +117,20 @@
                 {% endfor %} 
 
             {% else %}
-                <section class="filter-section filter-section-{{ filter_type }}">
-                    <h4 class="filter-title">{{ filter_titles[filter_type] }}</h4>
-                    <ul class="filter-list" 
+                <section class="section-filter filter-section-{{ filter_type }}">
+                    <h4 class="title-filter">{{ filter_titles[filter_type] }}</h4>
+                    <ul class="list-filter" 
                         {% if settings.show_filter_type_closed %} 
                             style="display: none" 
                         {% endif %}
                     >
                         {% for item in filter_data %}
                         
-                            <li class="filter-item">
-                                <div class="filter-checkbox">
+                            <li class="item-filter">
+                                <div class="checkbox-filter">
                                     <input
                                         type="checkbox"
-                                        class="filter-input"
+                                        class="input-filter"
                                         id="{{ filter_type ~ '-' ~ item.key | lower }}"
                                         name="{{ filter_type }}[]"
                                         value="{{ item.key_encoded }}"
@@ -132,9 +138,9 @@
                                             checked
                                         {% endif %}
                                     />
-                                    <label class="filter-label" for="{{ filter_type ~ '-' ~  item.key | lower }}">
-                                        <span class="filter-name">{{ item.key }}</span>
-                                        <span class="filter-count">({{ item.doc_count }})</span>
+                                    <label class="label-filter" for="{{ filter_type ~ '-' ~  item.key | lower }}">
+                                        <span class="name-filter">{{ item.key }}</span>
+                                        <span class="count-filter">({{ item.doc_count }})</span>
                                     </label>
                                 </div>
                             </li>
@@ -148,5 +154,5 @@
         {% endfor %}
     </div>
 
-    <button type="submit" class="filter-button button2">Filtrar produtos</button>
+    <button type="submit" class="button-filter">Filtrar</button>
 </form>

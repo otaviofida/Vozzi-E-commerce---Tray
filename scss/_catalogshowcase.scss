@@ -1,0 +1,13 @@
+.showcase-catalog{
+   ul{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+   }
+
+   @media (max-width: 768px) {
+      ul{
+         grid-template-columns: 1fr;
+      }
+   }
+}
