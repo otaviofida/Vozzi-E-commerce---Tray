@@ -15,7 +15,7 @@
    */
 
 body {
-    margin: 0;
+    margin: 0; 
 }
 
 /**
@@ -829,5 +829,25 @@ body{
 @media (max-width: 998px) {
     .application{
         overflow: hidden;
+    }
+}
+
+
+.overlayShadow{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    opacity: 0;
+    visibility: visible;
+    background-color: #0000006f;
+    transition: ease-out 0.3s;
+
+    &.active{
+        opacity: 1;
+        visibility: visible;
+        z-index: 888;
     }
 }
