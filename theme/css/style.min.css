@@ -3425,6 +3425,7 @@ div.Seguro {
   right: 0;
   background: #a51111;
   text-align: center;
+  z-index: 10000;
 }
 
 
@@ -3466,6 +3467,7 @@ div.Seguro {
   right: 0;
   background: #dd2e2e;
   text-align: center;
+  z-index: 10000;
 }
 .box-alerts:empty {
   display: none;
