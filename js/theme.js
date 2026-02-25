@@ -994,3 +994,255 @@
 
   });
 }
+
+{
+  document.addEventListener("DOMContentLoaded", () => {
+  const ul = document.querySelector("#opcoes0.lista_radios");
+  if (!ul) return;
+
+  const radios = Array.from(ul.querySelectorAll('input[type="radio"][name]'));
+  if (!radios.length) return;
+
+  // Evita rodar 2x
+  if (ul.dataset.selectBuilt === "1") return;
+  ul.dataset.selectBuilt = "1";
+
+  const name = radios[0].name;
+
+  // Cria select
+  const select = document.createElement("select");
+  select.className = "js-variant-select";
+  select.setAttribute("aria-label", "Selecionar variação");
+
+  // Monta options
+  radios.forEach((radio) => {
+    const label = radio.closest("label");
+    const text =
+      (label?.querySelector("span")?.textContent || radio.value || "").trim();
+
+    const opt = document.createElement("option");
+    opt.value = radio.value; // mantém o value do radio
+    opt.textContent = text;
+
+    if (radio.checked) opt.selected = true;
+    select.appendChild(opt);
+  });
+
+  // Quando mudar o select -> marca o radio correspondente e dispara change
+  select.addEventListener("change", () => {
+    const target = ul.querySelector(
+      `input[type="radio"][name="${CSS.escape(name)}"][value="${CSS.escape(select.value)}"]`
+    );
+    if (target) {
+      target.checked = true;
+      target.dispatchEvent(new Event("change", { bubbles: true }));
+      target.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+  });
+
+  // Se o radio mudar por outro motivo -> atualiza o select
+  ul.addEventListener("change", (e) => {
+    const t = e.target;
+    if (t && t.matches(`input[type="radio"][name="${CSS.escape(name)}"]`)) {
+      select.value = t.value;
+    }
+  });
+
+  // Insere antes da UL e esconde a UL
+  ul.parentElement.insertBefore(select, ul);
+  ul.style.display = "none";
+});
+
+}
+
+{
+  (function ($) {
+  if (!window.theme || !$('html').hasClass('page-product')) return;
+
+  // =========================
+  // HELPERS
+  // =========================
+  function fadeSwap(img, url) {
+    if (!img || !url) return;
+
+    img.style.transition = 'opacity .12s ease';
+    img.style.opacity = '0';
+
+    setTimeout(function () {
+      // PDP usa lazy (data-src). Atualiza ambos:
+      img.setAttribute('src', url);
+      img.setAttribute('data-src', url);
+
+      // evita depender do lazy depois da troca
+      img.classList.remove('swiper-lazy');
+      img.classList.remove('lazyload');
+
+      img.style.opacity = '1';
+    }, 120);
+  }
+
+  function pickThumb90(item) {
+    // item vem do /web_api/variants/{id} => VariantImage
+    // geralmente tem thumbs[90].https
+    if (item && item.thumbs && item.thumbs[90] && item.thumbs[90].https) return item.thumbs[90].https;
+    if (item && item.thumbs) {
+      // fallback: pega qualquer thumb
+      var keys = Object.keys(item.thumbs);
+      for (var i = 0; i < keys.length; i++) {
+        var k = keys[i];
+        if (item.thumbs[k] && item.thumbs[k].https) return item.thumbs[k].https;
+      }
+    }
+    return item && item.https ? item.https : '';
+  }
+
+  // =========================
+  // 1) OVERRIDE: init da galeria usando seu HTML real
+  // =========================
+  theme.gallerySlidesOnProductPage = function () {
+    var targetGallery = '.js-gallery-main';
+    var targetThumbs  = '.js-gallery-thumbs';
+
+    // destroi se existir (agora com params seguros)
+    try {
+      if (theme.settings.productThumbs && typeof theme.settings.productThumbs.destroy === 'function') {
+        theme.settings.productThumbs.destroy(true, true);
+      }
+    } catch(e) {}
+
+    try {
+      if (theme.settings.productGallery && typeof theme.settings.productGallery.destroy === 'function') {
+        theme.settings.productGallery.destroy(true, true);
+      }
+    } catch(e) {}
+
+    theme.settings.productThumbs = new Swiper(targetThumbs, {
+      spaceBetween: 10,
+      lazy: { loadPrevNext: true },
+      breakpoints: {
+        0:   { slidesPerView: 2 },
+        350: { slidesPerView: 3 },
+        768: { slidesPerView: 4 },
+        1280:{ slidesPerView: 5 },
+      },
+      freeMode: true,
+      watchSlidesProgress: true,
+    });
+
+    theme.settings.productGallery = new Swiper(targetGallery, {
+      spaceBetween: 10,
+      lazy: { loadPrevNext: true },
+      navigation: {
+        prevEl: '.js-gallery-thumbs-prev',
+        nextEl: '.js-gallery-thumbs-next',
+      },
+      thumbs: {
+        swiper: theme.settings.productThumbs,
+      },
+    });
+  };
+
+  // =========================
+  // 2) NOVO: só troca as imagens (sem recriar slides)
+  // =========================
+  theme.swapGalleryImages = function (variantImages) {
+    var mainWrapper   = document.querySelector('.js-gallery-main .swiper-wrapper');
+    var thumbsWrapper = document.querySelector('.js-gallery-thumbs .swiper-wrapper');
+    if (!mainWrapper || !thumbsWrapper) return;
+
+    var mainImgs   = Array.from(mainWrapper.querySelectorAll('img'));
+    var thumbsImgs = Array.from(thumbsWrapper.querySelectorAll('img'));
+
+    if (!Array.isArray(variantImages) || !variantImages.length) return;
+
+    // troca até o limite existente (não recria slide)
+    var max = Math.min(mainImgs.length, variantImages.length);
+
+    for (var i = 0; i < max; i++) {
+      var full = variantImages[i].https || '';
+      var th90 = pickThumb90(variantImages[i]) || full;
+
+      if (full) fadeSwap(mainImgs[i], full);
+      if (th90) fadeSwap(thumbsImgs[i], th90);
+    }
+
+    // se veio menos imagens na variação, mantém o restante como está (não apaga)
+    // update + volta pro início
+    if (theme.settings.productThumbs && typeof theme.settings.productThumbs.update === 'function') {
+      theme.settings.productThumbs.update();
+      theme.settings.productThumbs.slideTo(0, 0);
+    }
+    if (theme.settings.productGallery && typeof theme.settings.productGallery.update === 'function') {
+      theme.settings.productGallery.update();
+      theme.settings.productGallery.slideTo(0, 0);
+    }
+  };
+
+  // =========================
+  // 3) OVERRIDE: carrega imagens da variação e chama swapGalleryImages
+  // =========================
+  theme.loadProductVariantImage = function (id) {
+    $.ajax({
+      url: '/web_api/variants/' + id,
+      method: 'get',
+      success: function (response) {
+        var newVariationImages =
+          response &&
+          response.Variant &&
+          response.Variant.VariantImage
+            ? response.Variant.VariantImage
+            : [];
+
+        if (newVariationImages.length) {
+          theme.swapGalleryImages(newVariationImages);
+        }
+      },
+      error: function (request, status, error) {
+        console.log('[Theme] Erro ao buscar imagens da variação:', error);
+      },
+    });
+  };
+
+  // =========================
+  // 4) OVERRIDE: listeners de variação (remove antigos e aplica novos)
+  // =========================
+  theme.initProductVariationImageChange = function () {
+    var productVariationBox = $('.pageProduct-variants');
+
+    // remove handlers antigos do tema (evita duplicar)
+    productVariationBox.off('click', '.lista_cor_variacao li[data-id]');
+    productVariationBox.off('click', '.lista-radios-input');
+    productVariationBox.off('change', 'select');
+
+    // cor (li[data-id])
+    productVariationBox.on('click', '.lista_cor_variacao li[data-id]', function () {
+      var id = $(this).data('id');
+      if (id) theme.loadProductVariantImage(id);
+    });
+
+    // radios
+    productVariationBox.on('click', '.lista-radios-input', function () {
+      var v = $(this).find('input').val();
+      if (v) theme.loadProductVariantImage(v);
+    });
+
+    // selects
+    productVariationBox.on('change', 'select', function () {
+      var v = $(this).val();
+      if (v) theme.loadProductVariantImage(v);
+    });
+  };
+
+  // =========================
+  // 5) REAPLICA NA PDP
+  // =========================
+  // reinicia swipers com seus seletores
+  theme.gallerySlidesOnProductPage();
+
+  // reaplica listeners de variação (sem recriar galeria)
+  theme.initProductVariationImageChange();
+
+})(jQuery);
+
+}
+
