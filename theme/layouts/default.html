@@ -114,7 +114,7 @@
                     {% endif %}
                     <div class="swiper-slide cart-related-item" data-product-id="{{ item.id }}"{% if item.has_variation %} data-has-variation="1"{% endif %}>
                         <a href="{{ item.link }}" class="cart-related-img">
-                            <img data-src="{{ item.images[0].medium }}" alt="{{ item.name }}">
+                            <img src="{{ item.images[0].medium }}" alt="{{ item.name }}" width="300" height="300" loading="lazy">
                         </a>
                         <div class="cart-related-info">
                             <a href="{{ item.link }}" class="cart-related-name">{{ item.name }}</a>

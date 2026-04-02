@@ -24,13 +24,16 @@
             </a>
         </div>
     
-        <img class="img-hover" src="{{ asset('img/logo-fundo.png') }}" alt="" role="presentation" loading="lazy">
+        <img class="img-hover" src="{{ asset('img/logo-fundo.png') }}" alt="" role="presentation" loading="lazy" width="200" height="200">
     
         <a href="{{ product.link }}" class="link-img">
             <img
                 class="img-product"
                 src="{{ product.images[0].large }}"
                 alt="{{ product.name }}"
+                width="400"
+                height="400"
+                decoding="async"
             />
         </a>
     
