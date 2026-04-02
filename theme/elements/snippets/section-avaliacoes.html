@@ -1,0 +1,215 @@
+<section class="s-avaliar">
+    <div class="topo">
+        <h2>Avaliações do produto</h2>
+        <div class="seta-nav">
+          <button class=" btn-nav btn-prev">
+            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+              <path d="M7 13L1 7L7 1" stroke="#9F9F9F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="swiper-pagination"></div>
+          <button class="btn-nav btn-next">
+            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+              <path d="M1 13L7 7L1 1" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+    </div>
+    <div class="avaliacoes">
+        <div class="swiper-wrapper">
+
+        </div>
+    </div>
+    <div class="cont-btn">
+        <button class="btn-avali">Avaliar produto</button>
+        <a class="fazer-lg" data-logged-user="false" href="https://vozzi.commercesuite.com.br/loja/login_layout.php?loja=1451105&amp;origem=comentario_produto&amp;IdProd=3">Faça seu login e comente.</a>
+    </div>
+
+
+    <div class="cont-vazio">
+        <h2>Deixe seu comentário e sua avaliação</h2>
+        <a class="fazer-lg" data-logged-user="false" href="https://vozzi.commercesuite.com.br/loja/login_layout.php?loja=1451105&amp;origem=comentario_produto&amp;IdProd=3">Faça seu login e comente.</a>
+        <button class="btn-avali">Avaliar produto</button>
+    </div>
+</section>
+
+<div class="modal-comentario">
+    <div class="cont-modal">
+
+    </div>
+</div>
+
+<script>
+    function initAvaliacoesProduto() {
+  const timer = setInterval(function () {
+    const reviews = document.querySelectorAll(".hreview-comentarios");
+    const swiperWrapper = document.querySelector(".s-avaliar .swiper-wrapper");
+    const swiperContainer = document.querySelector(".avaliacoes");
+
+    if (!reviews.length || !swiperWrapper || !swiperContainer) return;
+
+    swiperWrapper.innerHTML = "";
+
+    reviews.forEach(function (review) {
+      const nomeEl = review.querySelector(".reviewer h3");
+      const rankingEl = review.querySelector(".ranking");
+      const descEl = review.querySelector(".description");
+
+      const nome = nomeEl ? nomeEl.innerText.trim() : "Cliente";
+      const ranking = rankingEl ? rankingEl.innerHTML : "";
+      const descricao = descEl ? descEl.innerText.trim() : "";
+
+      const slide = document.createElement("div");
+      slide.className = "swiper-slide";
+
+      slide.innerHTML = `
+        <div class="card-slide">
+          <div class="info">
+            <h3>${nome}</h3>
+            <div class="ranking">${ranking}</div>
+          </div>
+          <p class="description">${descricao}</p>
+        </div>
+      `;
+
+      swiperWrapper.appendChild(slide);
+    });
+
+    reviews.forEach(function (r) {
+      r.style.display = "none";
+    });
+
+    new Swiper(".avaliacoes", {
+      slidesPerView: 3,
+      spaceBetween: 16,
+
+      autoplay: {
+        delay: 3500,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: ".s-avaliar .seta-nav .btn-next",
+        prevEl: ".s-avaliar .seta-nav .btn-prev",
+      },
+      pagination: {
+        el: ".s-avaliar .swiper-pagination",
+        clickable: true,
+      },
+      speed: 1300,
+      breakpoints: {
+        260: { slidesPerView: 1, spaceBetween: 8 },
+        320: { slidesPerView: 1, spaceBetween: 8 },
+        560: { slidesPerView: 1.5, spaceBetween: 8 },
+        991: { slidesPerView: 1.5, spaceBetween: 16 },
+        1100: { slidesPerView: 2, spaceBetween: 16 },
+        1200: { slidesPerView: 3, spaceBetween: 16 },
+        1500: { slidesPerView: 3, spaceBetween: 16 },
+      },
+    });
+
+    clearInterval(timer);
+  }, 500);
+}
+
+document.addEventListener("DOMContentLoaded", initAvaliacoesProduto);
+
+function initModalAvaliacaoProdutoTray() {
+  var timer = setInterval(function () {
+    var btn = document.querySelector(".btn-avali");
+    var modal = document.querySelector(".modal-comentario");
+    var contModal = document.querySelector(".modal-comentario .cont-modal");
+    var comentario = document.querySelector("#comentario_cliente");
+
+    if (!btn || !modal || !contModal || !comentario) return;
+
+    // move o formulário para dentro do modal (apenas uma vez)
+    if (!contModal.querySelector("#comentario_cliente")) {
+      contModal.appendChild(comentario);
+    }
+
+    // abrir modal
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      modal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    });
+
+    // fechar ao clicar fora
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal) {
+        modal.style.display = "none";
+        document.body.style.overflow = "";
+      }
+    });
+
+    clearInterval(timer);
+  }, 500);
+}
+
+// chamada padrão Tray
+document.addEventListener("DOMContentLoaded", function () {
+  initModalAvaliacaoProdutoTray();
+});
+
+function controlarAvaliacoesProdutoTray() {
+  var timer = setInterval(function () {
+    var reviews = document.querySelectorAll(".hreview-comentarios");
+
+    var section = document.querySelector(".s-avaliar");
+    var topo = section ? section.querySelector(".topo") : null;
+    var avaliacoes = section ? section.querySelector(".avaliacoes") : null;
+    var contBtn = section ? section.querySelector(".cont-btn") : null;
+    var contVazio = section ? section.querySelector(".cont-vazio") : null;
+
+    if (!section || !topo || !avaliacoes || !contBtn || !contVazio) return;
+
+    // verifica login pela Tray
+    var loginEl = section.querySelector("[data-logged-user]");
+    var isLogged = loginEl && loginEl.getAttribute("data-logged-user") === "true";
+
+    var btnAvaliarContBtn = contBtn.querySelector(".btn-avali");
+    var loginContBtn = contBtn.querySelector(".fazer-lg");
+
+    var btnAvaliarVazio = contVazio.querySelector(".btn-avali");
+    var loginVazio = contVazio.querySelector(".fazer-lg");
+
+    if (reviews.length > 0) {
+      // TEM avaliações
+      topo.style.display = "flex";
+      avaliacoes.style.display = "block";
+      contBtn.style.display = "flex";
+      contVazio.style.display = "none";
+
+      if (isLogged) {
+        if (btnAvaliarContBtn) btnAvaliarContBtn.style.display = "inline-block";
+        if (loginContBtn) loginContBtn.style.display = "none";
+      } else {
+        if (btnAvaliarContBtn) btnAvaliarContBtn.style.display = "none";
+        if (loginContBtn) loginContBtn.style.display = "inline-block";
+      }
+
+    } else {
+      // NÃO tem avaliações
+      topo.style.display = "none";
+      avaliacoes.style.display = "none";
+      contBtn.style.display = "none";
+      contVazio.style.display = "flex";
+
+      if (isLogged) {
+        if (btnAvaliarVazio) btnAvaliarVazio.style.display = "inline-block";
+        if (loginVazio) loginVazio.style.display = "none";
+      } else {
+        if (btnAvaliarVazio) btnAvaliarVazio.style.display = "none";
+        if (loginVazio) loginVazio.style.display = "inline-block";
+      }
+    }
+
+    clearInterval(timer);
+  }, 500);
+}
+
+// chamada padrão Tray
+document.addEventListener("DOMContentLoaded", function () {
+  controlarAvaliacoesProdutoTray();
+});
+</script>

@@ -1,87 +1,113 @@
-header{
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    padding: 1.125rem 0;
-    z-index: 200;
-    background: linear-gradient(180deg, rgba(34, 34, 34, 0.40) 0%, rgba(34, 34, 34, 0.00) 100%);
-    backdrop-filter: blur(9.800000190734863px);
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 1.125rem 0;
+  z-index: 200;
+  background: linear-gradient(
+    180deg,
+    rgba(34, 34, 34, 0.4) 0%,
+    rgba(34, 34, 34, 0) 100%
+  );
+  backdrop-filter: blur(9.800000190734863px);
 
-    .container{ 
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-        .nav{
-            display: flex;
-            gap: 1.5rem;
-            width: 20%;
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+      width: 20%;
 
-            a{
-                color: var(--c_header_text_main);
-                transition: all .5s ease-in-out;
+      a {
+        color: var(--c_header_text_main);
+        transition: all 0.5s ease-in-out;
 
-                &:hover{
-                    opacity: .5;
-                }
-            }
+        &:hover {
+          opacity: 0.5;
         }
-
-        .logo-image{
-            width: 60%;
-            display: flex;
-            justify-content: center;
-            height: 1.375rem;
-
-            img{
-                width: auto;
-                height: 100%;
-                object-fit: contain;
-                object-position: center;
-                transition: opacity 0.25s ease;
-
-                &.is-fading {
-                    opacity: 0;
-                }
-            }
-        }
-
-        .nav-icons{
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: var(--c_header_icon);
-            width: 20%;
-            justify-content: flex-end;
-
-            i{
-                cursor: pointer;
-                transition: all .5s ease-in-out;
-
-                &:hover{
-                    opacity: .5;
-                }
-            }
-
-            .cart-icon-wrapper{
-                position: relative;
-
-                span{
-                    position: absolute;
-                    top: -5px;
-                    right: -5px;
-                    font-size: .625rem;
-                    background: #fff;
-                    color: #000;
-                    width: 12px;
-                    height: 12px;
-                    border-radius: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-            }
-        }
+      }
     }
+
+    .logo-image {
+      width: 60%;
+      display: flex;
+      justify-content: center;
+      height: 1.375rem;
+
+      img {
+        width: auto;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        transition: opacity 0.25s ease;
+
+        &.is-fading {
+          opacity: 0;
+        }
+      }
+    }
+
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--c_header_icon);
+      width: 20%;
+      justify-content: flex-end;
+
+      i {
+        cursor: pointer;
+        transition: all 0.5s ease-in-out;
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+
+      .cart-icon-wrapper {
+        position: relative;
+
+        span {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          font-size: 0.625rem;
+          background: #fff;
+          color: #000;
+          width: 12px;
+          height: 12px;
+          border-radius: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+    #btn-hamburger {
+      display: none;
+    }
+  }
+  @media (max-width: 990px) {
+    .container {
+      .nav {
+        display: none;
+      }
+      .nav-icons {
+        display: none;
+      }
+      .logo-image {
+        width: 20rem;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+      #btn-hamburger {
+        display: block;
+      }
+    }
+  }
 }

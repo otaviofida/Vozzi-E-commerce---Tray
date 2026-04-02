@@ -1,3 +1,87 @@
+
+<header class="header-mobile">
+  <div class="cont-menu-m">
+    <div class="topo">
+        <a href="" class="menu-mobile-link">
+            <div class="icone">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
+                  <path d="M8.37484 8.37492C10.3021 8.37492 11.8644 6.81258 11.8644 4.88533C11.8644 2.95809 10.3021 1.39575 8.37484 1.39575C6.44759 1.39575 4.88525 2.95809 4.88525 4.88533C4.88525 6.81258 6.44759 8.37492 8.37484 8.37492Z" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M14.3701 15.3542C14.3701 12.6532 11.6831 10.4688 8.37498 10.4688C5.06686 10.4688 2.37988 12.6532 2.37988 15.3542" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            Minha conta
+        </a>
+        <a href="" class="menu-mobile-link cart-toggle">
+            <div class="icone">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <g clip-path="url(#clip0_2379_330)">
+                  <path d="M0.666504 0.666748H3.33317L5.11984 9.59342C5.1808 9.90035 5.34778 10.1761 5.59153 10.3723C5.83529 10.5685 6.1403 10.6727 6.45317 10.6667H12.9332C13.246 10.6727 13.551 10.5685 13.7948 10.3723C14.0386 10.1761 14.2055 9.90035 14.2665 9.59342L15.3332 4.00008H3.99984M6.6665 14.0001C6.6665 14.3683 6.36803 14.6667 5.99984 14.6667C5.63165 14.6667 5.33317 14.3683 5.33317 14.0001C5.33317 13.6319 5.63165 13.3334 5.99984 13.3334C6.36803 13.3334 6.6665 13.6319 6.6665 14.0001ZM13.9998 14.0001C13.9998 14.3683 13.7014 14.6667 13.3332 14.6667C12.965 14.6667 12.6665 14.3683 12.6665 14.0001C12.6665 13.6319 12.965 13.3334 13.3332 13.3334C13.7014 13.3334 13.9998 13.6319 13.9998 14.0001Z" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_2379_330">
+                    <rect width="16" height="16" fill="white"/>
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            Carrinho
+        </a>
+    </div>
+        <ul class="sub-new-mobile">
+        <div class="title">
+            <span>Categorias</span>
+            <div class="icone">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                 <path d="M4.9285 12.3214L9.85707 7.39282L14.7856 12.3214" stroke="white" stroke-width="1.64286" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+          {% for category in show_categories %}
+          <li>
+            <a href="{{ category.link }}" title="{{ category.name }}"
+              >{{ category.name }}</a
+            >
+          </li>
+          {% endfor %}
+    </ul>
+    <ul class="sub-new-mobile">
+        <div class="title">
+            <span>Institucional</span>
+            <div class="icone">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                 <path d="M4.9285 12.3214L9.85707 7.39282L14.7856 12.3214" stroke="white" stroke-width="1.64286" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+            {% for custom in pages.custom %}
+            <li>
+              <a href="{{ custom.url }}" title="{{ custom.name }}"
+                >{{ custom.name }}</a
+              >
+            </li>
+            {% endfor %}
+    </ul>
+
+    <ul class="sub-new-mobile">
+        <div class="title">
+            <span>Suporte</span>
+            <div class="icone">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                 <path d="M4.9285 12.3214L9.85707 7.39282L14.7856 12.3214" stroke="white" stroke-width="1.64286" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+         
+        <li><a href="tel:{{ settings.footer_telefone }}">Nosso telefone</a></li>
+        <li><a href="https://wa.me/{{ settings.footer_whatsapp }}">Fale pelo whatsapp</a></li>
+        <li><a href="/nossas-lojas">Nossas Lojas</a></li>
+        <li><a href="/faq">FAQ</a></li>
+
+    </ul>
+
+
+  </div>
+</header>
 <header>
     <div class="container">
         <div class="nav">
@@ -17,6 +101,21 @@
                 <span class="cart-badge" data-cart="amount">0</span>
             </div>
         </div>
+       <button id="btn-hamburger" aria-label="Abrir menu" aria-expanded="false">
+         <span class="icon-open">
+           <!-- SVG menu -->
+           <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none">
+             <path d="M3.875 15.5H27.125M3.875 7.75H27.125M3.875 23.25H27.125" stroke="white" stroke-width="2.325" stroke-linecap="round" stroke-linejoin="round"/>
+           </svg>
+         </span>
+       
+         <span class="icon-close">
+           <!-- SVG close -->
+           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+             <path d="M24 8L8 24M8 8L24 24" stroke="white" stroke-width="2.32" stroke-linecap="round" stroke-linejoin="round"/>
+           </svg>
+         </span>
+       </button>
     </div>
 </header>
 
