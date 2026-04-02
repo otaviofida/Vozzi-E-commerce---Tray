@@ -39,13 +39,15 @@
     if (!section) return;
 
     function setSectionHeight() {
-      const height = section.offsetHeight;
-      if (height > 0) {
-        document.documentElement.style.setProperty(
-          "--hero-height",
-          `${height}px`,
-        );
-      }
+      requestAnimationFrame(function () {
+        const height = section.offsetHeight;
+        if (height > 0) {
+          document.documentElement.style.setProperty(
+            "--hero-height",
+            `${height}px`,
+          );
+        }
+      });
     }
 
     setSectionHeight();
@@ -145,9 +147,11 @@
       var textB = (b.textContent || "").trim().toLowerCase();
       return textA.localeCompare(textB, "pt-BR");
     });
+    var frag = document.createDocumentFragment();
     items.forEach(function (item) {
-      ul.appendChild(item);
+      frag.appendChild(item);
     });
+    ul.appendChild(frag);
   }
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -166,9 +170,11 @@
           var textB = (b.querySelector("a") || b).textContent.trim().toLowerCase();
           return textA.localeCompare(textB, "pt-BR");
         });
+        var lisFrag = document.createDocumentFragment();
         lis.forEach(function (li) {
-          ul.appendChild(li);
+          lisFrag.appendChild(li);
         });
+        ul.appendChild(lisFrag);
         // Ordena sub-children
         ul.querySelectorAll(".sub-children").forEach(sortList);
       }
