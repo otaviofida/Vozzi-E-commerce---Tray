@@ -95,7 +95,9 @@
                     <p class="pricing-new">
                         {{ settings.currency }} {{ current_price | currency }}
                     </p>
+                    {% if discount %}
                     <div class="tag">{{ discount| number_format }}% OFF</div>
+                    {% endif %}
                 </div>
                 <p class="pricing-installments">{{ product.payment }}</p>
                 {% element 'snippets/product-variants-destaque' { 

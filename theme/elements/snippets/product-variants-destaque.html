@@ -21,47 +21,68 @@
     {% set mainName = '' %}
     {% set colorIndex = null %}
     {% set mainIndex = null %}
+    {% set hasMain = false %}
+    {% set hasColor = false %}
     
     {% for variant in productVar %}
     
         {% if loop.first %}
             {% if variant.Sku[0].type == 'Cor' %}
                 {% set colorIndex = 0 %}
-                {% set mainIndex = 1 %}
+                {% set hasColor = true %}
+                {% if variant.Sku[1] is defined %}
+                    {% set mainIndex = 1 %}
+                    {% set hasMain = true %}
+                {% endif %}
             {% elseif variant.Sku[1] is defined and variant.Sku[1].type == 'Cor' %}
                 {% set colorIndex = 1 %}
                 {% set mainIndex = 0 %}
+                {% set hasColor = true %}
+                {% set hasMain = true %}
+            {% else %}
+                {% set mainIndex = 0 %}
+                {% set hasMain = true %}
             {% endif %}
     
-            {% set mainName = variant.Sku[mainIndex].type %}
+            {% if hasMain %}
+                {% set mainName = variant.Sku[mainIndex].type %}
+            {% endif %}
         {% endif %}
     
         {% set stock = settings.without_stock_sale ? '99999' : variant.stock %}
     
         {# NORMALIZAÇÃO #}
-        {% set mainValue = variant.Sku[mainIndex].value
-            | url_encode
-            | replace({
-                '%E1':'a','%E0':'a','%E2':'a','%E3':'a','%E4':'a',
-                '%E9':'e','%E8':'e','%EA':'e','%EB':'e',
-                '%ED':'i','%EC':'i','%EE':'i','%EF':'i',
-                '%F3':'o','%F2':'o','%F4':'o','%F5':'o','%F6':'o',
-                '%FA':'u','%F9':'u','%FB':'u','%FC':'u',
-                '%E7':'c','%20':' '
-            })
-        %}
+        {% if hasMain %}
+            {% set mainValue = variant.Sku[mainIndex].value
+                | url_encode
+                | replace({
+                    '%E1':'a','%E0':'a','%E2':'a','%E3':'a','%E4':'a',
+                    '%E9':'e','%E8':'e','%EA':'e','%EB':'e',
+                    '%ED':'i','%EC':'i','%EE':'i','%EF':'i',
+                    '%F3':'o','%F2':'o','%F4':'o','%F5':'o','%F6':'o',
+                    '%FA':'u','%F9':'u','%FB':'u','%FC':'u',
+                    '%E7':'c','%20':' '
+                })
+            %}
+        {% else %}
+            {% set mainValue = '' %}
+        {% endif %}
     
-        {% set colorValue = variant.Sku[colorIndex].value
-            | url_encode
-            | replace({
-                '%E1':'a','%E0':'a','%E2':'a','%E3':'a','%E4':'a',
-                '%E9':'e','%E8':'e','%EA':'e','%EB':'e',
-                '%ED':'i','%EC':'i','%EE':'i','%EF':'i',
-                '%F3':'o','%F2':'o','%F4':'o','%F5':'o','%F6':'o',
-                '%FA':'u','%F9':'u','%FB':'u','%FC':'u',
-                '%E7':'c','%20':' '
-            })
-        %}
+        {% if hasColor %}
+            {% set colorValue = variant.Sku[colorIndex].value
+                | url_encode
+                | replace({
+                    '%E1':'a','%E0':'a','%E2':'a','%E3':'a','%E4':'a',
+                    '%E9':'e','%E8':'e','%EA':'e','%EB':'e',
+                    '%ED':'i','%EC':'i','%EE':'i','%EF':'i',
+                    '%F3':'o','%F2':'o','%F4':'o','%F5':'o','%F6':'o',
+                    '%FA':'u','%F9':'u','%FB':'u','%FC':'u',
+                    '%E7':'c','%20':' '
+                })
+            %}
+        {% else %}
+            {% set colorValue = '' %}
+        {% endif %}
     
         {% set variants = variants|merge([{
             "id": variant.id,
@@ -73,15 +94,15 @@
                 "payment": variant.payment_option,
                 "payment_html": variant.payment_option_html | e('html')
             },
-            "imageColor": variant.Sku[colorIndex].image_secure,
+            "imageColor": hasColor ? variant.Sku[colorIndex].image_secure : '',
             "imageProduct": variant.images[0] is defined ? variant.images[0].full : ''
         }]) %}
     
-        {% if mainValue not in listMain %}
+        {% if hasMain and mainValue not in listMain %}
             {% set listMain = listMain|merge([mainValue]) %}
         {% endif %}
     
-        {% if colorValue not in listColor %}
+        {% if hasColor and colorValue not in listColor %}
             {% set listColor = listColor|merge([colorValue]) %}
         {% endif %}
     
@@ -93,6 +114,7 @@
           data-api-cart="1">
     
         {# VARIAÇÃO PRINCIPAL (MARCA, TAMANHO, ETC) #}
+        {% if hasMain and listMain|length > 0 %}
         <label class="select-variants">
             <div class="variant-types">
                 <span>{{ mainName }}</span>
@@ -104,8 +126,10 @@
                 {% endfor %}
             </select>
         </label>
+        {% endif %}
     
         {# COR — SEMPRE VISUAL #}
+        {% if hasColor and listColor|length > 0 %}
         <div class="color-select">
             <div class="variant-types">
                 <span>Cor</span>
@@ -124,6 +148,7 @@
                 {% endfor %}
             </ul>
         </div>
+        {% endif %}
     
         <div class="alert-dont-stock" style="display:none">
             <p>Variação indisponível</p>

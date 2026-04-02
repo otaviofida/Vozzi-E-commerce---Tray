@@ -42,8 +42,8 @@
           {% if product.images %} {% for images in product.images %}
            <div class="swiper-slide d-thumb-gallery">
              <img
-               class="thumb-gallery-img swiper-lazy"
-               data-src="{{ images.medium }}"
+               class="thumb-gallery-img"
+               src="{{ images.medium }}"
                alt="{{ product.name }}"
              />
 
@@ -66,8 +66,8 @@
         false : true %}
 <div class="swiper-slide d-gallery-image">
   <img
-    class="gallery-image swiper-lazy"
-    data-src="{{ images.full }}"
+    class="gallery-image{% if lazyIndex %} swiper-lazy{% endif %}"
+    {% if lazyIndex %}data-src="{{ images.full }}"{% else %}src="{{ images.full }}"{% endif %}
     alt="{{ product.name }}"
   />
 
@@ -311,16 +311,24 @@
 
 {% if product.related_products%}
 <section class="pageProduct-related">
-  <h2 class="related-title">
-    {{ settings.related_products_title ? settings.related_products_title :
-    "Produtos relacionados" }}
-  </h2>
-  <div class="related-showcase">
-    {% for item in product.related_products %}
-    <div class="related-item">
-      {% element 'snippets/product' { 'product' : item, 'slide' : false } %}
+  <div class="related-header">
+    <h2 class="related-title">
+      {{ settings.related_products_title ? settings.related_products_title :
+      "Produtos relacionados" }}
+    </h2>
+    <div class="related-nav">
+      <div class="swiper-button-prev related-prev"></div>
+      <div class="swiper-button-next related-next"></div>
     </div>
-    {% endfor %}
+  </div>
+  <div class="related-showcase swiper">
+    <div class="swiper-wrapper">
+      {% for item in product.related_products %}
+      <div class="swiper-slide">
+        {% element 'snippets/product' { 'product' : item, 'slide' : false } %}
+      </div>
+      {% endfor %}
+    </div>
   </div>
 </section>
 {% endif %}

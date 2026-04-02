@@ -160,3 +160,25 @@
     }
   });
 }
+
+{
+  const relatedEl = document.querySelector(".pageProduct-related .related-showcase");
+  if (relatedEl) {
+    new Swiper(relatedEl, {
+      breakpoints: {
+        0: {
+          slidesPerView: 1.3,
+        },
+        768: {
+          slidesPerView: 3,
+        },
+      },
+      spaceBetween: 24,
+      speed: 1300,
+      navigation: {
+        nextEl: ".related-next",
+        prevEl: ".related-prev",
+      },
+    });
+  }
+}

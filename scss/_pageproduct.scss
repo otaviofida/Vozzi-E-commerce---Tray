@@ -323,6 +323,7 @@
       width: 100%;
       justify-content: space-between;
       position: relative;
+      flex-wrap: wrap;
     }
 
     .shipping-form {
@@ -330,9 +331,8 @@
       width: 66%;
     }
     .shipping-result {
-      position: absolute;
-      bottom: 0;
-      left: 0;
+      position: relative;
+      width: 100%;
     }
 
     .shipping-input {
@@ -516,17 +516,56 @@
   display: none !important;
 }
 
-.pageProduct-related .related-item {
-  width: 100%;
-}
-
-.pageProduct-related .related-showcase {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
 .pageProduct-related {
   margin-bottom: 7.5rem;
+  padding: 0 1.25rem;
+
+  .related-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .related-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #000;
+  }
+
+  .related-nav {
+    display: flex;
+    gap: 0.5rem;
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      position: static;
+      width: 2.5rem;
+      height: 2.5rem;
+      margin: 0;
+      background: #f3f3f3;
+      border-radius: 50%;
+      transition: background 0.3s;
+
+      &::after {
+        font-size: 0.75rem;
+        color: #333;
+        font-weight: 700;
+      }
+
+      &:hover {
+        background: #462e86;
+
+        &::after {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .related-showcase {
+    overflow: hidden;
+  }
 }
 
 .pageProduct-tabs {

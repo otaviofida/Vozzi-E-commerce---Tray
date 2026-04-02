@@ -5,17 +5,71 @@
 
     function setSectionHeight() {
       const height = section.offsetHeight;
-      document.documentElement.style.setProperty(
-        "--hero-height",
-        `${height}px`,
-      );
-      console.log(height);
+      if (height > 0) {
+        document.documentElement.style.setProperty(
+          "--hero-height",
+          `${height}px`,
+        );
+      }
     }
 
     setSectionHeight();
 
-    // Recalcula em resize (muito importante)
+    // Recalcula quando a imagem do banner carregar
+    const bannerImg = section.querySelector("img");
+    if (bannerImg) {
+      if (bannerImg.complete) {
+        setSectionHeight();
+      } else {
+        bannerImg.addEventListener("load", setSectionHeight);
+      }
+    }
+
+    // Recalcula em resize
     window.addEventListener("resize", setSectionHeight);
+  });
+}
+
+// Header: gradiente -> roxo no scroll (apenas home)
+{
+  document.addEventListener("DOMContentLoaded", function () {
+    if (!document.documentElement.classList.contains("page-home")) return;
+
+    const header = document.querySelector("header:not(.header-mobile)");
+    if (!header) return;
+
+    function onScroll() {
+      if (window.scrollY > 80) {
+        header.classList.add("header-solid");
+      } else {
+        header.classList.remove("header-solid");
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  });
+}
+
+// Dropdown "Selecione por aparelho"
+{
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdown = document.querySelector(".dropdown-aparelho");
+    if (!dropdown) return;
+
+    const toggle = dropdown.querySelector(".dropdown-aparelho-toggle");
+    if (!toggle) return;
+
+    toggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      dropdown.classList.toggle("open");
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove("open");
+      }
+    });
   });
 }
 
@@ -480,6 +534,19 @@
     });
     button.classList.add("active");
   });
+
+  // Auto-seleciona a primeira variação de cor em cada card
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".product-slide").forEach(function (card) {
+      const firstColor = card.querySelector(".js-variant-color");
+      if (!firstColor) return;
+
+      firstColor.classList.add("active");
+      if (firstColor.dataset.variantId) {
+        card.dataset.variantId = firstColor.dataset.variantId;
+      }
+    });
+  });
 }
 
 //Script Variacoes - Marca e Cor
@@ -493,7 +560,7 @@
       const mainSelect = form.querySelector(".first.option-select");
       const colorItems = Array.from(form.querySelectorAll(".option-color li"));
 
-      if (!mainSelect || !colorItems.length) return;
+      if (!colorItems.length) return;
 
       let selectedMain = null;
       let selectedColor = null;
@@ -505,7 +572,12 @@
         selectedColor = null;
 
         const allowedColors = variants
-          .filter((v) => v.main === selectedMain && Number(v.stock) > 0)
+          .filter((v) => {
+            if (mainSelect && selectedMain !== null) {
+              return v.main === selectedMain && Number(v.stock) > 0;
+            }
+            return Number(v.stock) > 0;
+          })
           .map((v) => v.color);
 
         let firstValidColor = null;
@@ -539,10 +611,12 @@
         selectedColor = li.dataset.value;
 
         const variant = variants.find(
-          (v) =>
-            v.main === selectedMain &&
+          (v) => {
+            const matchMain = mainSelect ? v.main === selectedMain : true;
+            return matchMain &&
             v.color === selectedColor &&
-            Number(v.stock) > 0,
+            Number(v.stock) > 0;
+          }
         );
 
         if (!variant) return;
@@ -594,18 +668,20 @@
       /* ===============================
                CHANGE MARCA
             =============================== */
-      mainSelect.addEventListener("change", function () {
-        selectedMain = this.value;
-        if (!selectedMain) return;
-        updateColors(true);
-      });
+      if (mainSelect) {
+        mainSelect.addEventListener("change", function () {
+          selectedMain = this.value;
+          if (!selectedMain) return;
+          updateColors(true);
+        });
+      }
 
       /* ===============================
                CLICK COR
             =============================== */
       colorItems.forEach((li) => {
         li.addEventListener("click", function () {
-          if (!selectedMain) return;
+          if (mainSelect && !selectedMain) return;
           selectColor(this);
         });
       });
@@ -613,13 +689,17 @@
       /* ===============================
                ESTADO INICIAL
             =============================== */
-      const firstValidOption = Array.from(mainSelect.options).find(
-        (opt) => opt.value && opt.value !== "Selecione",
-      );
+      if (mainSelect) {
+        const firstValidOption = Array.from(mainSelect.options).find(
+          (opt) => opt.value && opt.value !== "Selecione",
+        );
 
-      if (firstValidOption) {
-        mainSelect.value = firstValidOption.value;
-        selectedMain = firstValidOption.value;
+        if (firstValidOption) {
+          mainSelect.value = firstValidOption.value;
+          selectedMain = firstValidOption.value;
+          updateColors(true);
+        }
+      } else {
         updateColors(true);
       }
     });
@@ -759,8 +839,7 @@
 
         if (
           !productId ||
-          !mainSelect ||
-          !colorItems.length ||
+          (!mainSelect && !colorItems.length) ||
           !btnAdd ||
           !qtyInput
         )
@@ -817,10 +896,12 @@
 
           return (
             variants.find(
-              (v) =>
-                normalizeStr(v.main) === main &&
-                normalizeStr(v.color) === color &&
-                Number(v.stock) > 0,
+              (v) => {
+                const matchMain = mainSelect ? normalizeStr(v.main) === main : true;
+                return matchMain &&
+                  normalizeStr(v.color) === color &&
+                  Number(v.stock) > 0;
+              }
             ) || null
           );
         }
@@ -828,7 +909,10 @@
         function allowedColorsForMain(main) {
           main = normalizeStr(main);
           const colors = variants
-            .filter((v) => normalizeStr(v.main) === main && Number(v.stock) > 0)
+            .filter((v) => {
+              const matchMain = mainSelect ? normalizeStr(v.main) === main : true;
+              return matchMain && Number(v.stock) > 0;
+            })
             .map((v) => normalizeStr(v.color));
           return Array.from(new Set(colors));
         }
@@ -968,16 +1052,18 @@
 
         // ===== Events =====
         // main change
-        mainSelect.addEventListener("change", function () {
-          selectedMain = normalizeStr(this.value);
-          if (!selectedMain) return;
-          filterColors(true);
-        });
+        if (mainSelect) {
+          mainSelect.addEventListener("change", function () {
+            selectedMain = normalizeStr(this.value);
+            if (!selectedMain) return;
+            filterColors(true);
+          });
+        }
 
         // color click
         colorItems.forEach((li) => {
           li.addEventListener("click", function () {
-            if (!selectedMain) return;
+            if (mainSelect && !selectedMain) return;
             selectColor(this);
           });
         });
@@ -987,7 +1073,7 @@
           e.preventDefault();
           hideAlert();
 
-          if (!selectedMain) {
+          if (mainSelect && !selectedMain) {
             showAlert("Selecione uma opção.");
             return;
           }
@@ -1044,12 +1130,16 @@
         });
 
         // ===== Estado inicial =====
-        const firstMain = Array.from(mainSelect.options).find(
-          (opt) => opt.value && opt.value !== "Selecione",
-        );
-        if (firstMain) {
-          mainSelect.value = firstMain.value;
-          selectedMain = normalizeStr(firstMain.value);
+        if (mainSelect) {
+          const firstMain = Array.from(mainSelect.options).find(
+            (opt) => opt.value && opt.value !== "Selecione",
+          );
+          if (firstMain) {
+            mainSelect.value = firstMain.value;
+            selectedMain = normalizeStr(firstMain.value);
+            filterColors(true);
+          }
+        } else {
           filterColors(true);
         }
 

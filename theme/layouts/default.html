@@ -48,6 +48,8 @@
                         </div>
                     {% elseif 'home' in pages.current %} 
                         {{ content_for_layout }} 
+                    {% elseif pages.current == 'sobre-a-vozzi' %}
+                        {% element 'snippets/page-about' %}
                     {% else %} 
                         {% set special_pages = [ 'listas', 'depoimentos-de-clientes', 'noticias' ] %} 
                         {% set title = '' %} 

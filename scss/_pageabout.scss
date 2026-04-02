@@ -1,0 +1,178 @@
+.p-about {
+    .p-about__hero {
+        position: relative;
+        width: 100%;
+        min-height: 28rem;
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(70, 46, 134, 0.2) 0%, rgba(70, 46, 134, 0.85) 100%);
+            z-index: 2;
+        }
+
+        .p-about__hero-content {
+            position: relative;
+            z-index: 3;
+            padding: 4rem 0;
+            max-width: 40rem;
+
+            h1 {
+                color: #fff;
+                font-size: 2.5rem;
+                font-weight: 500;
+                line-height: 120%;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                color: rgba(255, 255, 255, 0.85);
+                font-size: 1.125rem;
+                font-weight: 400;
+                line-height: 150%;
+            }
+        }
+    }
+
+    .p-about__values {
+        padding: 5rem 0;
+
+        .p-about__values-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.625rem;
+        }
+
+        .p-about__values-item {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 2.5rem 2rem;
+            border-radius: 1.5rem;
+            background: #f3f3f3;
+
+            .icon {
+                background-color: #462e86;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 3.5rem;
+                height: 3.5rem;
+                padding: 1rem;
+                border-radius: 0.5rem;
+            }
+
+            h3 {
+                color: #000;
+                font-size: 1.25rem;
+                font-weight: 400;
+                line-height: 120%;
+                margin-top: 3rem;
+            }
+
+            p {
+                color: #787878;
+                font-size: 0.875rem;
+                font-weight: 400;
+                line-height: 150%;
+                width: 50%;
+            }
+        }
+    }
+
+    .p-about__content {
+        padding: 0 0 5rem;
+
+        .container {
+            h2, h3, h4 {
+                color: #000;
+                font-weight: 500;
+                margin-bottom: 0.75rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+            }
+
+            p {
+                color: #787878;
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 160%;
+                margin-bottom: 1rem;
+            }
+
+            img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 1.5rem;
+                margin: 1.5rem 0;
+            }
+
+            ul, ol {
+                padding-left: 1.5rem;
+                margin-bottom: 1rem;
+                color: #787878;
+                font-size: 1rem;
+                line-height: 180%;
+            }
+        }
+    }
+
+    @media (max-width: 998px) {
+        .p-about__hero {
+            min-height: 20rem;
+
+            .p-about__hero-content {
+                padding: 3rem 0;
+
+                h1 {
+                    font-size: 1.75rem;
+                }
+
+                p {
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        .p-about__values {
+            padding: 3rem 0;
+
+            .p-about__values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .p-about__values-item {
+                p {
+                    width: 100%;
+                }
+            }
+        }
+
+        .p-about__content {
+            padding: 0 0 3rem;
+        }
+    }
+}

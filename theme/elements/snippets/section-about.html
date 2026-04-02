@@ -2,25 +2,13 @@
     <div class="container">
         <div class="up">
             <div class="video">
-                {% if settings.section_about_link %}
-                    {% set video_id = settings.section_about_link|replace({
-                        'https://www.youtube.com/watch?v=': '',
-                        'https://youtu.be/': '',
-                        '&feature=youtu.be': ''
-                    }) %}
-
-                    <iframe
-                        src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&controls=0&showinfo=0&rel=0&playsinline=1"
-                        frameborder="0"
-                        allow="autoplay; encrypted-media"
-                        allowfullscreen
-                    ></iframe>
+                {% if settings.section_about_img %}
+                    <img src="{{ asset(settings.section_about_img) }}" alt="{{ settings.section_about_titulo }}" loading="lazy">
                 {% endif %}
             </div>
             <div class="content">
                 <h2>{{ settings.section_about_titulo }}</h2>
                 <p>{{ settings.section_about_texto }}</p>
-                <a href="/nossas-lojas" class="btn-purple">Ver lojas</a>
             </div>
         </div>
         <div class="grid">

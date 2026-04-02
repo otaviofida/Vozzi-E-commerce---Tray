@@ -1,0 +1,235 @@
+.page-contact {
+    .default-main {
+        padding-top: 4.625rem;
+    }
+
+    .default-content > .container {
+        padding-top: 3rem;
+        padding-bottom: 4rem;
+
+        // Título principal
+        > h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #000;
+            margin-bottom: 0.5rem;
+        }
+
+        // Descrição
+        .contactUs-description {
+            color: #787878;
+            font-size: 1rem;
+            line-height: 150%;
+            margin-bottom: 2.5rem;
+        }
+
+        // Esconder container3 com mapa do site e título duplicado
+        > .container3:first-of-type {
+            display: none;
+        }
+
+        // Bloco de texto introdutório
+        > .board {
+            display: none;
+        }
+
+        // Container principal de contato
+        > .container3:last-of-type {
+            > .container2:first-child {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.625rem;
+                margin-bottom: 2rem;
+
+                // Telefone
+                .contactUs-phone {
+                    background: #f3f3f3;
+                    border-radius: 1.5rem;
+                    padding: 2rem;
+                    margin: 0;
+
+                    &::before {
+                        display: none;
+                    }
+
+                    h3 {
+                        font-size: 1.125rem;
+                        font-weight: 500;
+                        color: #000;
+                        margin-bottom: 0.75rem;
+                    }
+
+                    a {
+                        color: #462e86;
+                        font-size: 1rem;
+                        font-weight: 500;
+                        text-decoration: none;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                // Email
+                .contactUs-email {
+                    background: #f3f3f3;
+                    border-radius: 1.5rem;
+                    padding: 0;
+
+                    &::before {
+                        display: none;
+                    }
+
+                    .board {
+                        padding: 2rem;
+                        background: transparent;
+                        border: none;
+                        margin: 0;
+
+                        h3 {
+                            font-size: 1.125rem;
+                            font-weight: 500;
+                            color: #000;
+                            margin-bottom: 0.75rem;
+                        }
+
+                        .email-texto {
+                            color: #787878;
+                            font-size: 1rem;
+
+                            a {
+                                color: #462e86;
+                                font-weight: 500;
+                            }
+                        }
+                    }
+                }
+
+                .topBorder {
+                    display: none;
+                }
+            }
+
+            // Formulário
+            > .container2:last-child {
+                .board {
+                    background: #f3f3f3;
+                    border-radius: 1.5rem;
+                    padding: 2.5rem;
+                    border: none;
+                    margin-bottom: 0.625rem;
+
+                    .tit-contato {
+                        font-size: 1.25rem;
+                        font-weight: 500;
+                        color: #000;
+                        margin-bottom: 1.5rem;
+                    }
+
+                    h3 {
+                        font-size: 1.125rem;
+                        font-weight: 500;
+                        color: #000;
+                        margin-bottom: 0.75rem;
+                    }
+
+                    .block span.block {
+                        color: #787878;
+                        font-size: 0.875rem;
+                        line-height: 150%;
+                    }
+                }
+
+                .formulario-contato {
+                    .msg-obriga {
+                        display: none;
+                    }
+
+                    label.block {
+                        margin-bottom: 1rem;
+
+                        > span.block {
+                            color: #333;
+                            font-size: 0.875rem;
+                            font-weight: 500;
+                            margin-bottom: 0.375rem;
+                        }
+
+                        > span:last-child:not(.block):not(.obriga):not(.mensagensErro):not(#spanTextarea) {
+                            color: #aaa;
+                            font-size: 0.75rem;
+                        }
+                    }
+
+                    input.text,
+                    textarea.textarea {
+                        width: 100%;
+                        padding: 0.75rem 1rem;
+                        border: 1px solid #ddd;
+                        border-radius: 0.75rem;
+                        font-size: 0.875rem;
+                        font-family: inherit;
+                        background: #fff;
+                        color: #333;
+                        transition: border-color 0.3s ease;
+                        outline: none;
+                        box-sizing: border-box;
+
+                        &:focus {
+                            border-color: #462e86;
+                        }
+                    }
+
+                    textarea.textarea {
+                        resize: vertical;
+                        min-height: 7.5rem;
+                    }
+
+                    .btn_submit {
+                        display: inline-block;
+                        margin-top: 0.5rem;
+                        padding: 0.75rem 2rem;
+                        background-color: #462e86;
+                        border-radius: 9999px;
+                        color: #fff;
+                        font-size: 1rem;
+                        font-weight: 500;
+                        text-decoration: none;
+                        cursor: pointer;
+                        transition: opacity 0.3s ease;
+                        border: none;
+
+                        &:hover {
+                            opacity: 0.8;
+                        }
+                    }
+                }
+
+                .topBorder {
+                    display: none;
+                }
+
+                .bottom {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 998px) {
+        .default-content > .container {
+            > .container3:last-of-type {
+                > .container2:first-child {
+                    grid-template-columns: 1fr;
+                }
+
+                > .container2:last-child {
+                    .board {
+                        padding: 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -789,12 +789,27 @@ body {
 }
 
 .default-main {
-  padding-top: var(--hero-height);
+  padding-top: var(--hero-height, 0px);
   width: 100%;
 
   @media (max-width: 998px) {
     padding-top: 0;
   }
+}
+
+.page-home .default-main {
+  padding-top: var(--hero-height, 100vh);
+
+  @media (max-width: 998px) {
+    padding-top: 0;
+  }
+}
+
+.is-custom-page,
+.page-login .default-main,
+.page-register .default-main,
+.page-newsletter .default-main {
+  padding-top: 4.625rem;
 }
 
 body {
