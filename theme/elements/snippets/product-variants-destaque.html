@@ -95,7 +95,8 @@
                 "payment_html": variant.payment_option_html | e('html')
             },
             "imageColor": hasColor ? variant.Sku[colorIndex].image_secure : '',
-            "imageProduct": variant.images[0] is defined ? variant.images[0].full : ''
+            "imageProduct": variant.images[0] is defined ? variant.images[0].full : '',
+            "images": variant.images
         }]) %}
     
         {% if hasMain and mainValue not in listMain %}

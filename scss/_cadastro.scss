@@ -1,0 +1,403 @@
+// ========================================
+// Página de Cadastro (.page-register)
+// ========================================
+
+.page-register {
+
+  .default-main {
+    background-color: #f3f3f3;
+    padding-bottom: 3rem;
+  }
+
+  .default-content > .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  // ── Título principal ──
+  .container3 {
+    margin-bottom: 1.5rem;
+
+    .container2 {
+      padding: 0;
+    }
+
+    .board {
+      background: transparent;
+      padding: 0;
+
+      h1.color {
+        font-family: "Prompt", sans-serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #0a0713;
+        text-align: center;
+        margin: 0;
+      }
+    }
+
+    .bottom {
+      display: none;
+    }
+  }
+
+  // ── Seguro badge ──
+  .Seguro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: "Prompt", sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #30C578;
+    margin-bottom: 1.5rem;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  // ── Heading (carrinho-heading) ──
+  .carrinho-heading {
+    display: none;
+  }
+
+  // ── Tabs PF / PJ ──
+  #PessoaFisica,
+  #PessoaJuridica {
+    list-style: none;
+  }
+
+  // container com as li das tabs
+  .container2 > ul:not(.sub-new-mobile) {
+    display: flex;
+    gap: 0;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    list-style: none;
+    border-radius: 9999px;
+    overflow: hidden;
+    background: #e5e5e5;
+
+    li {
+      flex: 1;
+      text-align: center;
+
+      a {
+        display: block;
+        padding: 0.75rem 1rem;
+        font-family: "Prompt", sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #666;
+        text-decoration: none;
+        transition: all 0.25s ease;
+        border-radius: 9999px;
+      }
+
+      &.aberta a,
+      &.active a {
+        background: #462E86;
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // ── Form cards (board) ──
+  #frm2 {
+
+    .board {
+      background: #fff;
+      border-radius: 1.5rem;
+      padding: 2rem 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    // ── Section headings ──
+    h2.color {
+      font-family: "Prompt", sans-serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #0a0713;
+      margin: 0 0 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    // ── Fieldsets ──
+    fieldset {
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    // ── Labels ──
+    label {
+      display: block;
+      font-family: "Prompt", sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #444;
+      margin-bottom: 1rem;
+
+      br {
+        display: none;
+      }
+    }
+
+    .cadastro_label {
+      font-weight: 600;
+      color: #0a0713;
+    }
+
+    .estrela {
+      color: #462E86;
+      font-weight: 700;
+    }
+
+    .obriga.red {
+      color: #462E86;
+    }
+
+    // ── Inputs & selects ──
+    input.text,
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    select.select {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      margin-top: 0.375rem;
+      font-family: "Prompt", sans-serif;
+      font-size: 0.875rem;
+      color: #0a0713;
+      background: #f9fafb;
+      border: 1px solid #ddd;
+      border-radius: 0.75rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      appearance: none;
+
+      &:focus {
+        border-color: #462E86;
+        box-shadow: 0 0 0 3px rgba(70, 46, 134, 0.12);
+        background: #fff;
+      }
+
+      &.obriga:invalid {
+        border-color: #ddd;
+      }
+    }
+
+    select.select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%23666' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    // Reset size attributes (HTML has size="50" etc)
+    input[size] {
+      width: 100%;
+    }
+
+    // ── Checkbox ──
+    input.check {
+      width: auto;
+      display: inline-block;
+      margin-right: 0.5rem;
+      accent-color: #462E86;
+      vertical-align: middle;
+    }
+
+    // ── Error messages ──
+    .mensagensErro {
+      display: block;
+      font-family: "Prompt", sans-serif;
+      font-size: 0.75rem;
+      color: #e53e3e;
+      margin-top: 0.25rem;
+    }
+
+    // ── Telephone hint text ──
+    strong {
+      font-family: "Prompt", sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #444;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    // ── Password strength meter ──
+    #seguranca_senha {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.75rem;
+
+      img.safe {
+        vertical-align: middle;
+        height: 8px;
+      }
+
+      .sec_texto {
+        font-weight: 600;
+        color: #666;
+      }
+    }
+
+    // ── Different billing address checkbox ──
+    .dif {
+      display: inline;
+      font-size: 0.8125rem;
+      color: #444;
+      vertical-align: middle;
+    }
+
+    #endereco_cobranca_diferente {
+      margin-top: 0.5rem;
+    }
+
+    // ── Delivery & billing sections ──
+    // These are not inside .board, we wrap them visually
+    .txt-dados-entrega,
+    .txt-dados-cobranca {
+      margin-top: 0.5rem;
+    }
+  }
+
+  // ── Terms & submit area ──
+  .termContainerRegister {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem !important;
+    text-align: center;
+
+    .termText {
+      font-family: "Prompt", sans-serif;
+      font-size: 0.8125rem;
+      color: #666;
+      margin: 0;
+
+      a {
+        color: #462E86;
+        font-weight: 600;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  //  ── Submit button ──
+  .botao-commerce.botao-prosseguir-cadastro {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.875rem 2rem;
+    font-family: "Prompt", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: #462E86;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.15s ease;
+    float: none;
+
+    &:hover {
+      background: darken(#462E86, 8%);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    .botao-commerce-img {
+      color: inherit;
+      font-size: inherit;
+    }
+  }
+
+  // ── Container2 reset ──
+  .container2 {
+    padding: 0;
+  }
+
+  // ── Decorative elements hide ──
+  .topBorder,
+  .leftCorner,
+  .bottom .bLeft,
+  .bottom .bRight {
+    display: none;
+  }
+
+  // ── Obriga table (for state select wrapper) ──
+  .obriga.table {
+    display: block;
+
+    select {
+      width: 100%;
+    }
+  }
+
+  // ── Processando CEP ──
+  .processando_div_cep {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    color: #462E86;
+  }
+
+  // ========================================
+  // Mobile
+  // ========================================
+  @media (max-width: 998px) {
+
+    .default-content > .container {
+      padding: 0 1rem;
+    }
+
+    .container3 .board h1.color {
+      font-size: 1.375rem;
+    }
+
+    #frm2 {
+
+      .board {
+        padding: 1.5rem 1rem;
+        border-radius: 1rem;
+      }
+
+      label {
+        font-size: 0.8125rem;
+      }
+
+      input.text,
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="password"],
+      select.select {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.8125rem;
+      }
+    }
+
+    .botao-commerce.botao-prosseguir-cadastro {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9375rem;
+    }
+  }
+}

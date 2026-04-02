@@ -10,6 +10,7 @@
         <div class="grid">
             <ul>
                 {% for category in categories %}
+                {% if category.id != 53 %}
                 <li class="firstLevel {{ category.children ? 'subList' }}" role="none">
                     <a
                         class="menu-link"
@@ -49,6 +50,7 @@
                         </ul>
                     {% endif %}
                 </li>
+                {% endif %}
                 {% endfor %} 
             </ul>
         </div>

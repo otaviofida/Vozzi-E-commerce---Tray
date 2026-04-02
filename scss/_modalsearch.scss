@@ -174,14 +174,43 @@
 
 @media (max-width: 990px) {
   .modal-search {
-    justify-content: flex-end;
-    align-items: flex-end;
+    z-index: 300;
+    justify-content: center;
+    align-items: center;
 
     .container {
       max-width: 95%;
       height: auto;
-      padding-bottom: 32px;
-      margin-bottom: 103px;
+      padding: 1.5rem 1rem;
+      margin-bottom: 0;
+      gap: 1rem;
+
+      > img {
+        width: 7rem;
+        margin-top: 0;
+      }
+
+      .forms-search {
+        padding: 0;
+      }
+
+      .suggestion-products {
+        flex-direction: column !important;
+
+        .suggestion-product {
+          a {
+            flex-direction: row !important;
+            min-height: auto !important;
+            gap: 1rem !important;
+
+            .suggestion-img {
+              width: 3.5rem !important;
+              flex-shrink: 0;
+            }
+          }
+        }
+      }
+
       .grid {
         display: none;
       }

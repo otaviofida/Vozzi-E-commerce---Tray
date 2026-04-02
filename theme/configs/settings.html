@@ -4111,6 +4111,7 @@
                                                 <span class="name">Tipo de vitrine</span>
                                                 <select class="select-input" name="showcase_type_1">
                                                     <option value="">Selecione</option>
+                                                    <option value="all">Todos</option>
                                                     <option value="top_seller">Mais Vendidos</option>
                                                     <option value="new">Lançamentos</option>
                                                     <option value="featured">Destaques</option>
@@ -4121,6 +4122,10 @@
                                             <label class="input-area max">
                                                 <span class="name">Título</span>
                                                 <input type="text" name="showcase_title_1">
+                                            </label>
+                                            <label class="input-area max">
+                                                <span class="name">ID da categoria (opcional - filtrar por categoria)</span>
+                                                <input type="text" name="showcase_category_1" placeholder="Ex: 42">
                                             </label>
                                             
                                             <div class="featured">Quantidade de produtos a ser exibido na vitrine</div>
@@ -4155,6 +4160,7 @@
                                                 <span class="name">Tipo de vitrine</span>
                                                 <select class="select-input" name="showcase_type_2">
                                                     <option value="">Selecione</option>
+                                                    <option value="all">Todos</option>
                                                     <option value="top_seller">Mais Vendidos</option>
                                                     <option value="new">Lançamentos</option>
                                                     <option value="featured">Destaques</option>
@@ -4165,6 +4171,10 @@
                                             <label class="input-area max">
                                                 <span class="name">Título</span>
                                                 <input type="text" name="showcase_title_2">
+                                            </label>
+                                            <label class="input-area max">
+                                                <span class="name">ID da categoria (opcional - filtrar por categoria)</span>
+                                                <input type="text" name="showcase_category_2" placeholder="Ex: 42">
                                             </label>
                                             <div class="featured">Quantidade de produtos a ser exibido na vitrine</div>
                                             <div class="item flex">
@@ -4296,7 +4306,7 @@
                                 <div class="tab-content">
                                     <div class="box-section">
                                         <div class="title flex justify-between align-center">
-                                            <span>Exibir</span>
+                                            <span>Exibir barra de frete grátis</span>
                                             <label class="check-drag">
                                                 <input type="checkbox" name="show_freeshipping" value="1">
                                                 <span class="icon"></span>
@@ -4304,9 +4314,18 @@
                                         </div>
                                     </div>
                                     <label class="input-area max">
-                                        <span class="name">Título</span>
-                                        <input type="text" name="value_frete_gratis">
-                                    </label>                                    
+                                        <span class="name">Valor mínimo para frete grátis (ex: 200)</span>
+                                        <input type="text" name="value_frete_gratis" placeholder="Ex: 200">
+                                    </label>
+                                    <div class="box-section">
+                                        <div class="title flex justify-between align-center">
+                                            <span>Exibir "Você também pode gostar"</span>
+                                            <label class="check-drag">
+                                                <input type="checkbox" name="show_cart_related" value="1">
+                                                <span class="icon"></span>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -8,6 +8,7 @@
                 <span data-cart="amount" class="amount">0 produtos adicionados</span>
            </div>
        </div>
+       {% if settings.show_freeshipping %}
        <div class="free-shipping" data-free-shipping="{{ settings.value_frete_gratis }}">
             <p class="free-shipping__text">
                 Adicione mais <strong class="free-shipping__remaining">R$ 0,00</strong> e ganhe <strong>Frete Grátis</strong>
@@ -17,6 +18,7 @@
                 <span class="free-shipping__bar-fill" style="width:0%"></span>
             </div>
         </div>
+        {% endif %}
        <div class="content-cart empty">
            <div class="list">
                <div class="error">
@@ -24,6 +26,14 @@
                </div>
            </div>
        </div>
+       {% if settings.show_cart_related %}
+       <div class="cart-related">
+           <h4 class="cart-related-title">Você também pode gostar</h4>
+           <div class="cart-related-carousel swiper">
+               <div class="swiper-wrapper"></div>
+           </div>
+       </div>
+       {% endif %}
        <div class="footer-cart">
            <div class="text-info">
                <div class="total">

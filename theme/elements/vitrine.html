@@ -1,7 +1,20 @@
 {% if type %}
     {% set quantity = quantity | default(8) %}
 
-    {% if type == 'top_seller' %}
+    {% if category_id %}
+        {% set products = Products({
+            'filter': ['available'],
+            'categories': [category_id],
+            'order' : { 'quantity_sold': 'desc' },
+            'limit' : quantity
+        }) %}
+    {% elseif type == 'all' %}
+        {% set products = Products({
+            'filter': ['available'],
+            'order' : { 'quantity_sold': 'desc' },
+            'limit' : quantity
+        }) %}
+    {% elseif type == 'top_seller' %}
         {% set products = Products({
             'filter': ['available'],
             'order' : { 'quantity_sold': 'desc' },

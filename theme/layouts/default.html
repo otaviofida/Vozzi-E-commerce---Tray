@@ -87,6 +87,57 @@
         {% element 'snippets/pageview' %} 
         {% element 'snippets/modal' %} 
         {% element 'snippets/modal-search' %}
+
+        {% if settings.show_cart_related %}
+        <div id="cart-related-source" style="display:none">
+            {% set cart_related = Products({ 'filter': ['available'], 'limit': 10 }) %}
+            {% if cart_related %}
+                {% for item in cart_related %}
+                    {% set productVar = item.Variants|length ? item.Variants : item.variants %}
+                    {% set colorVariants = [] %}
+                    {% if productVar %}
+                        {% for variant in productVar %}
+                            {% set colorSku = null %}
+                            {% for sku in variant.Sku %}
+                                {% if sku.type == 'Cor' %}
+                                    {% set colorSku = sku %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if colorSku %}
+                                {% set colorVariants = colorVariants|merge([{
+                                    id: variant.id,
+                                    color: colorSku.value,
+                                    image: colorSku.image_secure
+                                }]) %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="swiper-slide cart-related-item" data-product-id="{{ item.id }}"{% if item.has_variation %} data-has-variation="1"{% endif %}>
+                        <a href="{{ item.link }}" class="cart-related-img">
+                            <img data-src="{{ item.images[0].medium }}" alt="{{ item.name }}">
+                        </a>
+                        <div class="cart-related-info">
+                            <a href="{{ item.link }}" class="cart-related-name">{{ item.name }}</a>
+                            <span class="cart-related-price">{{ item.price | currency }}</span>
+                            {% if colorVariants|length > 0 %}
+                                <div class="d-variants colors-only">
+                                    {% for v in colorVariants %}
+                                        <button type="button" class="circle cart-related-color" data-variant-id="{{ v.id }}" aria-label="{{ v.color }}">
+                                            <img src="{{ v.image }}" alt="{{ v.color }}">
+                                        </button>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <button type="button" class="cart-related-add" aria-label="Adicionar ao carrinho">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% endif %}
+
         {% element 'snippets/carrinho-lateral' %}
         {% endspaceless %}
 

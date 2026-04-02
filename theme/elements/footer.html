@@ -44,7 +44,7 @@
         </li>
 
         <li>
-            <a href="http://" class="">
+            <a href="{{ links.central }}" class="">
                 <div class="icone">
                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                    <path d="M9.99992 10.0003C12.3011 10.0003 14.1666 8.13485 14.1666 5.83366C14.1666 3.53247 12.3011 1.66699 9.99992 1.66699C7.69873 1.66699 5.83325 3.53247 5.83325 5.83366C5.83325 8.13485 7.69873 10.0003 9.99992 10.0003Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -62,7 +62,7 @@
     <div class="container">
         <div class="up">
             {% element 'snippets/social-icons' %}
-            <img src="{{ asset(settings.logorodape) }}" alt="{{ store.name }}">
+            <img src="{{ asset(settings.logorodape) }}" alt="{{ store.name }}" loading="lazy">
         </div>
         <div class="mid">
             <div class="item">
@@ -79,7 +79,7 @@
                 <span>Precisa de ajuda?</span>
                 <ul>
                     <li><a href="tel:{{ settings.footer_telefone }}">Nosso telefone</a></li>
-                    <li><a href="https://wa.me/{{ settings.footer_whatsapp }}">Fale pelo whatsapp</a></li>
+                    <li><a href="https://wa.me/{{ settings.footer_whatsapp }}" target="_blank" rel="noopener noreferrer">Fale pelo whatsapp</a></li>
                     <li><a href="/nossas-lojas">Nossas Lojas</a></li>
                     <li><a href="/faq">FAQ</a></li>
                 </ul>
@@ -122,7 +122,7 @@
                 {{ store.name }} {{ 'now'|date('Y') }} | CNPJ {{ Translation('ag_mensagem_rodape') }}
             </div>
 
-            <a href="wa.me/5512991499737" class="company">
+            <a href="https://wa.me/5512991499737" class="company" target="_blank" rel="noopener noreferrer" aria-label="Desenvolvido por Colli & Co">
                 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="19" viewBox="0 0 60 19" fill="none">
                 <g clip-path="url(#clip0_2184_1102)">
                     <mask id="mask0_2184_1102" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="60" height="19">

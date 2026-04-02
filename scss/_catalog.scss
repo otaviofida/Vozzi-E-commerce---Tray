@@ -113,6 +113,9 @@
             display: none;
           }
         }
+        .orderby {
+          display: none;
+        }
         .filtro-ordem {
           display: flex;
           align-items: center;
@@ -137,4 +140,8 @@
   .close {
     cursor: pointer;
   }
+}
+
+.pagination .page.current {
+  opacity: 0.5;
 }

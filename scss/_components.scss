@@ -214,6 +214,21 @@
     }
 
     @media (max-width: 998px) {
-        height: 24.8125rem;
+        height: auto;
+        min-height: 24.8125rem;
+        padding-bottom: 5rem;
+
+        .link-img .img-product {
+            top: 30%;
+        }
+
+        .info-product .d-variants {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .addcart {
+            bottom: 1rem;
+        }
     }
 }

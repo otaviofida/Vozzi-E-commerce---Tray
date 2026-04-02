@@ -17,13 +17,13 @@
             <div class="swiper-wrapper">
                 {% for slide in banner.slides %}
                     <div class="swiper-slide">
-                        <a href="{{ slide.link }}" target="{{ slide.target }}">
+                        <a href="{{ slide.link }}" target="{{ slide.target }}" rel="noopener noreferrer">
                             <img
                                 src="{{ slide.image }}"
                                 alt="{{ slide.label }}"
                                 width="{{ slide.width }}"
                                 height="{{ slide.height }}"
-                                loading="lazy"
+                                {% if loop.index > 1 %}loading="lazy"{% endif %}
                             >
                         </a>
                     </div>
@@ -43,10 +43,11 @@
         {% if banner is defined %}
             {% set slide = banner %}
             <div class="container img-item">
-                <a href="{{ slide.link }}" target="{{ slide.target }}">
+                <a href="{{ slide.link }}" target="{{ slide.target }}" rel="noopener noreferrer">
                     <img
                         src="{{ slide.src }}"
                         alt="{{ slide.label }}"
+                        loading="lazy"
                     >
                 </a>
             </div>

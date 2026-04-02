@@ -9,11 +9,13 @@
     <div class="container">
         <div class="grid">
             {% for slide in banner.slides %}
-            <a href="{{ slide.link }}" class="item" target="{{ slide.target }}">
+            <a href="{{ slide.link }}" class="item" target="{{ slide.target }}" rel="noopener noreferrer">
                 <img
                     src="{{ slide.image }}"
                     alt="{{ slide.label }}"
                     loading="lazy"
+                    width="{{ slide.width }}"
+                    height="{{ slide.height }}"
                 >
             </a>
             {% endfor %}

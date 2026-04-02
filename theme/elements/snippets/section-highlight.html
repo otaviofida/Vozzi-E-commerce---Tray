@@ -6,20 +6,17 @@
  {% set product = products[0] %}
  {% set discount = product.price_offer > 0 ? (100 - (product.price_offer / product.price) * 100) : false %}
 
-{% if utils.is.is_mobile %}
-{% set banner = asset(settings.section_highlight_image_mobile) %}
-{% else %}
-{% set banner = asset(settings.section_highlight_image) %}
-{% endif %}
+{% set banner_desktop = asset(settings.section_highlight_image) %}
+{% set banner_mobile = asset(settings.section_highlight_image_mobile) %}
 
 <section class="s-section-highlight">
     <div class="container">
         <div class="up">
-            <img src="{{ banner }}" alt="Vozzi - Produto Destaque">
+            <img class="js-responsive-banner" src="{{ banner_desktop }}" data-desktop="{{ banner_desktop }}" data-mobile="{{ banner_mobile }}" alt="Vozzi - Produto Destaque" loading="lazy">
         </div>
         <div class="mid-product">
             <div class="left swiper">
-                <img class="img-highlight" src="{{ asset('img/bg-highlight-product.svg') }}" alt="Vozzi">
+                <img class="img-highlight" src="{{ asset('img/bg-highlight-product.svg') }}" alt="" role="presentation" loading="lazy">
             
                 {# ===== SWIPER PRINCIPAL ===== #}
                 <div class="swiper-wrapper swipermain">

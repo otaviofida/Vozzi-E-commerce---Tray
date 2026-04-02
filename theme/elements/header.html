@@ -2,7 +2,7 @@
 <header class="header-mobile">
   <div class="cont-menu-m">
     <div class="topo">
-        <a href="" class="menu-mobile-link">
+        <a href="{{ links.central }}" class="menu-mobile-link">
             <div class="icone">
                 <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
                   <path d="M8.37484 8.37492C10.3021 8.37492 11.8644 6.81258 11.8644 4.88533C11.8644 2.95809 10.3021 1.39575 8.37484 1.39575C6.44759 1.39575 4.88525 2.95809 4.88525 4.88533C4.88525 6.81258 6.44759 8.37492 8.37484 8.37492Z" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -36,12 +36,14 @@
                 </svg>
             </div>
         </div>
-          {% for category in show_categories %}
+          {% for category in categories %}
+          {% if category.id != 53 %}
           <li>
             <a href="{{ category.link }}" title="{{ category.name }}"
               >{{ category.name }}</a
             >
           </li>
+          {% endif %}
           {% endfor %}
     </ul>
     <ul class="sub-new-mobile">
@@ -53,15 +55,29 @@
                 </svg>
             </div>
         </div>
-          {% for category in categories %}
+        {% for category in categories %}
             {% if category.id == 53 and category.children %}
-              {% for sub in category.children %}
-                <li>
-                  <a href="{{ sub.link }}" title="{{ sub.name }}">{{ sub.name }}</a>
-                </li>
-              {% endfor %}
+                {% for sub in category.children %}
+                    <li class="{% if sub.children %}has-children{% endif %}">
+                        <div class="mobile-sub-link">
+                            <a href="{{ sub.link }}" title="{{ sub.name }}">{{ sub.name }}</a>
+                            {% if sub.children %}
+                                <svg class="arrow-expand" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="none">
+                                    <path d="M4 6L8 10L12 6" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            {% endif %}
+                        </div>
+                        {% if sub.children %}
+                            <ul class="sub-children">
+                                {% for subsub in sub.children %}
+                                    <li><a href="{{ subsub.link }}" title="{{ subsub.name }}">{{ subsub.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
             {% endif %}
-          {% endfor %}
+        {% endfor %}
     </ul>
     <ul class="sub-new-mobile">
         <div class="title">
@@ -118,7 +134,23 @@
                     {% for category in categories %}
                         {% if category.id == 53 and category.children %}
                             {% for sub in category.children %}
-                                <li><a href="{{ sub.link }}">{{ sub.name }}</a></li>
+                                <li class="dropdown-aparelho-item{% if sub.children %} has-children{% endif %}">
+                                    <div class="dropdown-aparelho-link">
+                                        <a href="{{ sub.link }}">{{ sub.name }}</a>
+                                        {% if sub.children %}
+                                            <svg class="arrow-expand" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" fill="none">
+                                                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {% endif %}
+                                    </div>
+                                    {% if sub.children %}
+                                        <ul class="dropdown-aparelho-sublist">
+                                            {% for subsub in sub.children %}
+                                                <li><a href="{{ subsub.link }}">{{ subsub.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </li>
                             {% endfor %}
                         {% endif %}
                     {% endfor %}
@@ -135,11 +167,11 @@
             <div class="dropdown-user">
                 <i class="ph ph-user"></i>
                 <div class="dropdown-user-menu">
-                    <a href="/central-do-cliente" class="dropdown-user-link">Minha conta</a>
-                    <a href="/loja/central_anteriores.php?loja=1366638" class="dropdown-user-link">Meus pedidos</a>
+                    <a href="{{ links.central }}" class="dropdown-user-link">Minha conta</a>
+                    <a href="{{ links.orders }}" class="dropdown-user-link">Meus pedidos</a>
                     <div class="dropdown-user-actions">
-                        <a href="/central-do-cliente" class="dropdown-user-btn">Entrar</a>
-                        <a href="/cadastro" class="dropdown-user-register">Cadastre-se</a>
+                        <a href="{{ links.login }}" class="dropdown-user-btn">Entrar</a>
+                        <a href="{{ links.register }}" class="dropdown-user-register">Cadastre-se</a>
                     </div>
                 </div>
             </div>
@@ -165,6 +197,30 @@
        </button>
     </div>
 </header>
+
+<nav class="category-bar">
+    <div class="container">
+        <ul class="category-bar-list">
+            {% for category in categories %}
+                {% if category.id != 53 and category.id != 13 %}
+                    <li class="category-bar-item{% if category.children %} has-sub{% endif %}">
+                        <a href="{{ category.link }}">{{ category.name }}</a>
+                        {% if category.children %}
+                            <svg class="category-bar-arrow" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 16 16" fill="none">
+                                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <ul class="category-bar-dropdown">
+                                {% for sub in category.children %}
+                                    <li><a href="{{ sub.link }}">{{ sub.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</nav>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -198,6 +254,16 @@
                 }, 150);
     
                 changed = false;
+            }
+
+            // Category bar visibility
+            var categoryBar = document.querySelector('.category-bar');
+            if (categoryBar) {
+                if (window.scrollY > 200) {
+                    categoryBar.classList.add('visible');
+                } else {
+                    categoryBar.classList.remove('visible');
+                }
             }
         });
     });

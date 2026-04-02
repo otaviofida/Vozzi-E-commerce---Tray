@@ -1,11 +1,7 @@
-{% if utils.is_mobile %}
-    {% set image = asset(settings.section_brand_background_mobile) %}
-{% else %}
-    {% set image = asset(settings.section_brand_background) %}
-{% endif %}
+{% set image_desktop = asset(settings.section_brand_background) %}
+{% set image_mobile = asset(settings.section_brand_background_mobile) %}
 
-
-<section class="s-section-brands" style="background-image: url({{ image }});">
+<section class="s-section-brands" data-bg-desktop="{{ image_desktop }}" data-bg-mobile="{{ image_mobile }}" style="background-image: url({{ image_desktop }});">
     <div class="container">
         <div class="entry-space"></div>
         <div class="info">
