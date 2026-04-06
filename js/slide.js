@@ -18,12 +18,12 @@
   });
 }
 
-// Variáveis globais para Swipers do produto (usadas em theme.js)
+// Variáveis globais para Swipers do produto (usadas em theme.js)  
 var swiperThumbs, swiperMain;
 
 {
   requestAnimationFrame(function () {
-    document.querySelectorAll(".s-showcase").forEach((section) => {
+    document.querySelectorAll(".s-showcase:not(.s-showcase--grid)").forEach((section) => {
       const swiperEl = section.querySelector(".d-showcase");
       const nextBtn = section.querySelector(".swiper-button-next");
       const prevBtn = section.querySelector(".swiper-button-prev");

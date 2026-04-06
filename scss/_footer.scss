@@ -82,6 +82,33 @@ footer{
                         }
                     }
                 }
+
+                .btn-suporte-pulse{
+                    display: inline-flex;
+                    align-items: center;
+                    gap: .5rem;
+                    background-color: #462E86;
+                    color: #fff;
+                    font-size: .8125rem;
+                    font-weight: 600;
+                    padding: .625rem 1.25rem;
+                    border-radius: 9999px;
+                    margin-top: .75rem;
+                    width: fit-content;
+                    text-decoration: none;
+                    transition: background-color .3s ease, transform .3s ease;
+                    animation: pulse-btn 2s infinite;
+
+                    svg{
+                        flex-shrink: 0;
+                    }
+
+                    &:hover{
+                        background-color: #362272;
+                        transform: scale(1.05);
+                        animation: none;
+                    }
+                }
             }
         }
 
@@ -139,5 +166,17 @@ footer{
                 gap: .625rem;
             }
         }
+    }
+}
+
+@keyframes pulse-btn {
+    0% {
+        box-shadow: 0 0 0 0 rgba(70, 46, 134, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 12px rgba(70, 46, 134, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(70, 46, 134, 0);
     }
 }

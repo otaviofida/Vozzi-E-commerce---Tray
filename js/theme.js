@@ -67,7 +67,7 @@
   });
 }
 
-// Header: gradiente -> roxo no scroll (home) / sólido em páginas internas com hero
+// Header: gradiente -> roxo no scroll (home) / sólido em todas as outras páginas
 {
   document.addEventListener("DOMContentLoaded", function () {
     const html = document.documentElement;
@@ -85,14 +85,14 @@
       }
       window.addEventListener("scroll", onScroll, { passive: true });
       onScroll();
-    } else if (html.classList.contains("page-sobre-a-vozzi")) {
-      // Sobre: header sempre sólido roxo
+    } else {
+      // Todas as outras páginas: header sempre sólido roxo
       header.classList.add("header-solid");
     }
   });
 }
 
-// Dropdown "Selecione por aparelho"
+// Dropdown "Selecione por aparelho" 
 {
   document.addEventListener("DOMContentLoaded", function () {
     const dropdown = document.querySelector(".dropdown-aparelho");
@@ -804,8 +804,8 @@
           (v) => {
             const matchMain = mainSelect ? v.main === selectedMain : true;
             return matchMain &&
-            v.color === selectedColor &&
-            Number(v.stock) > 0;
+              v.color === selectedColor &&
+              Number(v.stock) > 0;
           }
         );
 
@@ -1488,7 +1488,7 @@
         ) {
           theme.settings.productThumbs.destroy(true, true);
         }
-      } catch (e) {}
+      } catch (e) { }
 
       try {
         if (
@@ -1497,7 +1497,7 @@
         ) {
           theme.settings.productGallery.destroy(true, true);
         }
-      } catch (e) {}
+      } catch (e) { }
 
       theme.settings.productThumbs = new Swiper(targetThumbs, {
         spaceBetween: 10,
@@ -1721,4 +1721,3 @@
     initFilterToggle();
   });
 }
-  

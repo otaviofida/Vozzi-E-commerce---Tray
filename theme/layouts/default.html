@@ -50,6 +50,8 @@
                         {{ content_for_layout }} 
                     {% elseif pages.current == 'sobre-a-vozzi' %}
                         {% element 'snippets/page-about' %}
+                    {% elseif pages.current == 'nossas-lojas' %}
+                        {% element 'snippets/nossas-lojas' %}
                     {% else %} 
                         {% set special_pages = [ 'listas', 'depoimentos-de-clientes', 'noticias' ] %} 
                         {% set title = '' %} 

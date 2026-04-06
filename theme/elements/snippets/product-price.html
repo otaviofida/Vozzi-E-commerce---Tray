@@ -1,15 +1,44 @@
-{% set current_price = product.price_offer > 0 ? product.price_offer : product.price %} {% set old_price = product.price_offer > 0 ? product.price : false %} 
+{% set current_price = product.price_offer > 0 ? product.price_offer : product.price %}
+{% set old_price = product.price_offer > 0 ? product.price : false %}
+
+{% set cash_price = null %}
+{% set installment_text = null %}
+
+{% for payment in product.payment_option_details %}
+    {% if payment.plots == 1 and cash_price is null %}
+        {% set cash_price = payment.value %}
+    {% endif %}
+    {% if payment.plots > 1 and installment_text is null %}
+        {% set installment_text = payment.plots ~ 'x de ' ~ settings.currency ~ ' ' ~ (payment.value | currency) %}
+    {% endif %}
+{% endfor %}
 
 {% if product.has_variation and product.has_other_prices %}
     <p class="pricing-title">{{ Translation('a_partir_de') }}</p>
 {% endif %}
 
-    {% if old_price %}
-        <p class="pricing-old">de: {{ settings.currency }} {{ old_price | currency }}</p>
-    {% endif %}
+{% if old_price %}
+    <p class="pricing-old">de: {{ settings.currency }} {{ old_price | currency }}</p>
+{% endif %}
 
+{% if cash_price %}
+    <p class="pricing-current">
+        <em class="value">{{ settings.currency }} {{ cash_price | currency }}</em>
+        <span class="tag-pix">pix</span>
+    </p>
+    {% if installment_text %}
+        <p class="pricing-installments">ou {{ installment_text }}</p>
+    {% else %}
+        <p class="pricing-installments">{{ product.payment }}</p>
+    {% endif %}
+    <p class="pricing-prazo">Total a prazo: {{ settings.currency }} {{ current_price | currency }}</p>
+{% else %}
     <p class="pricing-current">
         {{ old_price ? 'por:' }} <em class="value"> {{ settings.currency }} {{ current_price | currency }} </em>
     </p>
-
-    <p class="pricing-installments">{{ product.payment }}</p>
+    {% if installment_text %}
+        <p class="pricing-installments">ou {{ installment_text }}</p>
+    {% else %}
+        <p class="pricing-installments">{{ product.payment }}</p>
+    {% endif %}
+{% endif %}

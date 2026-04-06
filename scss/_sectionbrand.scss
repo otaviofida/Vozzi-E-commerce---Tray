@@ -4,7 +4,7 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     position: relative;
-    min-height: 100vh; /* espaço total */
+    min-height: auto;
 
     .container{
         position: relative;
@@ -101,11 +101,11 @@
         }
 
         .entry-space{
-            height: 26.25rem;
+            height: 6.25rem;
         }
 
         .spacer{
-            height: 7.5rem;
+            height: 3.75rem;
         }
     }
 }
@@ -113,10 +113,10 @@
 
 /* espaço inicial: faz o texto vir de baixo */
 .entry-space{
-    height: 80vh;
+    height: 15rem;
 }
 
 /* espaço final */
 .spacer{
-    height: 100vh;
+    height: 15rem;
 }

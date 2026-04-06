@@ -1,53 +1,70 @@
 {% if type %}
-    {% set quantity = quantity | default(8) %}
+{% set quantity = quantity | default(8) %}
+{% set layout = layout | default('carousel') %}
 
-    {% if category_id %}
-        {% set products = Products({
-            'filter': ['available'],
-            'categories': [category_id],
-            'order' : { 'quantity_sold': 'desc' },
-            'limit' : quantity
-        }) %}
-    {% elseif type == 'all' %}
-        {% set products = Products({
-            'filter': ['available'],
-            'order' : { 'quantity_sold': 'desc' },
-            'limit' : quantity
-        }) %}
-    {% elseif type == 'top_seller' %}
-        {% set products = Products({
-            'filter': ['available'],
-            'order' : { 'quantity_sold': 'desc' },
-            'limit' : quantity
-        }) %}
-    {% else %}
-    {% set products = Products({
-        'filter': [type, 'available'],
-        'limit': quantity,
-        'order': {'quantity_sold': 'desc'}
-     }) %}
-     {% endif %}
+{% if layout == 'grid' %}
+{% set quantity = 6 %}
+{% endif %}
+
+{% if category_id %}
+{% set products = Products({
+'filter': ['available'],
+'categories': [category_id],
+'order' : { 'quantity_sold': 'desc' },
+'limit' : quantity
+}) %}
+{% elseif type == 'all' %}
+{% set products = Products({
+'filter': ['available'],
+'order' : { 'quantity_sold': 'desc' },
+'limit' : quantity
+}) %}
+{% elseif type == 'top_seller' %}
+{% set products = Products({
+'filter': ['available'],
+'order' : { 'quantity_sold': 'desc' },
+'limit' : quantity
+}) %}
+{% else %}
+{% set products = Products({
+'filter': [type, 'available'],
+'limit': quantity,
+'order': {'quantity_sold': 'desc'}
+}) %}
+{% endif %}
 {% endif %}
 
 {% if products | length > 0 %}
-<section class="s-showcase">
+<section class="s-showcase{% if layout == 'grid' %} s-showcase--grid{% endif %}">
     <div class="container">
         <div class="d-title">
             <h2>{{ title }}</h2>
+            {% if layout != 'grid' %}
             <div class="swiper-pagination">
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
             </div>
+            {% endif %}
         </div>
+        {% if layout == 'grid' %}
+        <div class="d-showcase-grid">
+            {% for item in products %}
+            {% element 'snippets/product' {
+            product : item
+            } %}
+            {% endfor %}
+        </div>
+        {% else %}
         <div class="d-showcase">
             <div class="swiper-wrapper">
                 {% for item in products %}
-                    {% element 'snippets/product' {
-                        product : item
-                    } %}
+                {% element 'snippets/product' {
+                product : item
+                } %}
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
     </div>
 </section>
 {% endif %}

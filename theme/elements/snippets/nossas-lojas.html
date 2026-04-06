@@ -1,0 +1,155 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<section class="p-stores">
+    <!-- HERO -->
+    <div class="p-stores__hero">
+        <div class="container">
+            <div class="p-stores__hero-content">
+                <span class="p-stores__hero-tag">Nossas Lojas</span>
+                <h1>Nossas Lojas</h1>
+                <p>Encontre a loja Vozzi mais perto de você.</p>
+            </div>
+        </div>
+        {% if settings.section_about_img %}
+        <img src="{{ asset(settings.section_about_img) }}" alt="Nossas Lojas Vozzi" loading="lazy">
+        {% endif %}
+    </div>
+
+    <!-- LOJAS + MAPA -->
+    <div class="p-stores__content">
+        <div class="container">
+            <div class="p-stores__grid">
+                <!-- INFO -->
+                <div class="p-stores__info">
+                    <span class="p-stores__label">Nossas Lojas</span>
+                    <h2>Visite uma das lojas exclusivas da Vozzi</h2>
+                    <p class="p-stores__desc">Visite uma das lojas exclusivas da Vozzi e entre em um mundo de tecnologia premium.</p>
+
+                    <div class="p-stores__list">
+                        {% for i in 1..13 %}
+                            {% set sname = attribute(settings, 'store_name_' ~ i) %}
+                            {% set saddr = attribute(settings, 'store_address_' ~ i) %}
+                            {% set sphone = attribute(settings, 'store_phone_' ~ i) %}
+                            {% set slat = attribute(settings, 'store_lat_' ~ i) %}
+                            {% set slng = attribute(settings, 'store_lng_' ~ i) %}
+                            {% if sname %}
+                            <div class="p-stores__card" data-store="{{ i }}" data-lat="{{ slat }}" data-lng="{{ slng }}">
+                                <div class="p-stores__card-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                        <circle cx="12" cy="10" r="3"/>
+                                    </svg>
+                                </div>
+                                <div class="p-stores__card-info">
+                                    <h3>{{ sname }}</h3>
+                                    <p>{{ saddr }}</p>
+                                    {% if sphone %}
+                                    <a href="tel:{{ sphone }}" class="p-stores__card-phone">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                        </svg>
+                                        {{ sphone }}
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- MAPA LEAFLET -->
+                <div class="p-stores__map">
+                    <div id="stores-map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var mapEl = document.getElementById('stores-map');
+    if (!mapEl) return;
+
+    var cards = document.querySelectorAll('.p-stores__card');
+    var stores = [];
+    var markers = {};
+
+    cards.forEach(function (card) {
+        var lat = parseFloat(card.dataset.lat);
+        var lng = parseFloat(card.dataset.lng);
+        var id = card.dataset.store;
+        var nameEl = card.querySelector('h3');
+        var addrEl = card.querySelector('.p-stores__card-info p');
+        var name = nameEl ? nameEl.textContent : '';
+        var address = addrEl ? addrEl.textContent : '';
+
+        if (!isNaN(lat) && !isNaN(lng)) {
+            stores.push({ id: id, lat: lat, lng: lng, name: name, address: address });
+        }
+    });
+
+    if (stores.length === 0) return;
+
+    var map = L.map('stores-map', {
+        scrollWheelZoom: false,
+        zoomControl: true
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '\u00a9 OpenStreetMap'
+    }).addTo(map);
+
+    var bounds = [];
+    stores.forEach(function (store) {
+        var marker = L.circleMarker([store.lat, store.lng], {
+            radius: 10,
+            fillColor: '#462E86',
+            color: '#fff',
+            weight: 3,
+            opacity: 1,
+            fillOpacity: 1
+        }).addTo(map);
+
+        var popupDiv = document.createElement('div');
+        var b = document.createElement('b');
+        b.textContent = store.name;
+        popupDiv.appendChild(b);
+        popupDiv.appendChild(document.createElement('br'));
+        popupDiv.appendChild(document.createTextNode(store.address));
+        marker.bindPopup(popupDiv);
+
+        markers[store.id] = marker;
+        bounds.push([store.lat, store.lng]);
+    });
+
+    if (bounds.length > 1) {
+        map.fitBounds(bounds, { padding: [50, 50] });
+    } else {
+        map.setView(bounds[0], 15);
+    }
+
+    cards.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+            if (e.target.closest('.p-stores__card-phone')) return;
+
+            var id = this.dataset.store;
+            var marker = markers[id];
+            if (!marker) return;
+
+            cards.forEach(function (c) { c.classList.remove('is-active'); });
+            this.classList.add('is-active');
+
+            map.flyTo(marker.getLatLng(), 16, { duration: 1 });
+            marker.openPopup();
+
+            if (window.innerWidth <= 998) {
+                mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    });
+});
+</script>
+

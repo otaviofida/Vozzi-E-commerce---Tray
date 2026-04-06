@@ -1,29 +1,30 @@
-.s-showcase{
+.s-showcase {
     padding: 3.75rem 0;
     background-color: #F9FAFB;
     overflow: hidden;
 
-    .container{
+    .container {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
 
-        .d-title{
+        .d-title {
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            h2{
+            h2 {
                 color: var(--c_general_titulos);
             }
 
-            .swiper-pagination{
+            .swiper-pagination {
                 display: flex;
                 align-items: center;
-                gap: .5rem; 
+                gap: .5rem;
                 position: relative;
 
-                .swiper-button-prev, .swiper-button-next{
+                .swiper-button-prev,
+                .swiper-button-next {
                     position: relative;
                     top: 0;
                     left: 0;
@@ -34,11 +35,37 @@
                     height: 3.5rem;
                     border-radius: 100%;
 
-                    &::after{
+                    &::after {
                         font-size: 1rem;
                         color: #6B7280;
                     }
                 }
+            }
+        }
+    }
+
+    // =====================
+    // GRID MODE
+    // =====================
+    &.s-showcase--grid {
+        overflow: visible;
+
+        .d-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+
+            .product-slide {
+                width: 100%;
+            }
+        }
+    }
+
+    @media (max-width: 998px) {
+        &.s-showcase--grid {
+            .d-showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
             }
         }
     }
