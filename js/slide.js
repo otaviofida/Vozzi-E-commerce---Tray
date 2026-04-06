@@ -140,24 +140,44 @@ var swiperThumbs, swiperMain;
     const nextEl = document.querySelector(".js-gallery-thumbs-next");
 
     let thumbsSwiper = null;
+    const mobileBreak = 630;
 
-    if (thumbsEl && thumbsEl.querySelectorAll(".swiper-slide").length > 1) {
-      thumbsSwiper = new Swiper(thumbsEl, {
-        direction: "vertical",
-        slidesPerView: 3, // quantos thumbs visíveis
+    function getThumbsConfig() {
+      var isMobile = window.innerWidth <= mobileBreak;
+      return {
+        direction: isMobile ? "horizontal" : "vertical",
+        slidesPerView: isMobile ? "auto" : 3,
         spaceBetween: 8,
         freeMode: false,
         watchSlidesProgress: true,
         navigation: prevEl && nextEl ? { prevEl, nextEl } : undefined,
-        mousewheel: true, // scroll do mouse/trackpad
-        lazy: { loadPrevNext: true },
+        mousewheel: !isMobile,
+      };
+    }
+
+    if (thumbsEl && thumbsEl.querySelectorAll(".swiper-slide").length > 1) {
+      thumbsSwiper = new Swiper(thumbsEl, getThumbsConfig());
+
+      // Recria o swiper de thumbs ao cruzar o breakpoint mobile
+      var wasMobile = window.innerWidth <= mobileBreak;
+      window.addEventListener("resize", function () {
+        var isMobile = window.innerWidth <= mobileBreak;
+        if (isMobile !== wasMobile) {
+          wasMobile = isMobile;
+          thumbsSwiper.destroy(true, true);
+          thumbsSwiper = new Swiper(thumbsEl, getThumbsConfig());
+          if (mainSwiper) {
+            mainSwiper.thumbs.swiper = thumbsSwiper;
+            mainSwiper.thumbs.init();
+            mainSwiper.thumbs.update(true);
+          }
+        }
       });
     }
 
     const mainSwiper = new Swiper(mainEl, {
       slidesPerView: 1,
       spaceBetween: 0,
-      lazy: { loadPrevNext: true, loadPrevNextAmount: 2 },
       thumbs: thumbsSwiper ? { swiper: thumbsSwiper } : undefined,
     });
 

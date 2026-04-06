@@ -67,24 +67,28 @@
   });
 }
 
-// Header: gradiente -> roxo no scroll (apenas home)
+// Header: gradiente -> roxo no scroll (home) / sólido em páginas internas com hero
 {
   document.addEventListener("DOMContentLoaded", function () {
-    if (!document.documentElement.classList.contains("page-home")) return;
-
+    const html = document.documentElement;
     const header = document.querySelector("header:not(.header-mobile)");
     if (!header) return;
 
-    function onScroll() {
-      if (window.scrollY > 80) {
-        header.classList.add("header-solid");
-      } else {
-        header.classList.remove("header-solid");
+    if (html.classList.contains("page-home")) {
+      // Home: toggle no scroll
+      function onScroll() {
+        if (window.scrollY > 80) {
+          header.classList.add("header-solid");
+        } else {
+          header.classList.remove("header-solid");
+        }
       }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    } else if (html.classList.contains("page-sobre-a-vozzi")) {
+      // Sobre: header sempre sólido roxo
+      header.classList.add("header-solid");
     }
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
   });
 }
 
@@ -1717,3 +1721,4 @@
     initFilterToggle();
   });
 }
+  

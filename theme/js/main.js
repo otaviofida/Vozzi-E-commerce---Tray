@@ -778,7 +778,7 @@
       customTab.each(function () {
         let target = $(this).attr("href").split("#")[1];
         target = $(`#${target}`);
-
+ 
         $(target).detach().insertAfter(this);
       });
 
@@ -791,18 +791,94 @@
           method: "get",
           success: function (response) {
             tab.html(response);
-            $("#atualizaFormas li table").css("display", "none");
+            simplifyPaymentMethods();
             openPaymentMethod();
           },
         });
       });
 
-      const openPaymentMethod = () => {
-        $("#formasPagto #linkPagParcelado").remove();
+      const simplifyPaymentMethods = () => {
+        setTimeout(function () {
+          var ul = document.querySelector("#atualizaFormas ul");
+          if (!ul) return;
 
-        return $("#atualizaFormas li a").on("click", function () {
-          $(this).toggleClass("u-visible");
-        });
+          var items = ul.querySelectorAll('li[id^="li_"]');
+          if (!items.length) return;
+
+          var pixLi = null;
+          var cardLis = [];
+          var bestCardLi = null;
+          var maxParcelas = 0;
+
+          for (var i = 0; i < items.length; i++) {
+            var li = items[i];
+            var anchor = li.querySelector("a");
+            var img = anchor ? anchor.querySelector("img") : null;
+            var src = img ? (img.getAttribute("src") || "") : "";
+
+            if (src.toLowerCase().indexOf("pix") !== -1) {
+              pixLi = li;
+            } else if (img) {
+              cardLis.push({ li: li, img: img });
+              var parcelas = li.querySelectorAll(".item-parcela").length;
+              if (parcelas > maxParcelas) {
+                maxParcelas = parcelas;
+                bestCardLi = li;
+              }
+            }
+          }
+
+          // Esconde todos os li originais
+          for (var i = 0; i < items.length; i++) {
+            items[i].style.setProperty("display", "none", "important");
+          }
+
+          // Mostra PIX com tabela aberta
+          if (pixLi) {
+            pixLi.style.setProperty("display", "block", "important");
+            var pixTable = pixLi.querySelector("table");
+            if (pixTable) pixTable.style.display = "block";
+          }
+
+          // Unifica cartoes de credito
+          if (bestCardLi && cardLis.length > 0) {
+            var brandsHtml = "";
+            for (var j = 0; j < cardLis.length; j++) {
+              var cardImg = cardLis[j].img;
+              brandsHtml += '<img src="' + cardImg.getAttribute("src") + '" alt="' + (cardImg.getAttribute("alt") || "") + '" border="0" style="width:35px;height:auto;object-fit:contain;margin-right:5px;">';
+            }
+
+            var bestTable = bestCardLi.querySelector("table");
+            var tableHtml = bestTable ? bestTable.outerHTML : "";
+
+            var newLi = document.createElement("li");
+            newLi.id = "li_unified_card";
+            newLi.style.setProperty("display", "block", "important");
+            newLi.innerHTML = '<a class="color" href="javascript:void(0)" style="cursor:pointer;">' +
+              '<span style="display:inline-flex;align-items:center;flex-wrap:wrap;gap:4px;margin-right:8px;">' + brandsHtml + '</span>' +
+              'Cartão de Crédito' +
+            '</a>' + tableHtml;
+
+            var unifiedTable = newLi.querySelector("table");
+            if (unifiedTable) unifiedTable.style.display = "none";
+
+            ul.appendChild(newLi);
+          }
+        }, 150);
+      };
+
+      const openPaymentMethod = () => {
+        setTimeout(function () {
+          $("#formasPagto #linkPagParcelado").remove();
+
+          $("#atualizaFormas li a").on("click", function () {
+            $(this).toggleClass("u-visible");
+            var table = $(this).siblings("table");
+            if (table.length) {
+              table.toggle();
+            }
+          });
+        }, 200);
       };
 
       linkNavTabs.on("click", function (event) {

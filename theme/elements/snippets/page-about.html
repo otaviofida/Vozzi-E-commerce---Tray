@@ -1,45 +1,115 @@
 <section class="p-about">
+    <!-- HERO -->
     <div class="p-about__hero">
         <div class="container">
             <div class="p-about__hero-content">
-                <h1>{{ settings.section_about_titulo }}</h1>
-                <p>{{ settings.section_about_texto }}</p>
+                <span class="p-about__hero-tag">Sobre nós</span>
+                <h1>Conheça a Vozzi</h1>
+                <p>Estilo, proteção e escolha.</p>
             </div>
         </div>
         {% if settings.section_about_img %}
-            <img src="{{ asset(settings.section_about_img) }}" alt="{{ settings.section_about_titulo }}" loading="lazy">
+        <img src="{{ asset(settings.section_about_img) }}" alt="Sobre a Vozzi" loading="lazy">
         {% endif %}
     </div>
 
-    <div class="p-about__values">
+    <!-- INTRO -->
+    <div class="p-about__intro">
         <div class="container">
-            <div class="p-about__values-grid">
-                <div class="p-about__values-item">
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="18" viewBox="0 0 32 18" fill="none">
-                            <path d="M30.1764 17.1517L17.1299 17.127C15.0838 17.1275 13.4282 15.4626 13.4401 13.4165L13.4509 11.575L22.6972 4.1377L30.144 4.16062C31.1688 4.16062 31.9997 4.99146 31.9997 6.01636V15.2959H32L30.1764 17.1517Z" fill="white"/>
-                            <path d="M1.82361 0L0 1.85574H0.000284747V11.1353C0.000284747 12.1602 0.831129 12.9911 1.85598 12.9911L9.30278 13.014L18.5491 5.57663L18.5599 3.73522C18.5718 1.68907 16.9162 0.024156 14.8701 0.0246306L1.82361 0Z" fill="white"/>
-                        </svg>
-                    </div>
-                    <h3>{{ settings.section_about_titulo1 }}</h3>
-                    <p>{{ settings.section_about_texto1 }}</p>
+            <div class="p-about__intro-grid">
+                <div class="p-about__intro-left">
+                    <h2>Quem somos</h2>
                 </div>
-                <div class="p-about__values-item">
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" viewBox="0 0 26 20" fill="none">
-                            <path d="M25.2418 14.0232H22.4369L19.878 16.8553H11.2186V14.0232L14.7076 11.2183H22.4369V8.33623H18.2935L25.2418 2.75053L22.4369 0H2.80433L0 2.75053V5.6093H5.6093V2.75053H14.0232V5.6093L10.623 8.33623H2.80433V11.2183H7.02861L0 16.8553L2.80496 19.6055H22.4369L25.2418 16.8553V14.0232Z" fill="white"/>
-                        </svg>
-                    </div>
-                    <h3>{{ settings.section_about_titulo2 }}</h3>
-                    <p>{{ settings.section_about_texto2 }}</p>
+                <div class="p-about__intro-right">
+                    <p>A <strong>VOZZI</strong> é uma marca de acessórios para celular que acredita que estilo e
+                        funcionalidade devem andar juntos.</p>
+                    <p>Mais do que proteger, nossos produtos são pensados para acompanhar o seu dia a dia, refletir sua
+                        personalidade e trazer praticidade para a sua rotina. Trabalhamos com uma linha completa de
+                        capinhas e acessórios, desenvolvidos com atenção aos detalhes, qualidade e design.</p>
+                    <p>Nosso compromisso é oferecer produtos que vão além do básico, entregando uma experiência que une
+                        estética, durabilidade e confiança.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="p-about__content">
+    <!-- O QUE FAZEMOS -->
+    <div class="p-about__whatwedo">
         <div class="container">
-            {{ content_for_layout }}
+            <div class="p-about__whatwedo-header">
+                <span class="p-about__label">O que fazemos</span>
+                <h2>Desenvolvemos e selecionamos capinhas e acessórios que unem</h2>
+            </div>
+            <div class="p-about__whatwedo-grid">
+                <div class="p-about__whatwedo-card">
+                    <div class="p-about__whatwedo-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <h3>Design atual e versátil</h3>
+                    <p>Criamos produtos com estética moderna que se adaptam a diferentes estilos e personalidades.</p>
+                </div>
+                <div class="p-about__whatwedo-card">
+                    <div class="p-about__whatwedo-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                    </div>
+                    <h3>Proteção eficiente para o dia a dia</h3>
+                    <p>Cada produto é desenvolvido para proteger seu dispositivo sem abrir mão do visual.</p>
+                </div>
+                <div class="p-about__whatwedo-card">
+                    <div class="p-about__whatwedo-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                            <line x1="9" y1="9" x2="9.01" y2="9" />
+                            <line x1="15" y1="9" x2="15.01" y2="9" />
+                        </svg>
+                    </div>
+                    <h3>Variedade de estilos para diferentes perfis</h3>
+                    <p>Aqui, você encontra opções que se adaptam ao seu ritmo, ao seu gosto e à forma como você se
+                        expressa.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMO FAZEMOS + POR QUE FAZEMOS -->
+    <div class="p-about__philosophy">
+        <div class="container">
+            <div class="p-about__philosophy-grid">
+                <div class="p-about__philosophy-card">
+                    <span class="p-about__label">Como fazemos</span>
+                    <h3>Pensamos em cada detalhe do produto</h3>
+                    <p>Do acabamento ao encaixe — para garantir qualidade e funcionalidade. Trabalhamos com foco em
+                        oferecer uma experiência simples e prática, desde a escolha até o uso, trazendo soluções que
+                        facilitam sua rotina e valorizam o seu estilo.</p>
+                </div>
+                <div class="p-about__philosophy-card p-about__philosophy-card--accent">
+                    <span class="p-about__label p-about__label--light">Por que fazemos</span>
+                    <h3>Acreditamos que pequenos detalhes fazem diferença</h3>
+                    <p>Um acessório pode transformar não só o visual do seu celular, mas também a forma como você se
+                        conecta com o seu dia a dia. Por isso, buscamos entregar produtos que tragam mais praticidade,
+                        mais estilo e mais confiança para quem usa.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BRAND TAGLINE -->
+    <div class="p-about__tagline">
+        <div class="container">
+            <div class="p-about__tagline-content">
+                <img class="p-about__tagline-logo" src="{{ asset('img/logo-roxo.png') }}" alt="VOZZI" loading="lazy">
+                <p>Estilo, proteção e escolha.</p>
+            </div>
         </div>
     </div>
 </section>

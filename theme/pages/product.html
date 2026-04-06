@@ -66,8 +66,9 @@
         false : true %}
 <div class="swiper-slide d-gallery-image">
   <img
-    class="gallery-image{% if lazyIndex %} swiper-lazy{% endif %}"
-    {% if lazyIndex %}data-src="{{ images.full }}"{% else %}src="{{ images.full }}"{% endif %}
+    class="gallery-image"
+    src="{{ images.full }}"
+    {% if lazyIndex %}loading="lazy"{% endif %}
     alt="{{ product.name }}"
   />
 
