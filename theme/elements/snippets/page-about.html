@@ -18,9 +18,14 @@
         <div class="container">
             <div class="p-about__intro-grid">
                 <div class="p-about__intro-left">
-                    <h2>Quem somos</h2>
+                    {% if settings.section_about_img %}
+                    <img src="{{ asset(settings.section_about_img) }}" alt="Sobre a Vozzi" loading="lazy">
+                    {% else %}
+                    <img src="{{ asset('img/about-intro.jpg') }}" alt="Sobre a Vozzi" loading="lazy">
+                    {% endif %}
                 </div>
                 <div class="p-about__intro-right">
+                    <h2>Quem somos</h2>
                     <p>A <strong>VOZZI</strong> é uma marca de acessórios para celular que acredita que estilo e
                         funcionalidade devem andar juntos.</p>
                     <p>Mais do que proteger, nossos produtos são pensados para acompanhar o seu dia a dia, refletir sua
