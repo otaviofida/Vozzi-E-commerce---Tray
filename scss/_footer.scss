@@ -83,25 +83,98 @@ footer{
                     }
                 }
 
+                .footer-security-seals{
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: .75rem;
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+
+                    &__item{
+                        margin: 0;
+
+                        a{
+                            display: inline-flex;
+                            align-items: center;
+                            gap: .35rem;
+                            opacity: 1;
+
+                            &:hover{
+                                opacity: .85;
+                            }
+                        }
+
+                        img{
+                            display: block;
+                            height: auto;
+                            max-height: 2.75rem;
+                            width: auto;
+                        }
+                    }
+
+                    .google-seal a{
+                        color: var(--c_footer_text);
+
+                        .icon{
+                            font-size: 1.25rem;
+                        }
+                    }
+
+                    &__sr{
+                        position: absolute;
+                        width: 1px;
+                        height: 1px;
+                        padding: 0;
+                        margin: -1px;
+                        overflow: hidden;
+                        clip: rect(0, 0, 0, 0);
+                        white-space: nowrap;
+                        border: 0;
+                    }
+                }
+
+                .footer-cta-buttons{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: .75rem;
+                    margin-top: .75rem;
+                }
+
+                .btn-footer-tracking,
                 .btn-suporte-pulse{
                     display: inline-flex;
                     align-items: center;
                     gap: .5rem;
-                    background-color: #462E86;
-                    color: #fff;
                     font-size: .8125rem;
                     font-weight: 600;
                     padding: .625rem 1.25rem;
                     border-radius: 9999px;
-                    margin-top: .75rem;
                     width: fit-content;
                     text-decoration: none;
-                    transition: background-color .3s ease, transform .3s ease;
-                    animation: pulse-btn 2s infinite;
+                    transition: background-color .3s ease, color .3s ease, transform .3s ease;
 
                     svg{
                         flex-shrink: 0;
                     }
+                }
+
+                .btn-footer-tracking{
+                    background-color: #fff;
+                    color: #462E86;
+
+                    &:hover{
+                        background-color: #f0edf8;
+                        color: #362272;
+                        transform: scale(1.05);
+                    }
+                }
+
+                .btn-suporte-pulse{
+                    background-color: #462E86;
+                    color: #fff;
+                    animation: pulse-btn 2s infinite;
 
                     &:hover{
                         background-color: #362272;

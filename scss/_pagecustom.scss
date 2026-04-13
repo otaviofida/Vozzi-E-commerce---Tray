@@ -1,0 +1,127 @@
+// Páginas institucionais (CMS) — ex.: Como comprar
+.is-custom-page {
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 4rem;
+    padding-top: 8rem;
+
+    .default-title {
+        margin: 0 0 2rem;
+        padding: 0 0 1.25rem;
+        border-bottom: none;
+        text-align: left;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 4rem;
+            height: 3px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #462e86, rgba(70, 46, 134, 0.35));
+        }
+
+        .text {
+            display: block;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: #0a0713;
+        }
+    }
+
+    .board_htm.description {
+        padding-bottom: 0;
+    }
+
+    // Introdução (primeiro parágrafo antes dos passos)
+    .board_htm.description > p:first-child {
+        font-size: 1.0625rem;
+        line-height: 1.65;
+        color: #4b5563;
+        margin: 0 0 2rem;
+        padding: 1rem 1.25rem;
+        background: linear-gradient(135deg, rgba(70, 46, 134, 0.07) 0%, rgba(249, 250, 251, 0.9) 100%);
+        border-radius: 0.75rem;
+        border: 1px solid rgba(70, 46, 134, 0.12);
+    }
+
+    h2 {
+        font-size: 1.0625rem;
+        font-weight: 700;
+        line-height: 1.35;
+        color: #0a0713;
+        margin: 0 0 0.75rem;
+        padding: 1rem 1.125rem 1rem 1rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        border-left: 4px solid #462e86;
+        box-shadow: 0 4px 24px rgba(10, 7, 19, 0.06);
+        scroll-margin-top: 6rem;
+    }
+
+    h2:not(:first-of-type) {
+        margin-top: 1.75rem;
+    }
+
+    p {
+        font-size: 0.9375rem;
+        line-height: 1.7;
+        color: #374151;
+        margin: 0 0 1.5rem;
+    }
+
+    // Corpo do passo (parágrafo após o h2)
+    h2 + p {
+        margin-top: 0;
+        margin-bottom: 1.25rem;
+        padding-left: 0.25rem;
+    }
+
+    a {
+        color: #462e86;
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        transition: color 0.2s ease, opacity 0.2s ease;
+
+        &:hover {
+            color: #362272;
+        }
+    }
+
+    strong,
+    b {
+        font-weight: 600;
+        color: #111827;
+    }
+
+    ul,
+    ol {
+        margin: 0 0 1.5rem;
+        padding-left: 1.25rem;
+        color: #374151;
+        font-size: 0.9375rem;
+        line-height: 1.65;
+    }
+
+    li + li {
+        margin-top: 0.35rem;
+    }
+
+    @media (max-width: 768px) {
+        padding-bottom: 3rem;
+
+        .default-title {
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1rem;
+            padding: 0.875rem 1rem;
+        }
+    }
+}

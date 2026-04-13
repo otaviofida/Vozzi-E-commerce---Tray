@@ -1,380 +1,238 @@
 <style>
-  header {
-    background-color: #462e86;
+  header{
+      background-color: #462E86;
   }
 
-  .application {
-    padding-top: 4.625rem;
-    background-color: #f8fafc;
+  .application{
+      padding-top: 4.625rem;
+      background-color: #f8fafc;
   }
 
   @media (max-width: 768px) {
-    .application {
-      padding-top: 4.625rem;
-    }
-  }
-  .custom-link-tab{
-    display: none !important;
+      .application{
+          padding-top: 4.625rem;
+      }
   }
 </style>
 
+{% set form_classes = form_classes | default([]) %}
+
 {% if ProgressiveDiscounts %}
-<div class="pageProduct-bannerDiscount">
-  {% for discount in ProgressiveDiscounts %} {% if discount.banner %}
-  <img
-    class="bannerDiscount-image"
-    src="{{ discount.banner }}"
-    alt="{{ discount.name }}"
-  />
-  {% endif %} {% endfor %}
-</div>
-{% endif %} {% element 'snippets/breadcrumb' %} {% element 'schema' { 'product'
-: product } %}
+  <div class="pageProduct-bannerDiscount">
+      {% for discount in ProgressiveDiscounts %}
+          {% if discount.banner %}
+              <img class="bannerDiscount-image" src="{{ discount.banner }}" alt="{{ discount.name }}"/>
+          {% endif %}
+      {% endfor %}
+  </div>
+{% endif %}
+
+{% element 'snippets/breadcrumb' %}
+{% element 'schema' { 'product' : product } %}
 <section class="s-product-info">
-  <div class="d-product-gallery">
-    {% set quantityImages = product.images | length %}
+<div class="d-product-gallery">
 
-    <div
-      class="d-gallery-thumbs{{ quantityImages > 4 ? ' u-show' }} js-gallery-thumbs-wrap"
-    >
-      <div class="swiper js-gallery-thumbs">
-        <div class="swiper-wrapper">
-          {% if product.images %} {% for images in product.images %}
-           <div class="swiper-slide d-thumb-gallery">
-             <img
-               class="thumb-gallery-img"
-               src="{{ images.medium }}"
-               alt="{{ product.name }}"
-             />
+  {% set quantityImages = product.images | length %}
 
-           </div>
-          {% endfor %} {% endif %}
-        </div>
-      </div>
+  <div class="d-gallery-thumbs{{ quantityImages > 4 ? ' u-show' }} js-gallery-thumbs-wrap">
 
-      <div
-        class="slides-buttonPrev--gallery icon-arrow-simple{{ quantityImages > 4 ? ' u-show' }} js-gallery-thumbs-prev"
-      ></div>
-      <div
-        class="slides-buttonNext--gallery icon-arrow-simple{{ quantityImages > 4 ? ' u-show' }} js-gallery-thumbs-next"
-      ></div>
-    </div>
-
-    <div class="d-gallery-product swiper js-gallery-main">
+  <div class="swiper js-gallery-thumbs">
       <div class="swiper-wrapper">
-        {% for images in product.images %} {% set lazyIndex = loop.index == 1 ?
-        false : true %}
-<div class="swiper-slide d-gallery-image">
-  <img
-    class="gallery-image"
-    src="{{ images.full }}"
-    {% if lazyIndex %}loading="lazy"{% endif %}
-    alt="{{ product.name }}"
-  />
-
-</div>
-        {% endfor %}
+      {% if product.images %}
+          {% for images in product.images %}
+          <div class="swiper-slide d-thumb-gallery">
+              <img class="thumb-gallery-img" src="{{ images.medium }}" alt="{{ product.name }}" width="90" height="90" loading="lazy" decoding="async" />
+          </div>
+          {% endfor %}
+      {% endif %}
       </div>
+  </div>
+
+  <div class="slides-buttonPrev--gallery icon-arrow-simple{{ quantityImages > 4 ? ' u-show' }} js-gallery-thumbs-prev"></div>
+  <div class="slides-buttonNext--gallery icon-arrow-simple{{ quantityImages > 4 ? ' u-show' }} js-gallery-thumbs-next"></div>
+
+  </div>
+
+
+  <div class="d-gallery-product swiper js-gallery-main">
+    <div class="swiper-wrapper">
+      {% for images in product.images %}
+        <div class="swiper-slide d-gallery-image">
+          <img
+            class="gallery-image"
+            src="{{ images.full }}"
+            alt="{{ product.name }}"
+            {% if loop.index > 1 %}loading="lazy"{% endif %}
+            decoding="async"
+          />
+        </div>
+      {% endfor %}
     </div>
   </div>
 
-  <div class="d-product-info">
-    <div class="tags">
-      {% set discount = product.price_offer > 0 ? (100 - (product.price_offer /
-      product.price) * 100) : false %} {% if discount %}
-      <div class="item-tag tagdesconto">-{{ discount| number_format }}%</div>
-      {% endif %} {% if product.featured %}
-      <div
-        class="item-tag tag{{ show_double_tag == 0 ? ' tag--full' }}{{show_double_tag == 1 and (odd_amount and position == tags_count) ? ' tag--center' }}"
-      >
-        Destaque
-      </div>
-      {% endif %} {% if product.new %}
-      <div
-        class="item-tag tag{{ show_double_tag == 0 ? ' tag--full' }}{{show_double_tag == 1 and (odd_amount and position == tags_count) ? ' tag--center' }}"
-      >
-        Lançamento
-      </div>
-      {% endif %} {% if product.free_shipping and Image('free_shipping') %}
-      <div
-        class="item-tag tag{{ show_double_tag == 0 ? ' tag--full' }}{{show_double_tag == 1 and (odd_amount and position == tags_count) ? ' tag--center' }}"
-      >
-        Frete Grátis
-      </div>
-      {% endif %}
-    </div>
-    <h1>{{ product.name }}</h1>
-    {% if product.additional_message %}
-    <p class="page-additionalMessage">{{ product.additional_message }}</p>
-    {% endif %}
+</div>
 
-    <form
-      id="form_comprar"
-      class=" {{ form_classes | length > 0 ? form_classes | join (' ') }}"
-      method="post"
-      data-app="product.buy-form"
-      data-id="{{ product.id }}"
-      action="{{ links.cart_add ~ product.id }}"
-    >
-      {% if productHelper.bonus() and 'idBonusVariacao' in productHelper.bonus()
-      %}
-      <div class="page-bonusScore">{{ productHelper.bonus() }}</div>
-      {% endif %} {% if ProgressiveDiscounts %}
-      <div class="page-progressiveDiscount">
-        <p class="progressiveDiscount-text">Produto com desconto progressivo</p>
-        <ul class="progressiveDiscount-list">
-          {% for discount in ProgressiveDiscounts %}
-          <li class="progressiveDiscount-item" data-name="{{ discount.name }}">
-            {{ discount.description }}
-          </li>
-          {% endfor %}
-        </ul>
-        {% if ProgressiveDiscounts|length > 1 %}
-        <p class="progressiveDiscount-alert">
-          <b>Aten��o!</b> Somente o maior desconto será aplicado na finalização
-          do pedido.
-        </p>
-        {% endif %}
-      </div>
-      {% endif %} {% if product.variants %}
-      <div class="pageProduct-variants" data-has-variations>
-        <div class="variants-choice serverTray-content">
-          {{ productHelper.variants() }}
-        </div>
-      </div>
-      {% endif %} {% if productHelper.gifts() %}
-      <div class="page-gifts serverTray-content">
-        <p class="pageProduct-giftsText">BRINDE DO PRODUTO</p>
-        {{ productHelper.gifts() }}
-      </div>
-      {% endif %} {% if product.is_kit %}
-      <div class="page-kit">
-        <div class="serverTray-content">{{ productHelper.kit() }}</div>
-        <div class="error-kit error-message" style="display: none">
-          Por favor, selecione as variações antes de prosseguir.
-        </div>
-      </div>
-      {% endif %} {% if product.additional_information %}
+<div class="d-product-info">
+  <div class="tags"> 
+      {% set discount = product.price_offer > 0 ? (100 - (product.price_offer / product.price) * 100) : false %} 
+
+      {% if discount %}
+          <div class="item-tag tagdesconto">
+              -{{ discount| number_format }}%
+          </div>
+      {% endif %} 
+
+      {% if product.featured %}
+          <div class="item-tag tag{{ show_double_tag == 0 ? ' tag--full' }}{{show_double_tag == 1 and (odd_amount and position == tags_count) ? ' tag--center' }}">
+              Destaque
+          </div>
+      {% endif %}
+
+      {% if product.new %}
+          <div class="item-tag tag{{ show_double_tag == 0 ? ' tag--full' }}{{show_double_tag == 1 and (odd_amount and position == tags_count) ? ' tag--center' }}">
+              Lançamento
+          </div>
+      {% endif %}
+
+      {% if product.free_shipping and Image('free_shipping') %}
+          <div class="item-tag tag{{ show_double_tag == 0 ? ' tag--full' }}{{show_double_tag == 1 and (odd_amount and position == tags_count) ? ' tag--center' }}">
+              Frete Grátis
+          </div>
+      {% endif %} 
+  </div>
+  <h1>{{ product.name }}</h1>
+  {% if product.additional_message %}
+      <p class="page-additionalMessage">{{ product.additional_message }}</p>
+  {% endif %}
+
+  <form id="form_comprar" class="pageProduct-form{{ form_classes | length > 0 ? ' ' ~ (form_classes | join(' ')) : '' }}" method="post" data-app="product.buy-form" data-id="{{ product.id }}" action="{{ links.cart_add ~ product.id }}">
+      {% if productHelper.bonus() and 'idBonusVariacao' in productHelper.bonus() %}
+          <div class="page-bonusScore">{{ productHelper.bonus() }}</div>
+      {% endif %}
+      {% if ProgressiveDiscounts %}
+          <div class="page-progressiveDiscount">
+              <p class="progressiveDiscount-text">Produto com desconto progressivo</p>
+              <ul class="progressiveDiscount-list">
+                  {% for discount in ProgressiveDiscounts %}
+                      <li class="progressiveDiscount-item" data-name="{{ discount.name }}">
+                          {{ discount.description }}
+                      </li>
+                  {% endfor %}
+              </ul>
+          {% if ProgressiveDiscounts|length > 1 %}
+              <p class="progressiveDiscount-alert">
+                  <b>Atenção!</b> Somente o maior desconto será aplicado na finalização do
+                  pedido.
+              </p>
+          {% endif %}
+          </div>
+      {% endif %}
+
+      {% if product.variants %}
+          <div class="pageProduct-variants" data-has-variations>
+              <div class="variants-choice serverTray-content">{{ productHelper.variants() }}</div>
+          </div>
+      {% endif %}
+
+      {% if productHelper.gifts() %}
+          <div class="page-gifts serverTray-content">
+              <p class="pageProduct-giftsText">BRINDE DO PRODUTO</p>
+              {{ productHelper.gifts() }}
+          </div>
+      {% endif %}
+
+      {% if product.is_kit %}
+          <div class="page-kit">
+              <div class="serverTray-content">{{ productHelper.kit() }}</div>
+              <div class="error-kit error-message" style="display: none">
+                  Por favor, selecione as variações antes de prosseguir.
+              </div>
+          </div>
+      {% endif %}
+
+      {% if product.additional_information %}
       <div class="page-fieldsAdditional">
-        {{ product.additional_information }}
-        <div
-          class="fieldsAdditional-required error-message"
-          style="display: none"
-        >
-          Por favor, preencha os campos acima.
-        </div>
+          {{ product.additional_information }}
+          <div class="fieldsAdditional-required error-message" style="display: none">
+              Por favor, preencha os campos acima.
+          </div>
       </div>
       {% endif %}
 
       <div class="page-price serverTray-content">
-        {{ productHelper.pricing() }}
+          {{ productHelper.pricing() }}
       </div>
 
-      {% if not product.upon_request and product.available and
-      productHelper.wishlist() %}
-      <button
-        class="page-wishlist"
-        type="button"
-        title="Adicionar � Lista de Desejos"
-      >
-        {{ productHelper.wishlist() }}
-      </button>
+      {% if not product.upon_request and product.available and productHelper.wishlist() %}
+          <button class="page-wishlist" type="button" title="Adicionar à lista de desejos">
+              {{ productHelper.wishlist() }}
+          </button>
       {% endif %}
 
       <div class="pageProduct-buy serverTray-content" data-buy-product="box">
-        <input
-          class="buy-quantityTop"
-          type="button"
-          id="more"
-          value="+"
-          data-quantity
-        />
-        <input
-          class="buy-quantityDown"
-          type="button"
-          id="less"
-          value="-"
-          data-quantity
-        />
-        {{ productHelper.form() }}
+          <input class="buy-quantityTop" type="button" id="more" value="+" data-quantity />
+          <input class="buy-quantityDown" type="button" id="less" value="-" data-quantity /> {{
+          productHelper.form() }}
       </div>
-    </form>
+  </form>
 
-    {% if productHelper.shipping() %}
-    <div class="pageProduct-shipping">
-      <span class="serverTray-content">{{ productHelper.shipping() }}</span>
-      <div class="cont-frete">
-        <p class="shipping-text">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-          >
-            <path
-              d="M17.5 16.25C18.5355 16.25 19.375 15.4105 19.375 14.375C19.375 13.3395 18.5355 12.5 17.5 12.5C16.4645 12.5 15.625 13.3395 15.625 14.375C15.625 15.4105 16.4645 16.25 17.5 16.25Z"
-              stroke="#374151"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M2.5 16.25C3.53553 16.25 4.375 15.4105 4.375 14.375C4.375 13.3395 3.53553 12.5 2.5 12.5C1.46447 12.5 0.625 13.3395 0.625 14.375C0.625 15.4105 1.46447 16.25 2.5 16.25Z"
-              stroke="#374151"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M6.25 16.25C7.28553 16.25 8.125 15.4105 8.125 14.375C8.125 13.3395 7.28553 12.5 6.25 12.5C5.21447 12.5 4.375 13.3395 4.375 14.375C4.375 15.4105 5.21447 16.25 6.25 16.25Z"
-              stroke="#374151"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M15.625 14.375H8.125"
-              stroke="#374151"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M11.875 14.375V4.375C11.875 4.20924 11.9408 4.05027 12.0581 3.93306C12.1753 3.81585 12.3342 3.75 12.5 3.75H13.125C14.1196 3.75 15.0734 4.14509 15.7767 4.84835C16.4799 5.55161 16.875 6.50544 16.875 7.5V8.125C17.538 8.125 18.1739 8.38839 18.6428 8.85723C19.1116 9.32607 19.375 9.96196 19.375 10.625V14.375"
-              stroke="#374151"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M9.375 14.375V5.625H1.25C1.08424 5.625 0.925268 5.69085 0.808058 5.80806C0.690848 5.92527 0.625 6.08424 0.625 6.25V14.375"
-              stroke="#374151"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          Frete e prazo
-        </p>
-        <a href="http://">Não sei meu CEP</a>
+  {% if productHelper.shipping() %}
+      <div class="pageProduct-shipping">
+          <span class="serverTray-content">{{ productHelper.shipping() }}</span>
+          <p class="shipping-text">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M17.5 16.25C18.5355 16.25 19.375 15.4105 19.375 14.375C19.375 13.3395 18.5355 12.5 17.5 12.5C16.4645 12.5 15.625 13.3395 15.625 14.375C15.625 15.4105 16.4645 16.25 17.5 16.25Z" stroke="#374151" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M2.5 16.25C3.53553 16.25 4.375 15.4105 4.375 14.375C4.375 13.3395 3.53553 12.5 2.5 12.5C1.46447 12.5 0.625 13.3395 0.625 14.375C0.625 15.4105 1.46447 16.25 2.5 16.25Z" stroke="#374151" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M6.25 16.25C7.28553 16.25 8.125 15.4105 8.125 14.375C8.125 13.3395 7.28553 12.5 6.25 12.5C5.21447 12.5 4.375 13.3395 4.375 14.375C4.375 15.4105 5.21447 16.25 6.25 16.25Z" stroke="#374151" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15.625 14.375H8.125" stroke="#374151" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M11.875 14.375V4.375C11.875 4.20924 11.9408 4.05027 12.0581 3.93306C12.1753 3.81585 12.3342 3.75 12.5 3.75H13.125C14.1196 3.75 15.0734 4.14509 15.7767 4.84835C16.4799 5.55161 16.875 6.50544 16.875 7.5V8.125C17.538 8.125 18.1739 8.38839 18.6428 8.85723C19.1116 9.32607 19.375 9.96196 19.375 10.625V14.375" stroke="#374151" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9.375 14.375V5.625H1.25C1.08424 5.625 0.925268 5.69085 0.808058 5.80806C0.690848 5.92527 0.625 6.08424 0.625 6.25V14.375" stroke="#374151" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Frete e prazo
+          </p>
+          <form class="shipping-form" data-shipping="form" data-url="{{ store.url }}">
+              <label for="cep" class="shipping-label">CEP</label>
+              <input class="shipping-input mask-cep" id="cep" name="calcule o frete" type="text" minlength="9" maxlength="9" placeholder="Informe seu CEP" required />
+              <button type="submit" class="shipping-submit button2">Calcular</button>
+          </form>
+          <div class="shipping-result loaded" data-shipping="result">
+              <p class="shipping-loading">Carregando fretes...</p>
+          </div>
       </div>
-      <form
-        class="shipping-form"
-        data-shipping="form"
-        data-url="{{ store.url }}"
-      >
-        <label for="cep" class="shipping-label">CEP</label>
-        <input
-          class="shipping-input mask-cep"
-          id="cep"
-          name="calcule o frete"
-          type="text"
-          minlength="9"
-          maxlength="9"
-          placeholder="Informe seu CEP"
-          required
-        />
-        <button type="submit" class="shipping-submit button2">Calcular</button>
-      </form>
-      <div class="shipping-result loaded" data-shipping="result">
-        <p class="shipping-loading">Carregando fretes...</p>
-      </div>
-    </div>
-    {% endif %}
-  </div>
+  {% endif %}
+</div>
 </section>
 
-  <section class="s-estrutura">
-    <h2>Informações do produto</h2>
-    <ul>
-        <li>
-            <h3></h3>
-            <p></p>
-        </li>
-    </ul>
 
-</section>
+
 <div class="pageProduct" id="page-product">
+
+
   {% if productHelper.bundle() %}
-  <div class="pageProduct-buyTogether">
-    <div class="buyTogether serverTray-content">
-      {{ productHelper.bundle() }}
-    </div>
-  </div>
+      <div class="pageProduct-buyTogether">
+          <div class="buyTogether serverTray-content">{{ productHelper.bundle() }}</div>
+      </div>
   {% endif %}
 
-
   <div class="pageProduct-tabs">
-    {% element 'snippets/product-tabs' { 'product' : product } %}
+      {% element 'snippets/product-tabs' { 'product' : product } %}
   </div>
 </div>
 
 {% if product.related_products%}
-<section class="pageProduct-related">
-  <div class="related-header">
-    <h2 class="related-title">
-      {{ settings.related_products_title ? settings.related_products_title :
-      "Produtos relacionados" }}
-    </h2>
-    <div class="related-nav">
-      <div class="swiper-button-prev related-prev"></div>
-      <div class="swiper-button-next related-next"></div>
-    </div>
-  </div>
-  <div class="related-showcase swiper">
-    <div class="swiper-wrapper">
-      {% for item in product.related_products %}
-      <div class="swiper-slide">
-        {% element 'snippets/product' { 'product' : item, 'slide' : false } %}
+  <section class="pageProduct-related">
+      <h2 class="related-title">
+          {{ settings.related_products_title ? settings.related_products_title : "Produtos relacionados" }}
+      </h2>
+      <div class="related-showcase">
+          {% for item in product.related_products %}
+              <div class="related-item">
+                  {% element 'snippets/product' {
+                      'product' : item,
+                      'slide'   : false
+                  } %}
+              </div>
+          {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
+  </section>
 {% endif %}
-
-{% element 'snippets/section-avaliacoes' %}
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const tab = document.querySelector("#caracteristicas ul");
-  const estruturaUl = document.querySelector(".s-estrutura ul");
-
-  if (!tab || !estruturaUl) return;
-
-  estruturaUl.innerHTML = ""; // limpa o conteúdo atual
-
-  tab.querySelectorAll("li").forEach(item => {
-    const texto = item.textContent.trim();
-
-    if (texto.includes(":")) {
-      const partes = texto.split(":");
-
-      const titulo = partes[0].trim();
-      const valor = partes.slice(1).join(":").trim();
-
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <h3>${titulo}:</h3>
-        <p>${valor}</p>
-      `;
-
-      estruturaUl.appendChild(li);
-    }
-  });
-
-  // opcional: esconder a tab original
-  const tabContainer = document.querySelector(".tabs-content#caracteristicas");
-  if (tabContainer) tabContainer.style.display = "none";
-});
-</script>
-
-<script>
-document.querySelectorAll(".s-estrutura").forEach(section => {
-  const li = section.querySelector("li");
-
-  if (!li || li.textContent.trim() === "") {
-    section.style.display = "none";
-  }
-});
-</script>

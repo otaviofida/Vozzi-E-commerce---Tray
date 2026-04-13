@@ -106,9 +106,10 @@
                 </svg>
             </div>
         </div>
-         
-        <li><a href="tel:{{ settings.footer_telefone }}">Nosso telefone</a></li>
-        <li><a href="https://wa.me/{{ settings.footer_whatsapp }}">Fale pelo whatsapp</a></li>
+        {% set footer_tel_link = settings.footer_telefone | replace({'(': '', ')': '', '-': '', ' ': '', '.': '', '_': '', '+': '', '/': ''}) %}
+        {% set footer_wa_link = settings.footer_whatsapp | replace({'(': '', ')': '', '-': '', ' ': '', '.': '', '_': '', '+': '', '/': ''}) %}
+        <li><a href="tel:{{ footer_tel_link }}">Nosso telefone</a></li>
+        <li><a href="https://wa.me/{{ footer_wa_link }}">Fale pelo whatsapp</a></li>
         <li><a href="/faq">FAQ</a></li>
 
     </ul>

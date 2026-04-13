@@ -1480,6 +1480,10 @@
       var targetGallery = ".js-gallery-main";
       var targetThumbs = ".js-gallery-thumbs";
 
+      if (!document.querySelector(targetGallery) || !document.querySelector(targetThumbs)) {
+        return;
+      }
+
       // destroi se existir (agora com params seguros)
       try {
         if (
@@ -1501,7 +1505,6 @@
 
       theme.settings.productThumbs = new Swiper(targetThumbs, {
         spaceBetween: 10,
-        lazy: { loadPrevNext: true },
         breakpoints: {
           0: { slidesPerView: 2 },
           350: { slidesPerView: 3 },
@@ -1514,7 +1517,6 @@
 
       theme.settings.productGallery = new Swiper(targetGallery, {
         spaceBetween: 10,
-        lazy: { loadPrevNext: true },
         navigation: {
           prevEl: ".js-gallery-thumbs-prev",
           nextEl: ".js-gallery-thumbs-next",
@@ -1523,6 +1525,12 @@
           swiper: theme.settings.productThumbs,
         },
       });
+
+      // Evita segundo Swiper no mesmo DOM (slide.js usa esta classe no DOMContentLoaded)
+      var mainGalleryEl = document.querySelector(targetGallery);
+      if (mainGalleryEl) {
+        mainGalleryEl.classList.add("is-swiper-initialized");
+      }
     };
 
     // =========================
