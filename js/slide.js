@@ -50,17 +50,28 @@ var swiperThumbs, swiperMain;
 
 {
   requestAnimationFrame(function () {
-    new Swiper(".s-categorias .container", {
-      breakpoints: {
-        0: {
-          slidesPerView: 2.4,
+    document.querySelectorAll(".s-categorias").forEach((section) => {
+      const swiperEl = section.querySelector(".container");
+      const nextBtn = section.querySelector(".swiper-button-next");
+      const prevBtn = section.querySelector(".swiper-button-prev");
+      if (!swiperEl || !nextBtn || !prevBtn) return;
+
+      new Swiper(swiperEl, {
+        breakpoints: {
+          0: {
+            slidesPerView: 2.4,
+          },
+          768: {
+            slidesPerView: 5.2,
+          },
         },
-        768: {
-          slidesPerView: 5.2,
+        spaceBetween: 24,
+        speed: 1300,
+        navigation: {
+          nextEl: nextBtn,
+          prevEl: prevBtn,
         },
-      },
-      spaceBetween: 24,
-      speed: 1300,
+      });
     });
   });
 }

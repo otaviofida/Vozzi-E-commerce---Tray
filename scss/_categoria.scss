@@ -7,6 +7,41 @@
     flex-direction: column;
     gap: 1.5rem;
 
+    .d-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h2 {
+        color: var(--c_general_titulos);
+      }
+
+      .swiper-pagination {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+
+        .swiper-button-prev,
+        .swiper-button-next {
+          position: relative;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #e5e7eb;
+          width: 3.5rem;
+          height: 3.5rem;
+          border-radius: 100%;
+
+          &::after {
+            font-size: 1rem;
+            color: #6b7280;
+          }
+        }
+      }
+    }
+
     .swiper-slide {
       display: flex;
       flex-direction: column;
