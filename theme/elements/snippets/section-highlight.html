@@ -1,19 +1,36 @@
+{% set highlight_category_id = settings.section_highlight_product ? settings.section_highlight_product : 13 %}
+{% set use_mid_vitrine = settings.section_highlight_mid_vitrine == '1' %}
+
+{% if not use_mid_vitrine %}
 {% set products = Products({
     'limit': 1,
-     'categories': [13],
- }) %} 
-
- {% set product = products[0] %}
- {% set discount = product.price_offer > 0 ? (100 - (product.price_offer / product.price) * 100) : false %}
+    'categories': [highlight_category_id],
+}) %}
+{% set product = products[0] %}
+{% set discount = product.price_offer > 0 ? (100 - (product.price_offer / product.price) * 100) : false %}
+{% endif %}
 
 {% set banner_desktop = asset(settings.section_highlight_image) %}
 {% set banner_mobile = asset(settings.section_highlight_image_mobile) %}
 
-<section class="s-section-highlight">
+<section class="s-section-highlight{% if use_mid_vitrine %} s-section-highlight--mid-vitrine{% endif %}">
     <div class="container">
         <div class="up">
             <img class="js-responsive-banner" src="{{ banner_desktop }}" data-desktop="{{ banner_desktop }}" data-mobile="{{ banner_mobile }}" alt="Vozzi - Produto Destaque" width="1200" height="600">
         </div>
+
+        {% if use_mid_vitrine %}
+        <div class="mid-showcase">
+            {% element 'vitrine' {
+                'title': '',
+                'hide_title': true,
+                'type': 'all',
+                'category_id': settings.section_highlight_product,
+                'layout': 'carousel',
+                'quantity': 8
+            } %}
+        </div>
+        {% else %}
         <div class="mid-product">
             <div class="left swiper">
                 <img class="img-highlight" src="{{ asset('img/bg-highlight-product.svg') }}" alt="" role="presentation" loading="lazy" width="600" height="600">
@@ -116,5 +133,6 @@
                 } %} 
             </div>
         </div>
+        {% endif %}
     </div>
 </section>

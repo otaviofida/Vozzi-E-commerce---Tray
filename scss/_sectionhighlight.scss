@@ -371,6 +371,19 @@
         }
     }
 
+    &.s-section-highlight--mid-vitrine {
+        .mid-showcase {
+            width: 100%;
+            overflow: visible;
+
+            .s-showcase {
+                padding: 0;
+                background-color: transparent;
+                overflow: visible;
+            }
+        }
+    }
+
     @media (max-width: 998px) {
         .container{
             gap: .5rem;

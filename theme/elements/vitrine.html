@@ -35,10 +35,12 @@
 {% endif %}
 
 {% if products | length > 0 %}
-<section class="s-showcase{% if layout == 'grid' %} s-showcase--grid{% endif %}">
+<section class="s-showcase{% if layout == 'grid' %} s-showcase--grid{% endif %}{% if hide_title %} s-showcase--no-title{% endif %}">
     <div class="container">
-        <div class="d-title">
+        <div class="d-title{% if hide_title %} d-title--no-heading{% endif %}">
+            {% if not hide_title %}
             <h2>{{ title }}</h2>
+            {% endif %}
             {% if layout != 'grid' %}
             <div class="swiper-pagination">
                 <div class="swiper-button-prev"></div>

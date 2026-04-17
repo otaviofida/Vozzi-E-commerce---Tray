@@ -13,6 +13,10 @@
             align-items: center;
             justify-content: space-between;
 
+            &.d-title--no-heading {
+                justify-content: flex-end;
+            }
+
             h2 {
                 color: var(--c_general_titulos);
             }
@@ -47,6 +51,36 @@
     // =====================
     // GRID MODE
     // =====================
+    &.s-showcase--no-title:not(.s-showcase--grid) {
+        overflow: visible;
+
+        .container {
+            gap: 0;
+            overflow: visible;
+        }
+
+        .d-title.d-title--no-heading {
+            overflow: visible;
+            flex-shrink: 0;
+            min-height: 4rem;
+            align-items: center;
+            padding: 0.35rem 0 0.85rem;
+
+            .swiper-pagination {
+                position: relative;
+                z-index: 2;
+                overflow: visible;
+                padding: 2px;
+            }
+
+            .swiper-button-prev,
+            .swiper-button-next {
+                flex-shrink: 0;
+                overflow: visible;
+            }
+        }
+    }
+
     &.s-showcase--grid {
         overflow: visible;
 
