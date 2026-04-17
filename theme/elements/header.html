@@ -226,44 +226,45 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const img = document.querySelector('.logo-image img');
-        if (!img) return;
-    
-        // Preload da imagem alternativa (muito importante)
-        const preload = new Image();
-        preload.src = img.dataset.alt;
-    
-        let changed = false;
-    
+        const isHome = document.documentElement.classList.contains('page-home');
+
+        if (img && img.dataset && img.dataset.alt) {
+            var preload = new Image();
+            preload.src = img.dataset.alt;
+        }
+
+        var changed = false;
+
         document.addEventListener('scroll', function () {
-            if (window.scrollY > 400 && !changed) {
-                img.classList.add('is-fading');
-    
-                setTimeout(() => {
-                    img.src = img.dataset.alt;
-                    img.classList.remove('is-fading');
-                }, 150);
-    
-                changed = true;
-            }
-    
-            if (window.scrollY <= 400 && changed) {
-                img.classList.add('is-fading');
-    
-                setTimeout(() => {
-                    img.src = img.dataset.original;
-                    img.classList.remove('is-fading');
-                }, 150);
-    
-                changed = false;
+            if (img && img.dataset) {
+                if (window.scrollY > 400 && !changed) {
+                    img.classList.add('is-fading');
+                    setTimeout(function () {
+                        img.src = img.dataset.alt;
+                        img.classList.remove('is-fading');
+                    }, 150);
+                    changed = true;
+                }
+                if (window.scrollY <= 400 && changed) {
+                    img.classList.add('is-fading');
+                    setTimeout(function () {
+                        img.src = img.dataset.original;
+                        img.classList.remove('is-fading');
+                    }, 150);
+                    changed = false;
+                }
             }
 
-            // Category bar visibility
-            var categoryBar = document.querySelector('.category-bar');
-            if (categoryBar) {
-                if (window.scrollY > 200) {
-                    categoryBar.classList.add('visible');
-                } else {
-                    categoryBar.classList.remove('visible');
+            // Category bar: só controla por scroll na home; nas demais páginas o desktop usa CSS fixo
+            if (isHome) {
+                var categoryBarScrollPx = 120;
+                var categoryBar = document.querySelector('.category-bar');
+                if (categoryBar) {
+                    if (window.scrollY > categoryBarScrollPx) {
+                        categoryBar.classList.add('visible');
+                    } else {
+                        categoryBar.classList.remove('visible');
+                    }
                 }
             }
         });

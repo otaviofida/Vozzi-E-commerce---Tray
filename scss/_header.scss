@@ -465,3 +465,11 @@ header {
     display: none;
   }
 }
+
+// Fora da home: menu de categorias sempre fixo/visível no desktop (na home continua via scroll + .visible)
+html:not(.page-home) .category-bar {
+  @media (min-width: 991px) {
+    opacity: 1;
+    top: 56px;
+  }
+}
