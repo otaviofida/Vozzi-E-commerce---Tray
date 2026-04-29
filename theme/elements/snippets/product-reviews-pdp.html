@@ -1,0 +1,381 @@
+{# Seção PDP (.s-avaliar). Tab comments continua oculta no CSS. #}
+<section class="s-avaliar s-avaliar--pdp js-pdp-reviews{% if product.comments is defined and product.comments|length %} has-reviews{% endif %}">
+    <div class="container container--reviews">
+        <div class="topo topo--reviews js-pdp-topo">
+            <h2>Avaliações do produto</h2>
+            <div class="seta-nav js-pdp-carousel-nav" aria-hidden="true">
+                <button type="button" class="btn-nav btn-prev js-pdp-rev-prev" aria-label="Avaliações anteriores">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M7 13L1 7L7 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button type="button" class="btn-nav btn-next js-pdp-rev-next" aria-label="Próximas avaliações">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 13L7 7L1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <p class="pdp-reviews-loading js-pdp-loading" aria-live="polite">Carregando avaliações…</p>
+
+        <div class="js-pdp-carousel-wrap">
+            <div class="avaliacoes avaliacoes--pdp swiper js-pdp-reviews-swiper" data-swiper-pdp-init="0">
+                <div class="swiper-wrapper js-pdp-reviews-track">
+                    {% if product.comments is defined and product.comments|length %}
+                        {% for c in product.comments %}
+                            <div class="swiper-slide">
+                                <div class="card-slide card-slide--pdp">
+                                    <div class="info">
+                                        <h3>
+                                            {% if c.customer is defined and c.customer.name %}
+                                                {{ c.customer.name }}
+                                            {% elseif c.customer_name is defined %}
+                                                {{ c.customer_name }}
+                                            {% else %}
+                                                Cliente
+                                            {% endif %}
+                                        </h3>
+                                        <div class="pdp-review-stars ranking" aria-label="Nota {{ c.rating|default(0) }} de 5">
+                                            {% set _r = c.rating|default(0) %}
+                                            {% for i in 1..5 %}
+                                                <span class="pdp-review-star {% if _r >= i %}is-full{% endif %}" aria-hidden="true"></span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    {% if c.comment %}
+                                        <p class="description">{{ c.comment }}</p>
+                                    {% elseif c.msg is defined %}
+                                        <p class="description">{{ c.msg }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {# Estado sem avaliações #}
+        <div class="pdp-reviews-empty js-pdp-empty-panel" aria-live="polite">
+            <div class="pdp-reviews-empty__inner">
+                <div class="pdp-reviews-empty__icon" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" stroke="rgba(255,255,255,0.35)" stroke-width="2"/><path fill="#F3F3F3" stroke="#462E86" stroke-width="1.5" d="M31.92 17.42 35.43 29h11.93L38.3 37.43l4.54 13.93-11.93-9.43-11.93 9.43L23.54 37.43 17.53 29h11.88l4.52-11.58Z"/></svg>
+                </div>
+                <p class="pdp-reviews-empty__title">Nenhuma avaliação ainda</p>
+                <p class="pdp-reviews-empty__text">Seja o primeiro a contar como foi sua experiência com este produto. Leva menos de um minuto.</p>
+            </div>
+        </div>
+
+        <div class="cont-btn cont-btn--pdp js-pdp-cont-btn">
+            <button type="button" class="btn-avali js-pdp-btn-avaliar">Avaliar produto</button>
+            <a class="fazer-lg js-pdp-login" href="{{ links.login }}" data-logged-user="false">Faça seu login e comente.</a>
+        </div>
+
+    </div>
+</section>
+
+<div class="modal-comentario modal-comentario--pdp is-pdp-review-modal" id="modal-comentario-pdp" aria-hidden="true" role="dialog" aria-labelledby="pdp-review-heading">
+    <div class="modal-comentario--pdp__backdrop" aria-hidden="true"></div>
+    <div class="cont-modal modal-comentario--pdp__panel">
+        <div class="modal-comentario--pdp__head">
+            <h2 id="pdp-review-heading" class="modal-comentario--pdp__title">Sua avaliação</h2>
+            <button type="button" class="modal-comentario--pdp__close js-pdp-modal-close" aria-label="Fechar">&times;</button>
+        </div>
+        <p class="modal-comentario--pdp__subtitle">Escolha a nota, escreva um comentário e ajude outras pessoas a decidirem com confiança.</p>
+        <div class="modal-comentario--pdp__slot js-pdp-modal-slot"></div>
+    </div>
+</div>
+
+<script>
+(function () {
+  function qs(sel, ctx) {
+    return (ctx || document).querySelector(sel);
+  }
+  function qsa(sel, ctx) {
+    return Array.prototype.slice.call((ctx || document).querySelectorAll(sel));
+  }
+
+  function buildSlideFromTray(node) {
+    var nomeEl = node.querySelector(".reviewer h3");
+    var rankingEl = node.querySelector(".ranking");
+    var descEl = node.querySelector(".description");
+    var nome = nomeEl ? nomeEl.textContent.trim() : "Cliente";
+
+    var slide = document.createElement("div");
+    slide.className = "swiper-slide";
+    var wrap = document.createElement("div");
+    wrap.className = "card-slide card-slide--pdp";
+
+    var info = document.createElement("div");
+    info.className = "info";
+
+    var h = document.createElement("h3");
+    h.textContent = nome;
+    info.appendChild(h);
+
+    if (rankingEl) {
+      var rankCopy = rankingEl.cloneNode(true);
+      info.appendChild(rankCopy);
+    }
+
+    wrap.appendChild(info);
+
+    if (descEl && descEl.textContent.trim()) {
+      var p = document.createElement("p");
+      p.className = "description";
+      p.textContent = descEl.textContent.trim();
+      wrap.appendChild(p);
+    }
+
+    slide.appendChild(wrap);
+    return slide;
+  }
+
+  function mountSwiper(section) {
+    var el = qs(".js-pdp-reviews-swiper", section);
+    if (!el || !el.querySelector(".swiper-slide")) return;
+    if (el.dataset.swiperPdpInit === "1") return;
+
+    var prev = qs(".js-pdp-rev-prev", section);
+    var next = qs(".js-pdp-rev-next", section);
+
+    try {
+      new Swiper(el, {
+        slidesPerView: 3,
+        spaceBetween: 16,
+        autoplay: { delay: 4000, disableOnInteraction: false },
+        navigation: prev && next ? { prevEl: prev, nextEl: next } : undefined,
+        speed: 600,
+        watchOverflow: true,
+        breakpoints: {
+          0: { slidesPerView: 1, spaceBetween: 12 },
+          560: { slidesPerView: 1.25, spaceBetween: 14 },
+          768: { slidesPerView: 2, spaceBetween: 16 },
+          1100: { slidesPerView: 3, spaceBetween: 16 },
+        },
+      });
+      el.dataset.swiperPdpInit = "1";
+    } catch (e1) {}
+
+    section.classList.add("has-reviews");
+    section.classList.remove("is-reviews-empty", "is-reviews-pending");
+  }
+
+  function showEmpty(section) {
+    section.classList.add("is-reviews-empty");
+    section.classList.remove("has-reviews", "is-reviews-pending");
+  }
+
+  function hasHreviewInDom() {
+    return (
+      qsa(
+        ".pageProduct .tabs-reviews .hreview-comentarios, #page-product .tabs-reviews .hreview-comentarios",
+      ).length > 0
+    );
+  }
+
+  /** Tray main.js só remove #tray-comment-block após AJAX /mvc/store/greeting (reviewsOnProductPage). */
+  function trayReviewsDomReady() {
+    return !document.querySelector("#tray-comment-block");
+  }
+
+  /** Quando Tray já montou .tabs-reviews mas não há avaliações. */
+  function finalizeNoReviewsCarousel(section, track) {
+    if (!track || track.dataset.pdpFinalize === "done") return false;
+    track.dataset.pdpFinalize = "done";
+    track.dataset.reviewsCopied = "1";
+    showEmpty(section);
+    return true;
+  }
+
+  function fillFromTrayHreview(section, track) {
+    if (!track) return false;
+    if (track.dataset.reviewsCopied === "1")
+      return track.children.length > 0;
+    var reviews = qsa(
+      ".pageProduct .tabs-reviews .hreview-comentarios, #page-product .tabs-reviews .hreview-comentarios",
+    );
+    if (!reviews.length) return false;
+    track.innerHTML = "";
+    reviews.forEach(function (r) {
+      track.appendChild(buildSlideFromTray(r));
+      r.style.display = "none";
+    });
+    track.dataset.reviewsCopied = "1";
+    mountSwiper(section);
+    return true;
+  }
+
+  /**
+   * Copia avaliações do Tray quando existem.
+   * Se o AJAX do Tray já terminou (#tray-comment-block removido) e há .tabs-reviews mas sem cards hreview → vazio já.
+   * Sem .tabs-reviews após várias tentativas → vazio (ex.: produto sem aba comentários).
+   */
+  function tryResolveReviews(section, track, n) {
+    if (track.dataset.pdpFinalize === "done") return false;
+    if (fillFromTrayHreview(section, track)) return true;
+
+    if (!trayReviewsDomReady()) return false;
+
+    var tray =
+      qs(".pageProduct .tabs-reviews") || qs("#page-product .tabs-reviews");
+
+    if (tray && !hasHreviewInDom()) {
+      return finalizeNoReviewsCarousel(section, track);
+    }
+
+    if (!tray && n >= 5 && !hasHreviewInDom()) {
+      return finalizeNoReviewsCarousel(section, track);
+    }
+
+    return false;
+  }
+
+  function applyCommentFormNoNativeValidation() {
+    var f = document.getElementById("form-comments");
+    if (f) {
+      f.setAttribute("novalidate", "true");
+      f.noValidate = true;
+    }
+    var note = document.getElementById("nota_comentario");
+    if (note) {
+      note.removeAttribute("required");
+      note.required = false;
+    }
+  }
+
+  function openReviewModal(modal) {
+    var slot = qs(".js-pdp-modal-slot", modal);
+    var alvo = qs("#comentario_cliente");
+    if (!alvo || !slot || !modal) return;
+    if (!slot.querySelector("#comentario_cliente")) slot.appendChild(alvo);
+    applyCommentFormNoNativeValidation();
+    if (
+      typeof jQuery !== "undefined" &&
+      window.theme &&
+      typeof window.theme.commentFormFixHtmlFive === "function"
+    ) {
+      window.theme.commentFormFixHtmlFive();
+    }
+    modal.classList.add("is-open");
+    modal.style.display = "flex";
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeReviewModal(modal) {
+    if (!modal) return;
+    modal.classList.remove("is-open");
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  function attachModal(btnList, modal) {
+    if (!modal) return;
+    btnList.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        openReviewModal(modal);
+      });
+    });
+
+    var backdrop = qs(".modal-comentario--pdp__backdrop", modal);
+    var panel = qs(".modal-comentario--pdp__panel", modal);
+    modal.addEventListener("click", function (e) {
+      if (!panel) return;
+      if (panel.contains(e.target)) {
+        if (e.target.closest && e.target.closest(".js-pdp-modal-close")) {
+          e.preventDefault();
+          closeReviewModal(modal);
+        }
+        return;
+      }
+      if (backdrop && backdrop.contains(e.target)) {
+        closeReviewModal(modal);
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (
+        e.key === "Escape" &&
+        modal &&
+        modal.classList.contains("is-open")
+      ) {
+        closeReviewModal(modal);
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var section = qs(".js-pdp-reviews");
+    if (!section) return;
+    var track = qs(".js-pdp-reviews-track", section);
+    var modal = qs("#modal-comentario-pdp");
+
+    attachModal(qsa(".js-pdp-btn-avaliar", section), modal);
+
+    var hadSlidesInitially = !!(track && track.querySelector(".swiper-slide"));
+    if (!hadSlidesInitially) section.classList.add("is-reviews-pending");
+
+    function finishPoll(id) {
+      if (id) window.clearInterval(id);
+    }
+
+    if (hadSlidesInitially) {
+      mountSwiper(section);
+      return;
+    }
+
+    var timer = null;
+    var obs = null;
+    var pollN = 0;
+
+    function cleanupReviewPoll() {
+      finishPoll(timer);
+      timer = null;
+      if (obs) {
+        obs.disconnect();
+        obs = null;
+      }
+    }
+
+    function onTrayDomMaybeReady() {
+      if (!trayReviewsDomReady()) return;
+      var tray =
+        qs(".pageProduct .tabs-reviews") ||
+        qs("#page-product .tabs-reviews");
+      if (tray && !hasHreviewInDom()) {
+        if (finalizeNoReviewsCarousel(section, track))
+          cleanupReviewPoll();
+      }
+    }
+
+    try {
+      obs = new MutationObserver(function () {
+        if (track.dataset.pdpFinalize === "done") return;
+
+        if (fillFromTrayHreview(section, track)) {
+          cleanupReviewPoll();
+          return;
+        }
+        onTrayDomMaybeReady();
+      });
+      var root = qs("#page-product") || document.body;
+      obs.observe(root, { childList: true, subtree: true });
+    } catch (e4) {}
+
+    timer = window.setInterval(function () {
+      pollN += 1;
+
+      if (tryResolveReviews(section, track, pollN)) {
+        cleanupReviewPoll();
+        return;
+      }
+
+      /* Rede absoluta (~11s): AJAX quebrado, DOM incomum */
+      if (pollN >= 40 && track.dataset.pdpFinalize !== "done") {
+        finalizeNoReviewsCarousel(section, track);
+        cleanupReviewPoll();
+      }
+    }, 280);
+  });
+})();
+</script>

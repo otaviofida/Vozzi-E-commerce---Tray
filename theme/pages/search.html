@@ -1,4 +1,4 @@
-<div class="search catalog">
+<div class="search catalog{% if products | length == 0 %} result-not-found{% endif %}">
     {% element 'snippets/breadcrumb' %}
     {% if settings.show_filters_sidebar %}
         <aside id="category-filter" class="catalog-filter">

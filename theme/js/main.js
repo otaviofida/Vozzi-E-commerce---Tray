@@ -588,25 +588,69 @@
       }, 3000);
     },
 
+    /**
+     * Campo oculto #nota_comentario com required causa "not focusable" no Chrome
+     * quando está display:none — desliga validação nativa HTML5 do Tray.
+     */
+    commentFormFixHtmlFive: function () {
+      const f = document.getElementById("form-comments");
+      if (f) {
+        f.setAttribute("novalidate", "novalidate");
+        f.noValidate = true;
+      }
+      const note = document.getElementById("nota_comentario");
+      if (note) {
+        note.removeAttribute("required");
+        note.required = false;
+      }
+    },
+
+    commentFormFeedbackContext: function ($form) {
+      const $tabs = $form.closest(".tabs-content.comments");
+      if ($tabs.length) return $tabs;
+      return $form.closest("#comentario_cliente");
+    },
+
     chooseProductReview: function () {
-      $("#form-comments .rateBlock .starn").on("click", function () {
-        const message = $(this).data("message");
-        const rating = $(this).data("id");
+      $(document)
+        .off("click.trayReviewStar")
+        .on(
+          "click.trayReviewStar",
+          "#form-comments .stars .starn, #form-comments .rateBlock .starn",
+          function () {
+            const message = $(this).data("message");
+            const rating = $(this).data("id");
 
-        $(this).parent().find("#rate").html(message);
-        $(this).closest("form").find("#nota_comentario").val(rating);
+            $(this).parent().find("#rate").html(message);
+            $(this).closest("form").find("#nota_comentario").val(rating);
 
-        $(this).parent().find(".starn").removeClass("icon-star");
+            $(this).parent().find(".starn").removeClass("icon-star");
 
-        $(this).prevAll().addClass("icon-star");
+            $(this).prevAll().addClass("icon-star");
 
-        $(this).addClass("icon-star");
-      });
+            $(this).addClass("icon-star");
+          },
+        );
     },
 
     sendProductReview: function () {
       $("#form-comments").on("submit", function (event) {
+        event.preventDefault();
         const form = $(this);
+        const $ctx = theme.commentFormFeedbackContext(form);
+
+        const noteVal = form.find("#nota_comentario").val();
+        if (
+          noteVal === undefined ||
+          noteVal === null ||
+          String(noteVal).trim() === ""
+        ) {
+          const textError =
+            "Avalia\u00e7\u00e3o do produto obrigat\u00f3ria, d\u00ea sua avalia\u00e7\u00e3o por favor.";
+          $ctx.find(".blocoAlerta").text(textError).show();
+          $ctx.find(".blocoSucesso").hide();
+          return;
+        }
 
         $.ajax({
           url: form.attr("action"),
@@ -614,14 +658,11 @@
           dataType: "json",
           data: form.serialize(),
           success: function (response) {
-            form.closest(".tabs-content.comments").find(".blocoAlerta").hide();
-            form.closest(".tabs-content.comments").find(".blocoSucesso").show();
+            $ctx.find(".blocoAlerta").hide();
+            $ctx.find(".blocoSucesso").show();
 
             setTimeout(function () {
-              form
-                .closest(".tabs-content.comments")
-                .find(".blocoSucesso")
-                .hide();
+              $ctx.find(".blocoSucesso").hide();
               $("#form-comments #mensagem_coment").val("");
 
               form.find("#nota_comentario").val("");
@@ -633,16 +674,10 @@
           error: function (response) {
             const error = JSON.stringify(response);
 
-            form.closest(".tabs-content.comments").find(".blocoSucesso").hide();
-            form
-              .closest(".tabs-content.comments")
-              .find(".blocoAlerta")
-              .html(error)
-              .show();
+            $ctx.find(".blocoSucesso").hide();
+            $ctx.find(".blocoAlerta").html(error).show();
           },
         });
-
-        event.preventDefault();
       });
     },
 
@@ -707,6 +742,7 @@
           $("#tray-comment-block").remove();
 
           theme.chooseProductReview();
+          theme.commentFormFixHtmlFive();
           theme.sendProductReview();
         },
       });
